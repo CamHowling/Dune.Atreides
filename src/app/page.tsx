@@ -1,14 +1,27 @@
 import React  from 'react';
 
-import styles from "./page.module.css";
-import { Typography } from "@mui/material";
+// import styles from "./page.module.css";
+import { Box, Typography } from "@mui/material";
+import {mainBackground, footerTransitionBottom} from "./../settings/colours";
+import {PageTitle} from "./../components/pageTitle";
+
+//move to style file
+const bodyStyle = {
+  display: 'flex',
+  backgroundColor: mainBackground,
+  flexDirection: 'column',
+  justifyContent:' space-between',
+  alignItems: 'center',
+  minHeight: '80vh',
+}
 
 export default function Home() {
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <Typography>This is a simple demo text for MUI</Typography>    
-      </div>
-    </main>
+    <Box sx={{ minHeight: '100vh' }}>
+      <PageTitle title="Treachery Tracker for Dune"></PageTitle>
+      <Box sx={{...bodyStyle}}>
+        <Typography sx={{color:footerTransitionBottom}}>This is a simple demo text for MUI</Typography>
+      </Box>
+    </Box>
   );
 }
