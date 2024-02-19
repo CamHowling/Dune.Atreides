@@ -2,7 +2,6 @@
 
 import React, { useState }  from 'react';
 
-// import styles from "./page.module.css";
 import { Box } from "@mui/material";
 import {mainBackground} from "../settings/colours";
 import {PageTitle} from "../components/pageTitle";
@@ -21,8 +20,6 @@ const bodyStyle = {
   alignItems: 'center',
   minHeight: '80vh',
 }
-
-
 
 export function MainMenu() {
   const [aboutOpen, setAboutOpen] = useState<boolean>(false);
