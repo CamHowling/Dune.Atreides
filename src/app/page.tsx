@@ -4,6 +4,7 @@ import React  from 'react';
 import { Box, Typography } from "@mui/material";
 import {mainBackground, footerTransitionBottom} from "./../settings/colours";
 import {PageTitle} from "./../components/pageTitle";
+import { Footer } from '@/components/footer';
 
 //move to style file
 const bodyStyle = {
@@ -22,6 +23,7 @@ export default function Home() {
       <Box sx={{...bodyStyle}}>
         <Typography sx={{color:footerTransitionBottom}}>This is a simple demo text for MUI</Typography>
       </Box>
+      <Footer></Footer>
     </Box>
   );
 }
