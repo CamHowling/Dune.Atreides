@@ -1,41 +1,36 @@
 "use client";
 
-import React, { useState }  from 'react';
+import * as React from "react";
 
-// import styles from "./page.module.css";
-import { Box } from "@mui/material";
-import {mainBackground} from "./../settings/colours";
-import {PageTitle} from "./../components/pageTitle";
-import { Footer } from '@/components/footer';
-import { GameMenuButton } from '@/components/gameMenuButton';
-import { DisclaimerDialog } from '@/components/disclaimerDialog';
-import { AboutDialog } from '@/components/aboutDialog';
+import {
+  createMemoryRouter,
+  RouterProvider,
+} from "react-router-dom";
+import { MainMenu } from '../pages/mainMenu';
+import Setup from "@/pages/setup";
+import Tracker from "@/pages/cardtracker";
 
-//move to style file
-const bodyStyle = {
-  display: 'flex',
-  backgroundColor: mainBackground,
-  flexDirection: 'column',
-  justifyContent:'center',
-  alignItems: 'center',
-  minHeight: '80vh',
-}
-
-export default function Home() {
-  const [aboutOpen, setAboutOpen] = useState<boolean>(false);
-  const [disclaimerOpen, setDisclaimerOpen] = useState<boolean>(false);
-
-  return (
-    <Box sx={{ minHeight: '100vh' }}>
-      <PageTitle title="Treachery Tracker for Dune"></PageTitle>
-      <Box sx={{...bodyStyle}}>
-        <GameMenuButton text="New Game"></GameMenuButton>
-        <GameMenuButton text="About" onClick={() => setAboutOpen(!aboutOpen)}></GameMenuButton>
-        <GameMenuButton text="Disclaimer" onClick={() => setDisclaimerOpen(!disclaimerOpen)}></GameMenuButton>
-      </Box>
-      <AboutDialog onClose={() => setAboutOpen(!aboutOpen)} open={aboutOpen}></AboutDialog>
-      <DisclaimerDialog onClose={() => setDisclaimerOpen(!disclaimerOpen)} open={disclaimerOpen}></DisclaimerDialog>
-      <Footer></Footer>
-    </Box>
-  );
+export default function App() {  
+    //TODO investigate URI paths...
+    const router = createMemoryRouter([
+      {
+        path: "/",
+        element: <MainMenu />,
+        // errorElement: <ErrorPage />,
+      },
+      {
+        path: "/setup",
+        element: <Setup />,
+      },
+      {
+        path: "/tracker",
+        element: <Tracker />,
+      }
+    ]);
+    
+    return (
+      <React.StrictMode>
+        <RouterProvider router={router} />
+      </React.StrictMode>
+    );
 }

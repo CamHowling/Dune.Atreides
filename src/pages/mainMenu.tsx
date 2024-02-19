@@ -1,0 +1,46 @@
+"use client";
+
+import React, { useState }  from 'react';
+
+// import styles from "./page.module.css";
+import { Box } from "@mui/material";
+import {mainBackground} from "../settings/colours";
+import {PageTitle} from "../components/pageTitle";
+import { Footer } from '@/components/footer';
+import { GameMenuButton } from '@/components/gameMenuButton';
+import { DisclaimerDialog } from '@/components/disclaimerDialog';
+import { AboutDialog } from '@/components/aboutDialog';
+import { useNavigate } from 'react-router-dom';
+
+//move to style file
+const bodyStyle = {
+  display: 'flex',
+  backgroundColor: mainBackground,
+  flexDirection: 'column',
+  justifyContent:'center',
+  alignItems: 'center',
+  minHeight: '80vh',
+}
+
+
+
+export function MainMenu() {
+  const [aboutOpen, setAboutOpen] = useState<boolean>(false);
+  const [disclaimerOpen, setDisclaimerOpen] = useState<boolean>(false);
+
+  const navigate = useNavigate();
+
+  return (
+    <Box sx={{ minHeight: '100vh' }}>
+      <PageTitle title="Treachery Tracker for Dune"></PageTitle>
+      <Box sx={{...bodyStyle}}>
+        <GameMenuButton text="New Game" onClick={() => navigate('/setup')}></GameMenuButton>
+        <GameMenuButton text="About" onClick={() => setAboutOpen(!aboutOpen)}></GameMenuButton>
+        <GameMenuButton text="Disclaimer" onClick={() => setDisclaimerOpen(!disclaimerOpen)}></GameMenuButton>
+      </Box>
+      <AboutDialog onClose={() => setAboutOpen(!aboutOpen)} open={aboutOpen}></AboutDialog>
+      <DisclaimerDialog onClose={() => setDisclaimerOpen(!disclaimerOpen)} open={disclaimerOpen}></DisclaimerDialog>
+      <Footer></Footer>
+    </Box>
+  );
+}
