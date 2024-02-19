@@ -16,10 +16,17 @@ const buttonStyle = {
 
 type buttonProps = {
     text: string,
+    onClick?: () => void,
 }
 
-export function GameMenuButton({text}: buttonProps) {
+export function GameMenuButton({text, onClick}: buttonProps) {
+    const handleClick = () => {
+        if (onClick != undefined) {
+            onClick();
+        }
+    }
+
     return (
-        <Button variant="contained" size="large" sx={{...buttonStyle}}>{text}</Button>
-    )
+        <Button variant="contained" size="large" sx={{...buttonStyle}} onClick={() => handleClick()}>{text}</Button>
+    );
 }
