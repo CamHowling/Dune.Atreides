@@ -10,7 +10,7 @@ import { Footer } from '@/components/footer';
 import { GameMenuButton } from '@/components/gameMenuButton';
 import { DisclaimerDialog } from '@/components/disclaimerDialog';
 import { AboutDialog } from '@/components/aboutDialog';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation'
 
 //move to style file
 const bodyStyle = {
@@ -28,13 +28,13 @@ export function MainMenu() {
   const [aboutOpen, setAboutOpen] = useState<boolean>(false);
   const [disclaimerOpen, setDisclaimerOpen] = useState<boolean>(false);
 
-  const navigate = useNavigate();
+  const router = useRouter();
 
   return (
     <Box sx={{ minHeight: '100vh' }}>
       <PageTitle title="Treachery Tracker for Dune"></PageTitle>
       <Box sx={{...bodyStyle}}>
-        <GameMenuButton text="New Game" onClick={() => navigate('/setup')}></GameMenuButton>
+        <GameMenuButton text="New Game" onClick={() => router.push('/setup')}></GameMenuButton>
         <GameMenuButton text="About" onClick={() => setAboutOpen(!aboutOpen)}></GameMenuButton>
         <GameMenuButton text="Disclaimer" onClick={() => setDisclaimerOpen(!disclaimerOpen)}></GameMenuButton>
       </Box>
