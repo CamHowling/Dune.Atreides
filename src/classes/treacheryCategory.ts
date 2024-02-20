@@ -18,6 +18,13 @@ export class TreacheryCategory {
     static readonly RicheseDefensePoison = new TreacheryCategory(17, "Defense - Poison", 'TBD');
     static readonly RicheseWeaponSpecial = new TreacheryCategory(18, "Weapon - Special", 'TBD');
 
+    static RicheseCategories: TreacheryCategory[] = [
+        TreacheryCategory.RicheseSpecial, 
+        TreacheryCategory.RicheseSpecialMovement, 
+        TreacheryCategory.RicheseDefensePoison, 
+        TreacheryCategory.RicheseWeaponSpecial
+    ]
+
     private constructor(
         public readonly id: number, 
         public readonly name: string, 

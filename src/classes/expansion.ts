@@ -1,4 +1,6 @@
 export class Expansion {
+    static Expansions: Expansion[] = [];
+
     static readonly BaseGame = new Expansion(0, "Base Game", 'TBD');
     static readonly TleilaxuAndIxian = new Expansion(1, "Tleilaxu and Ixian", 'expansion 1.png');
     static readonly ChoamAndRichese = new Expansion(2, "Choam and Richese", 'expansion 2.png');
@@ -8,6 +10,7 @@ export class Expansion {
         public readonly id: number, 
         public readonly name: string, 
         public readonly icon: string) {
+            Expansion.Expansions.push(this);
     }
 
     toString() {

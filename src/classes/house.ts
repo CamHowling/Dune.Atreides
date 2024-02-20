@@ -1,6 +1,8 @@
 import { atreides, beneGesserit, choam, ecaz, emperor, fremen, harkonen, ixian, moritani, richeseGrey, spacingGuild, tleilaxu } from "@/settings/colours";
 
 export class House {
+    static Houses: House[] = [];
+
     static Fremen = new House(1, "Fremen", fremen, 'fremen.png', 0, false);
     static Atreides = new House(2, "Atreides", atreides, 'atreides.png', 0, true);
     static  Harkonen = new House(3, "Harkonen", harkonen, 'harkonen.png', 0, false);
@@ -24,6 +26,7 @@ export class House {
         public readonly icon: string, 
         public readonly expansionId: number,
         public readonly alwaysActive: boolean) {
+            House.Houses.push(this);
     }
 
     toString() {

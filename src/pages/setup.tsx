@@ -39,7 +39,7 @@ const menuButtonStyles = {
 
 function Setup () {
   const [selectedHouses, setSelectedHouses] = useState<House[]>([House.Atreides]);
-  const [selectedExpansions, setSelectedExpansions] = useState<Expansion[]>([]);
+  const [selectedExpansions, setSelectedExpansions] = useState<Expansion[]>([Expansion.BaseGame]);
 
   const handleHouseClick = (house: House) => {
     if (selectedHouses.includes(house)) {

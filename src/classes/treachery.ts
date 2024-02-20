@@ -2,6 +2,8 @@ import { Expansion } from "./expansion";
 import { TreacheryCategory } from "./treacheryCategory";
 
 export class Treachery {
+    static TreacheryCards: Treachery[] = [];
+
     static readonly Crysknife = new Treachery(1, "Crysknife", TreacheryCategory.WeaponProjectile, [Expansion.BaseGame.id]);
     static readonly HunterSeeker = new Treachery(2, "Hunter Seeker", TreacheryCategory.WeaponProjectile, [Expansion.TleilaxuAndIxian.id]);
     static readonly MaulerPistol = new Treachery(3, "Mauler Pistol", TreacheryCategory.WeaponProjectile, [Expansion.BaseGame.id]);
@@ -82,9 +84,10 @@ export class Treachery {
         public readonly category: TreacheryCategory,
         public readonly expansionIds: number[]
         ) {
+        Treachery.TreacheryCards.push(this)
     }
 
     toString() {
         return this.name;
-    }
+    }    
 }

@@ -2,8 +2,6 @@ import * as React from "react";
 
 import './../app/globals.css';
 import { useRouter } from 'next/router'
-import { House } from "@/classes/house";
-import { Expansion } from "@/classes/expansion";
 import { redirect } from "next/navigation";
 import { GameMenu } from "@/components/tracker/gameMenu";
 import { TabWrapper } from "@/components/tracker/TabWrapper";
@@ -11,6 +9,9 @@ import { OptionsMenu } from "@/components/tracker/optionsMenu";
 import { Footer } from "@/components/footer";
 import { mainBackground } from "@/settings/colours";
 import { Box } from "@mui/material";
+import { Treachery } from "@/classes/treachery";
+import { House } from "@/classes/house";
+import { TreacheryCategory } from "@/classes/treacheryCategory";
 
 //can potentially simplify
 const tabStyles = {
@@ -20,12 +21,21 @@ const tabStyles = {
 
 export default function Tracker () {
   const router = useRouter();
-  const selectedHouses = (router.query.houses ? JSON.parse( router.query.houses.toString()) : []) as House[];
-  if (selectedHouses.length == 0) {
+  const selectedHouseNames = (router.query.houses ? JSON.parse( router.query.houses.toString()) : []) as string[];
+  if (selectedHouseNames.length == 0) {
     redirect('/');
   }
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const selectedExpansions = (router.query.expansions? JSON.parse( router.query.expansions.toString()) : []) as Expansion[];
+  
+  const selectedExpansionIds = (router.query.expansions? JSON.parse( router.query.expansions.toString()) : []) as number[];
+
+  const treacheryCards = Treachery.TreacheryCards.filter((card) => {
+    const expansionIncluded = card.expansionIds.some((id) => selectedExpansionIds.includes(id));
+    const isRichese = TreacheryCategory.RicheseCategories.includes(card.category);
+    const includeIfRichese = isRichese && selectedHouseNames.includes(House.Richese.name);
+    return (expansionIncluded && !isRichese) || includeIfRichese;
+  });
+
+  console.log(treacheryCards.toString());
 
   const [currentTab, setCurrentTab] = React.useState(0);
   const handleChange = (newValue: number) => {
