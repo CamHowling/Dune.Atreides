@@ -6,8 +6,13 @@ export class TreacheryCategory {
     static readonly DefenseProjectile = new TreacheryCategory(5, "Defense - Projectile", 'TBD');
     static readonly DefensePoison = new TreacheryCategory(6, "Defense - Poison", 'TBD');
     static readonly DefenseSpecial = new TreacheryCategory(7, "Defense - Special", 'TBD');
-    static readonly Special = new TreacheryCategory(8, "Special", 'TBD');
-    static readonly WorthlessCard = new TreacheryCategory(9, "Worthless Card", 'TBD');
+    static readonly DefenseWeaponSpecial = new TreacheryCategory(8, "Defense - Weapon- Special", 'TBD');
+    static readonly Special = new TreacheryCategory(9, "Special", 'TBD');
+    static readonly WorthlessCard = new TreacheryCategory(10, "Worthless Card", 'TBD');
+    static readonly RicheseSpecial = new TreacheryCategory(11, "Special", 'TBD');
+    static readonly RicheseSpecialMovement = new TreacheryCategory(12, "Special - Movement", 'TBD');
+    static readonly RicheseDefensePoison = new TreacheryCategory(13, "Defense - Poison", 'TBD');
+    static readonly RicheseWeaponSpecial = new TreacheryCategory(14, "Weapon - Special", 'TBD');
 
     private constructor(
         public readonly id: number, 
