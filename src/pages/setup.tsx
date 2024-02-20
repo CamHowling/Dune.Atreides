@@ -71,6 +71,16 @@ function Setup () {
 
   const router = useRouter();
 
+  const houseQuery = () => {
+    const query = selectedHouses.map((house) => { return house.name})
+    return query;
+  }
+
+  const expansionQuery = () => {
+    const query = selectedExpansions.map((expansion) => { return expansion.id})
+    return query;
+  }
+
   return (
     <Box sx={{ minHeight: '100vh', m: 0 }}>
       <PageTitle title="Set Up"></PageTitle>
@@ -100,7 +110,11 @@ function Setup () {
           </Box>
         <Box sx={{ ...menuButtonStyles }}>
           <GameMenuButton text="Back" width= "20vh" onClick={() => router.push('/')}></GameMenuButton>
-          <GameMenuButton text="Start" width= "20vh" onClick={() => router.push('/setup')}></GameMenuButton>
+          <GameMenuButton text="Start" width= "20vh" onClick={() => router.push(
+            {
+              pathname: '/cardtracker',
+              query: { houses: JSON.stringify(houseQuery()), expansions: JSON.stringify(expansionQuery())}
+            })}></GameMenuButton>
         </Box>
       </Box>
       <Footer></Footer>
