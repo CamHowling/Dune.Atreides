@@ -7,7 +7,7 @@ import { Expansion } from "@/classes/expansion";
 import { redirect } from "next/navigation";
 import { GameMenu } from "@/components/tracker/gameMenu";
 import { TabWrapper } from "@/components/tracker/TabWrapper";
-import { OptionsMenu } from "@/components/tracker/options";
+import { OptionsMenu } from "@/components/tracker/optionsMenu";
 import { Footer } from "@/components/footer";
 import { mainBackground } from "@/settings/colours";
 import { Box } from "@mui/material";
@@ -20,12 +20,12 @@ const tabStyles = {
 
 export default function Tracker () {
   const router = useRouter();
-  const houses = (router.query.houses ? JSON.parse( router.query.houses.toString()) : []) as House[];
-  if (houses.length == 0) {
+  const selectedHouses = (router.query.houses ? JSON.parse( router.query.houses.toString()) : []) as House[];
+  if (selectedHouses.length == 0) {
     redirect('/');
   }
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const expansions = (router.query.expansions? JSON.parse( router.query.expansions.toString()) : []) as Expansion[];
+  const selectedExpansions = (router.query.expansions? JSON.parse( router.query.expansions.toString()) : []) as Expansion[];
 
   const [currentTab, setCurrentTab] = React.useState(0);
   const handleChange = (newValue: number) => {
@@ -43,6 +43,12 @@ export default function Tracker () {
           Item Two
         </TabWrapper>
         <TabWrapper value={currentTab} index={2}>
+          Item Three
+        </TabWrapper>
+        <TabWrapper value={currentTab} index={3}>
+          Item Three
+        </TabWrapper>
+        <TabWrapper value={currentTab} index={4}>
           Item Three
         </TabWrapper>
       </Box>
