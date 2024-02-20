@@ -2,8 +2,7 @@ import { Expansion } from "./expansion";
 import { TreacheryCategory } from "./treacheryCategory";
 
 export class Treachery {
-    //Names to be updated
-    static readonly Crysknife = new Treachery(1, "NAME", TreacheryCategory.WeaponProjectile, [Expansion.BaseGame.id]);
+    static readonly Crysknife = new Treachery(1, "Crysknife", TreacheryCategory.WeaponProjectile, [Expansion.BaseGame.id]);
     static readonly HunterSeeker = new Treachery(2, "Hunter Seeker", TreacheryCategory.WeaponProjectile, [Expansion.TleilaxuAndIxian.id]);
     static readonly MaulerPistol = new Treachery(3, "Mauler Pistol", TreacheryCategory.WeaponProjectile, [Expansion.BaseGame.id]);
     static readonly SlipTip = new Treachery(4, "Slip Tip", TreacheryCategory.WeaponProjectile, [Expansion.BaseGame.id]);
@@ -43,20 +42,20 @@ export class Treachery {
     static readonly TripToGamont = new Treachery(32, "Trip To Gamont", TreacheryCategory.WorthlessCard, [Expansion.BaseGame.id]);
     static readonly KullWahad = new Treachery(33, "Kull Wahad", TreacheryCategory.WorthlessCard, [Expansion.TleilaxuAndIxian.id]);
 
-    static readonly CheapHero = new Treachery(34, "Cheap Hero", TreacheryCategory.Special, [Expansion.BaseGame.id]);
-    static readonly CheapHeroine = new Treachery(35, "Cheap Hero", TreacheryCategory.Special, [Expansion.BaseGame.id]);
-    static readonly CheapHero3 = new Treachery(36, "NAME", TreacheryCategory.Special, [Expansion.BaseGame.id]);
+    static readonly CheapHero1 = new Treachery(34, "Cheap Hero", TreacheryCategory.SpecialLeader, [Expansion.BaseGame.id]);
+    static readonly CheapHero2 = new Treachery(35, "Cheap Hero", TreacheryCategory.SpecialLeader, [Expansion.BaseGame.id]);
+    static readonly CheapHeroine = new Treachery(36, "Cheap Hero", TreacheryCategory.SpecialLeader, [Expansion.BaseGame.id]);
     static readonly Karama1 = new Treachery(37, "Karama", TreacheryCategory.Special, [Expansion.BaseGame.id]);
     static readonly Karama2 = new Treachery(38, "Karama", TreacheryCategory.Special, [Expansion.BaseGame.id]);
     static readonly Truthtrance1 = new Treachery(39, "Truthtrance", TreacheryCategory.Special, [Expansion.BaseGame.id]);
     static readonly Truthtrance2 = new Treachery(40, "Truthtrance", TreacheryCategory.Special, [Expansion.BaseGame.id]);
-    static readonly Hajr = new Treachery(41, "Hajr", TreacheryCategory.Special, [Expansion.BaseGame.id]);
+    static readonly Hajr = new Treachery(41, "Hajr", TreacheryCategory.SpecialMovement, [Expansion.BaseGame.id]);
     static readonly TleilaxuGhola = new Treachery(42, "Tleilaxu Ghola", TreacheryCategory.Special, [Expansion.BaseGame.id]);
-    static readonly FamilyAtomics = new Treachery(43, "Family Atomics", TreacheryCategory.Special, [Expansion.BaseGame.id]);
-    static readonly WeatherControl = new Treachery(44, "Weather Control", TreacheryCategory.Special, [Expansion.BaseGame.id]);
+    static readonly FamilyAtomics = new Treachery(43, "Family Atomics", TreacheryCategory.SpecialStorm, [Expansion.BaseGame.id]);
+    static readonly WeatherControl = new Treachery(44, "Weather Control", TreacheryCategory.SpecialStorm, [Expansion.BaseGame.id]);
 
-    static readonly Thumper = new Treachery(45, "Thumper", TreacheryCategory.Special, [Expansion.TleilaxuAndIxian.id]);
-    static readonly Harvester = new Treachery(46, "Harvester", TreacheryCategory.Special, [Expansion.TleilaxuAndIxian.id]);
+    static readonly Thumper = new Treachery(45, "Thumper", TreacheryCategory.SpecialStorm, [Expansion.TleilaxuAndIxian.id]);
+    static readonly Harvester = new Treachery(46, "Harvester", TreacheryCategory.SpecialStorm, [Expansion.TleilaxuAndIxian.id]);
     static readonly Amal = new Treachery(47, "Amal", TreacheryCategory.Special, [Expansion.TleilaxuAndIxian.id]);
 
     static readonly Reinforcements = new Treachery(48, "Reinforcements", TreacheryCategory.Special, [Expansion.EcazAndMoritani.id]);
@@ -76,8 +75,6 @@ export class Treachery {
     static readonly StoneBurner = new Treachery(59, "Stone Burner", TreacheryCategory.Special, [Expansion.ChoamAndRichese.id]);
 
     static readonly PortableSnooper = new Treachery(60, "Portable Snooper", TreacheryCategory.Special, [Expansion.ChoamAndRichese.id]);
-
-
 
     private constructor(
         public readonly id: number, 

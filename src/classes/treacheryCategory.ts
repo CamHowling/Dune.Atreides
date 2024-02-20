@@ -8,11 +8,15 @@ export class TreacheryCategory {
     static readonly DefenseSpecial = new TreacheryCategory(7, "Defense - Special", 'TBD');
     static readonly DefenseWeaponSpecial = new TreacheryCategory(8, "Defense - Weapon- Special", 'TBD');
     static readonly Special = new TreacheryCategory(9, "Special", 'TBD');
-    static readonly WorthlessCard = new TreacheryCategory(10, "Worthless Card", 'TBD');
-    static readonly RicheseSpecial = new TreacheryCategory(11, "Special", 'TBD');
-    static readonly RicheseSpecialMovement = new TreacheryCategory(12, "Special - Movement", 'TBD');
-    static readonly RicheseDefensePoison = new TreacheryCategory(13, "Defense - Poison", 'TBD');
-    static readonly RicheseWeaponSpecial = new TreacheryCategory(14, "Weapon - Special", 'TBD');
+    static readonly SpecialLeader = new TreacheryCategory(10, "Special - Leader", 'TBD');
+    static readonly SpecialStorm = new TreacheryCategory(11, "Special - Storm", 'TBD');
+    static readonly SpecialMovement = new TreacheryCategory(12, "Special - Movement", 'TBD');
+    static readonly SpiceBlow = new TreacheryCategory(13, "Spice Blow - Special", 'TBD');
+    static readonly WorthlessCard = new TreacheryCategory(14, "Worthless Card", 'TBD');
+    static readonly RicheseSpecial = new TreacheryCategory(15, "Special", 'TBD');
+    static readonly RicheseSpecialMovement = new TreacheryCategory(16, "Special - Movement", 'TBD');
+    static readonly RicheseDefensePoison = new TreacheryCategory(17, "Defense - Poison", 'TBD');
+    static readonly RicheseWeaponSpecial = new TreacheryCategory(18, "Weapon - Special", 'TBD');
 
     private constructor(
         public readonly id: number, 
