@@ -2,14 +2,13 @@
 
 import React, { useState }  from 'react';
 
-// import styles from "./page.module.css";
 import { Box } from "@mui/material";
 import {mainBackground} from "../settings/colours";
 import {PageTitle} from "../components/pageTitle";
 import { Footer } from '@/components/footer';
 import { GameMenuButton } from '@/components/gameMenuButton';
-import { DisclaimerDialog } from '@/components/disclaimerDialog';
-import { AboutDialog } from '@/components/aboutDialog';
+import { DisclaimerDialog } from '@/components/mainMenu/disclaimerDialog';
+import { AboutDialog } from '@/components/mainMenu/aboutDialog';
 import { useRouter } from 'next/navigation'
 
 //move to style file
