@@ -1,5 +1,4 @@
 import { House } from "@/classes/house";
-import { minorHeading } from "@/settings/colours";
 import { IconButton, useMediaQuery } from "@mui/material";
 import * as React from "react";
 import { useState } from "react";
@@ -32,7 +31,7 @@ export default function HouseButton ({house, onClick}: houseButtonProps) {
     }
 
     return (
-        <IconButton sx={{  ...iconStyles, outlineColor: minorHeading }}
+        <IconButton sx={{  ...iconStyles, outlineColor: house.colour }}
             onClick={handleClick}
         >
             <img src={ `/assets/houses/${house.icon}` } height={imageSize} width={imageSize}/>

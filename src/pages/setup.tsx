@@ -11,6 +11,8 @@ import { House } from "@/classes/house";
 import { Expansion } from "@/classes/expansion";
 import HouseButton from "@/components/setUp/houseButton";
 import ExpansionButton from "@/components/setUp/expansionButton";
+import { GameMenuButton } from "@/components/gameMenuButton";
+import { useRouter } from "next/router";
 
 const bodyStyle = {
     display: 'flex',
@@ -26,6 +28,14 @@ const boxStyle = {
   justifyContent:'space-evenly',
   alignItems: 'center',
 }
+
+const menuButtonStyles = {
+  display: 'flex',
+  justifyContent:'space-evenly',
+  alignItems: 'flex-end',
+  mt: 2
+}
+
 
 function Setup () {
   const [selectedHouses, setSelectedHouses] = useState<House[]>([House.Atreides]);
@@ -59,11 +69,13 @@ function Setup () {
     setSelectedExpansions(expansions);
   }
 
+  const router = useRouter();
+
   return (
     <Box sx={{ minHeight: '100vh', m: 0 }}>
       <PageTitle title="Set Up"></PageTitle>
       <Box sx={{...bodyStyle}}>
-        <Typography variant='h3' sx={{ color: minorHeading, mt: 3, mb: 2 }}>Houses</Typography>
+        <Typography variant='h4' sx={{ color: minorHeading, mt: 3, mb: 1 }}>Houses</Typography>
         <Box sx={{...boxStyle}}>
           <HouseButton house={House.Atreides} onClick={() => {}}></HouseButton>
           <HouseButton house={House.Fremen} onClick={() => {handleHouseClick(House.Fremen)}}></HouseButton>
@@ -80,12 +92,16 @@ function Setup () {
           <HouseButton house={House.Richese} onClick={() => {handleHouseClick(House.Richese)}}></HouseButton>
           <HouseButton house={House.Moritani} onClick={() => {handleHouseClick(House.Moritani)}}></HouseButton>
         </Box>
-        <Typography variant='h3' sx={{ color: minorHeading, mt: 3, mb: 2 }}>Treacheries</Typography>
+        <Typography variant='h4' sx={{ color: minorHeading, mt: 3, mb: 1 }}>Treacheries</Typography>
         <Box sx={{...boxStyle}}>
-          <ExpansionButton expansion={Expansion.TleilaxuAndIxian} onClick={() => {handleExpansionClick(Expansion.TleilaxuAndIxian)}}></ExpansionButton>
-          <ExpansionButton expansion={Expansion.ChoamAndRichese} onClick={() => {handleExpansionClick(Expansion.ChoamAndRichese)}}></ExpansionButton>
-          <ExpansionButton expansion={Expansion.EcazAndMoritani} onClick={() => {handleExpansionClick(Expansion.EcazAndMoritani)}}></ExpansionButton>
-      </Box>
+            <ExpansionButton expansion={Expansion.TleilaxuAndIxian} onClick={() => {handleExpansionClick(Expansion.TleilaxuAndIxian)}}></ExpansionButton>
+            <ExpansionButton expansion={Expansion.ChoamAndRichese} onClick={() => {handleExpansionClick(Expansion.ChoamAndRichese)}}></ExpansionButton>
+            <ExpansionButton expansion={Expansion.EcazAndMoritani} onClick={() => {handleExpansionClick(Expansion.EcazAndMoritani)}}></ExpansionButton>
+          </Box>
+        <Box sx={{ ...menuButtonStyles }}>
+          <GameMenuButton text="Back" width= "20vh" onClick={() => router.push('/')}></GameMenuButton>
+          <GameMenuButton text="Start" width= "20vh" onClick={() => router.push('/setup')}></GameMenuButton>
+        </Box>
       </Box>
       <Footer></Footer>
     </Box>

@@ -8,7 +8,6 @@ const buttonStyle = {
     '&:hover': {
         backgroundColor: footerTransitionMiddle,
     },
-    minWidth: '50vh',
     minHeight: '6vh',
     fontSize: '24px',
     margin: 2,
@@ -17,16 +16,17 @@ const buttonStyle = {
 type buttonProps = {
     text: string,
     onClick?: () => void,
+    width?: string,
 }
 
-export function GameMenuButton({text, onClick}: buttonProps) {
+export function GameMenuButton({text, onClick, width}: buttonProps) {
     const handleClick = () => {
         if (onClick != undefined) {
             onClick();
         }
     }
-
+    const minWidth = width ? width : '50vh';
     return (
-        <Button variant="contained" size="large" sx={{...buttonStyle}} onClick={() => handleClick()}>{text}</Button>
+        <Button variant="contained" size="large" sx={{...buttonStyle, minWidth: minWidth}} onClick={() => handleClick()}>{text}</Button>
     );
 }
