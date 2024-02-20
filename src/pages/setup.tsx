@@ -15,7 +15,7 @@ import ExpansionButton from "@/components/setUp/expansionButton";
 const bodyStyle = {
     display: 'flex',
     backgroundColor: mainBackground,
-    justifyContent:'center',
+    justifyContent:'flex-start',
     alignItems: 'center',
     minHeight: '80vh',
     flexDirection: 'column',
@@ -59,19 +59,11 @@ function Setup () {
     setSelectedExpansions(expansions);
   }
 
-  React.useEffect(() => {
-    console.log(selectedHouses.toString());
-  }, [selectedHouses])
-
-  React.useEffect(() => {
-    console.log(selectedExpansions.toString());
-  }, [selectedExpansions])
-
   return (
     <Box sx={{ minHeight: '100vh', m: 0 }}>
       <PageTitle title="Set Up"></PageTitle>
       <Box sx={{...bodyStyle}}>
-        <Typography variant='h3' sx={{ color: minorHeading, mb: 2 }}>Houses</Typography>
+        <Typography variant='h3' sx={{ color: minorHeading, mt: 3, mb: 2 }}>Houses</Typography>
         <Box sx={{...boxStyle}}>
           <HouseButton house={House.Atreides} onClick={() => {}}></HouseButton>
           <HouseButton house={House.Fremen} onClick={() => {handleHouseClick(House.Fremen)}}></HouseButton>
@@ -88,7 +80,7 @@ function Setup () {
           <HouseButton house={House.Richese} onClick={() => {handleHouseClick(House.Richese)}}></HouseButton>
           <HouseButton house={House.Moritani} onClick={() => {handleHouseClick(House.Moritani)}}></HouseButton>
         </Box>
-        <Typography variant='h3' sx={{ color: minorHeading, mt: 3, mb: 2 }}>Expansion Treacheries</Typography>
+        <Typography variant='h3' sx={{ color: minorHeading, mt: 3, mb: 2 }}>Treacheries</Typography>
         <Box sx={{...boxStyle}}>
           <ExpansionButton expansion={Expansion.TleilaxuAndIxian} onClick={() => {handleExpansionClick(Expansion.TleilaxuAndIxian)}}></ExpansionButton>
           <ExpansionButton expansion={Expansion.ChoamAndRichese} onClick={() => {handleExpansionClick(Expansion.ChoamAndRichese)}}></ExpansionButton>
