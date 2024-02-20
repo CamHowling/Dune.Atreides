@@ -35,7 +35,7 @@ export function GameMenu({onChange}: gameMenuProps) {
         onChange(newValue);
     };
 
-    const imageSize = '80px';
+    const imageSize = '60px';
 
     return (
         <Box sx={{ ...boxStyle }}>
@@ -44,7 +44,10 @@ export function GameMenu({onChange}: gameMenuProps) {
             onChange={handleChange} 
             TabIndicatorProps={{
                 sx: {
-                  background: mainBackground,    
+                  background: mainBackground,
+                  borderBottom: 1, 
+                  borderColor: majorHeading, 
+                  height: 4,
                 }
               }}
             sx={{
