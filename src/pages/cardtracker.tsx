@@ -12,6 +12,7 @@ import { Box } from "@mui/material";
 import { Treachery } from "@/classes/treachery";
 import { House } from "@/classes/house";
 import { TreacheryCategory } from "@/classes/treacheryCategory";
+import { useEffect } from "react";
 
 //can potentially simplify
 const tabStyles = {
@@ -28,15 +29,19 @@ export default function Tracker () {
   
   const selectedExpansionIds = (router.query.expansions? JSON.parse( router.query.expansions.toString()) : []) as number[];
 
-  const treacheryCards = Treachery.TreacheryCards.filter((card) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [treacheryCards, setTreacheryCards] = React.useState<Treachery[]>([]);
+  const initialTreacheryCards = Treachery.TreacheryCards.filter((card) => {
     const expansionIncluded = card.expansionIds.some((id) => selectedExpansionIds.includes(id));
     const isRichese = TreacheryCategory.RicheseCategories.includes(card.category);
     const includeIfRichese = isRichese && selectedHouseNames.includes(House.Richese.name);
     return (expansionIncluded && !isRichese) || includeIfRichese;
   });
 
-  console.log(treacheryCards.toString());
-
+  useEffect(() => {
+    setTreacheryCards(initialTreacheryCards);
+  })
+  
   const [currentTab, setCurrentTab] = React.useState(0);
   const handleChange = (newValue: number) => {
       setCurrentTab(newValue);

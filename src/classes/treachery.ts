@@ -1,6 +1,9 @@
 import { Expansion } from "./expansion";
+import { House } from "./house";
+import { LocationType } from "./locationType";
 import { TreacheryCategory } from "./treacheryCategory";
 
+//TODO move class instances
 export class Treachery {
     static TreacheryCards: Treachery[] = [];
 
@@ -78,12 +81,23 @@ export class Treachery {
 
     static readonly PortableSnooper = new Treachery(60, "Portable Snooper", TreacheryCategory.Special, [Expansion.ChoamAndRichese.id]);
 
-    private constructor(
-        public readonly id: number, 
-        public readonly name: string, 
-        public readonly category: TreacheryCategory,
-        public readonly expansionIds: number[]
-        ) {
+    public readonly id: number;
+    public readonly name: string;
+    public readonly category: TreacheryCategory;
+    public readonly expansionIds: number[];
+    public locationType: LocationType;
+    public player: House | undefined;
+    public isDiscarded: boolean;
+
+    private constructor(id: number, name: string, category: TreacheryCategory, expansionIds: number[]) {
+        this.id = id;
+        this.name = name;
+        this.category = category;
+        this.expansionIds = expansionIds;
+
+        this.locationType = LocationType.Deck;
+        this.isDiscarded = false;
+
         Treachery.TreacheryCards.push(this)
     }
 
