@@ -1,11 +1,11 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { CardGroup } from "@/classes/cardGroup";
 import { House } from "@/classes/house";
 import { Treachery } from "@/classes/treachery";
 import { TreacheryCategory } from "@/classes/treacheryCategory";
-import { atreides, mainBackground, majorHeading, richeseGrey, treacheryBlue, treacheryGreen, treacheryRed, treacheryTan } from "@/settings/colours";
-import { Box, Card, CardMedia, Paper, Typography } from "@mui/material";
+import { mainBackground, richeseGrey, treacheryBlue, treacheryGreen, treacheryRed, treacheryTan } from "@/settings/colours";
+import { Box, Typography } from "@mui/material";
 import * as React from "react";
+import { CardBanner } from "./cardbanner";
 
 const bodyStyle = {
     display: 'flex',
@@ -24,14 +24,7 @@ const sectionTitleStyle = {
     display: 'flex',
 }
 
-const cardStyle = {
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    display: 'flex',
-    mb: .5,
-    ml: '10vh',
-    p: 2,
-}
+
 
 type deckProps = {
     treacheryCards: Treachery[],
@@ -40,10 +33,6 @@ type deckProps = {
 }
 
 function deckSection (group: CardGroup) {
-    const imageSize = 48;
-    const cardHeight = 80;
-    const cardWidth = 70;
-
     return (
         <Box>
             <Box sx={{ backgroundColor: group.colour, ...sectionTitleStyle }}>
@@ -51,31 +40,8 @@ function deckSection (group: CardGroup) {
             </Box>
             <Box sx={{ mb: 3 }}>
                 {group.cards.map((card) => {
-                    const imageFilePath = `/assets/cards/banners/${card.category.banner}`;
-                    return (
-                        <>
-                            <Box sx={{ alignItems: 'center', justifyContent: 'flex-start', display: 'flex'}}>
-                                <Paper
-                                    sx={{
-                                        backgroundImage: `url('${imageFilePath}')`,
-                                        height: cardHeight+"px",
-                                        width: cardWidth+"%",
-                                        ...cardStyle
-                                    }}
-                                    >
-                                        <Typography sx={{ color: mainBackground }} variant="h4">{card.name}</Typography>
-                                        <img src={ `/assets/cards/icons/${card.category.icon}` } height={imageSize} width={imageSize}/>
-                                </Paper>
-                                <Box sx={{ ml: 2}}>
-                                    {card.player != undefined ?
-                                        <img src={ `/assets/houses/${card.player.icon}` } height={imageSize} width={imageSize}/>
-                                        : <></>
-                                    }
-                                    
-                                </Box>
-                            </Box>
-                        </>
-                    )
+                    // eslint-disable-next-line react/jsx-key
+                    return <CardBanner card={card}></CardBanner>
                 })}
             </Box>
         </Box>
