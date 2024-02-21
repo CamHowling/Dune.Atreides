@@ -13,6 +13,7 @@ import { Treachery } from "@/classes/treachery";
 import { House } from "@/classes/house";
 import { TreacheryCategory } from "@/classes/treacheryCategory";
 import { useEffect } from "react";
+import { Deck } from "@/components/tracker/deck";
 
 //can potentially simplify
 const tabStyles = {
@@ -26,10 +27,13 @@ export default function Tracker () {
   if (selectedHouseNames.length == 0) {
     redirect('/');
   }
+
+  const players = House.Houses.filter((house) => {
+    return selectedHouseNames.includes(house.name);
+  })
   
   const selectedExpansionIds = (router.query.expansions? JSON.parse( router.query.expansions.toString()) : []) as number[];
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [treacheryCards, setTreacheryCards] = React.useState<Treachery[]>([]);
   const initialTreacheryCards = Treachery.TreacheryCards.filter((card) => {
     const expansionIncluded = card.expansionIds.some((id) => selectedExpansionIds.includes(id));
@@ -40,7 +44,7 @@ export default function Tracker () {
 
   useEffect(() => {
     setTreacheryCards(initialTreacheryCards);
-  })
+  },[])
   
   const [currentTab, setCurrentTab] = React.useState(0);
   const handleChange = (newValue: number) => {
@@ -55,7 +59,7 @@ export default function Tracker () {
           <OptionsMenu></OptionsMenu>
         </TabWrapper>
         <TabWrapper value={currentTab} index={1}>
-          Item Two
+          <Deck treacheryCards={treacheryCards} players={players} onUpdate={() => {}}></Deck>
         </TabWrapper>
         <TabWrapper value={currentTab} index={2}>
           Item Three

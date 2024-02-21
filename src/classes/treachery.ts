@@ -98,6 +98,8 @@ export class Treachery {
         this.locationType = LocationType.Deck;
         this.isDiscarded = false;
 
+        this.player = House.Atreides;
+
         Treachery.TreacheryCards.push(this)
     }
 
