@@ -54,6 +54,31 @@ export default function CardMenu({children, card, onUpdate, renderDiscard, rende
 
   const [nextCard, setNextCard] = useState<Treachery>(card);
 
+  const handleUpdatePlayer = (house: House) => {
+    nextCard.player = house;
+    setNextCard(nextCard);
+    handleClose();
+  };
+
+  const handleDiscard = () => {
+    nextCard.isDiscarded = true;
+    setNextCard(nextCard);
+    handleClose();
+  };
+
+  const handleReturnToHand = () => {
+    nextCard.isDiscarded = false;
+    setNextCard(nextCard);
+    handleClose();
+  };
+
+  const handleReturnToDeck = () => {
+    nextCard.player = undefined;
+    nextCard.isDiscarded = false;
+    setNextCard(nextCard);
+    handleClose();
+  };
+
   const handleClose = () => {
     setMenuAnchor(null);
     if (onUpdate != undefined) {
@@ -101,7 +126,7 @@ export default function CardMenu({children, card, onUpdate, renderDiscard, rende
       >
         {menuPlayers.map((house, key) => {
                 return (
-                    <MenuItem key={key} onClick={handleClose}>
+                    <MenuItem key={key} onClick={() => handleUpdatePlayer(house)}>
                         <Box sx={{ height: iconSize, width: iconSize, ...iconStyle }}>
                             <img src={ `/assets/houses/${house.icon}` } height={iconSize} width={iconSize}/>
                         </Box>
@@ -110,9 +135,9 @@ export default function CardMenu({children, card, onUpdate, renderDiscard, rende
                 );
             })  
         }
-        {renderDiscard ? 
+        {!card.isDiscarded && card.player ? 
            (
-            <MenuItem onClick={handleClose}>
+            <MenuItem onClick={handleDiscard}>
                 <Box sx={{ height: iconSize, width: iconSize, ...iconStyle }}>
                     <img src={ `/assets/cards/discard overlay.png` } height={40} width={40}/>
                 </Box>
@@ -120,9 +145,19 @@ export default function CardMenu({children, card, onUpdate, renderDiscard, rende
             </MenuItem>
            ) : <></>
         }
-        {!renderDiscard || !renderHouse ? 
+        {card.isDiscarded && card.player ? 
            (
-            <MenuItem onClick={handleClose}>
+            <MenuItem onClick={handleReturnToHand}>
+                <Box sx={{ height: iconSize, width: iconSize, ...iconStyle }}>
+                    <img src={ `/assets/houses/${card.player.icon}` } height={iconSize} width={iconSize}/>
+                </Box>
+                <Typography sx={{ ml: 1 }} fontSize={fontSize}>Return to Hand</Typography>
+            </MenuItem>
+           ) : <></>
+        }    
+        {card.player ? 
+           (
+            <MenuItem onClick={handleReturnToDeck}>
                 <Box sx={{ height: iconSize, width: iconSize, ...iconStyle }}>
                     <img src={ `/assets/cards/draw overlay.png` } height={48} width={48}/>
                 </Box>

@@ -98,10 +98,6 @@ export class Treachery {
         this.locationType = LocationType.Deck;
         this.isDiscarded = false;
 
-        //testing
-        this.isDiscarded = Math.floor(Math.random() * 2) == 1;
-        this.player = House.Houses.at(Math.floor(Math.random() * House.Houses.length)-1)
-
         Treachery.TreacheryCards.push(this)
     }
 
