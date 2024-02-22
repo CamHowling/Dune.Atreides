@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import * as React from "react";
 
 import './../app/globals.css';
@@ -48,10 +49,22 @@ export default function Tracker () {
     setTreacheryCards(initialTreacheryCards);
   },[])
   
-  const [currentTab, setCurrentTab] = React.useState(0);
+  const [currentTab, setCurrentTab] = React.useState(1);
   const handleChange = (newValue: number) => {
       setCurrentTab(newValue);
   };
+
+  const updateTreachery = (updatedCard: Treachery) => {
+    const nextTreacheryCards = treacheryCards.map((card) => {
+      if (card.id != updatedCard.id) {
+        return card;
+      }
+
+      return updatedCard;
+    })
+
+    setTreacheryCards(nextTreacheryCards);
+  }
 
   return (
     <>
@@ -61,13 +74,13 @@ export default function Tracker () {
           <OptionsMenu></OptionsMenu>
         </TabWrapper>
         <TabWrapper value={currentTab} index={1}>
-          <Deck treacheryCards={treacheryCards} players={players} onUpdate={() => {}}></Deck>
+          <Deck treacheryCards={treacheryCards} players={players} onUpdate={(card: Treachery) => {updateTreachery(card)}}></Deck>
         </TabWrapper>
         <TabWrapper value={currentTab} index={2}>
-          <Players treacheryCards={treacheryCards} players={players} onUpdate={() => {}}></Players>
+          <Players treacheryCards={treacheryCards} players={players} onUpdate={(card: Treachery) => {updateTreachery(card)}}></Players>
         </TabWrapper>
         <TabWrapper value={currentTab} index={3}>
-          <Discard treacheryCards={treacheryCards} players={players} onUpdate={() => {}}></Discard>
+          <Discard treacheryCards={treacheryCards} players={players} onUpdate={(card: Treachery) => {updateTreachery(card)}}></Discard>
         </TabWrapper>
         <TabWrapper value={currentTab} index={4}>
           Item Three

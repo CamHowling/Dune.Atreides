@@ -29,7 +29,7 @@ function tabProps(index: number) {
 }
 
 export function GameMenu({onChange}: gameMenuProps) {
-    const [value, setValue] = React.useState(0);
+    const [value, setValue] = React.useState(1);
     const handleChange = (event: React.SyntheticEvent, newValue: number) => {
         setValue(newValue);
         onChange(newValue);

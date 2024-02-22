@@ -2,7 +2,9 @@ import { CardGroup } from "@/classes/cardGroup";
 import { mainBackground } from "@/settings/colours";
 import { Box, Typography } from "@mui/material";
 import * as React from "react";
-import { CardBanner } from "./cardbanner";
+import { CardInfo } from "./CardInfo";
+import { Treachery } from "@/classes/treachery";
+import { House } from "@/classes/house";
 
 const sectionTitleStyle = {
     minWidth: '40vw',
@@ -14,22 +16,31 @@ const sectionTitleStyle = {
 }
 
 type sectionProps = {
-    group: CardGroup,
-    renderHouse: boolean,
-    renderDiscard: boolean,
-    onUpdate?: () => void,
+    group: CardGroup;
+    renderHouse: boolean;
+    renderDiscard: boolean;
+    onUpdate?: (card: Treachery) => void;
+    players: House[];
 }
 
-export function CardSection ({group, renderHouse, renderDiscard}: sectionProps) {
+export function CardSection ({group, renderHouse, renderDiscard, onUpdate, players}: sectionProps) {
     return (
         <Box>
             <Box sx={{ backgroundColor: group.colour, ...sectionTitleStyle }}>
                 <Typography variant="h3" sx={{ p: 1, color: mainBackground }}>{group.name}</Typography>
             </Box>
             <Box sx={{ mb: 3 }}>
-                {group.cards.map((card) => {
-                    // eslint-disable-next-line react/jsx-key
-                    return <CardBanner card={card} renderHouse={renderHouse} renderDiscard={renderDiscard}></CardBanner>
+                {group.cards.map((card) => {    
+                    return (
+                        <CardInfo 
+                            key={card.id}
+                            card={card}
+                            renderHouse={renderHouse}
+                            renderDiscard={renderDiscard}
+                            onUpdate={onUpdate} 
+                            players={players}>
+                        </CardInfo>
+                    );
                 })}
             </Box>
         </Box>

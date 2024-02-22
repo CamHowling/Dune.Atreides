@@ -16,7 +16,7 @@ const bodyStyle = {
 type playerProps = {
     treacheryCards: Treachery[],
     players: House[],
-    onUpdate: () => void,
+    onUpdate: (card: Treachery) => void,
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -38,7 +38,9 @@ export function Players ({treacheryCards, players, onUpdate}: playerProps) {
                         key={group.key} 
                         group={group.value} 
                         renderHouse={false} 
-                        renderDiscard={true}>
+                        renderDiscard={true}
+                        onUpdate={onUpdate}
+                        players={players}>
                     </CardSection>
                 );
             }
