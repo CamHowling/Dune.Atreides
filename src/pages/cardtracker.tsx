@@ -14,6 +14,8 @@ import { House } from "@/classes/house";
 import { TreacheryCategory } from "@/classes/treacheryCategory";
 import { useEffect } from "react";
 import { Deck } from "@/components/tracker/deck";
+import { Players } from "@/components/tracker/players";
+import { Discard } from "@/components/tracker/discard";
 
 //can potentially simplify
 const tabStyles = {
@@ -62,10 +64,10 @@ export default function Tracker () {
           <Deck treacheryCards={treacheryCards} players={players} onUpdate={() => {}}></Deck>
         </TabWrapper>
         <TabWrapper value={currentTab} index={2}>
-          Item Three
+          <Players treacheryCards={treacheryCards} players={players} onUpdate={() => {}}></Players>
         </TabWrapper>
         <TabWrapper value={currentTab} index={3}>
-          Item Three
+          <Discard treacheryCards={treacheryCards} players={players} onUpdate={() => {}}></Discard>
         </TabWrapper>
         <TabWrapper value={currentTab} index={4}>
           Item Three

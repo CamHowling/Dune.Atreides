@@ -16,8 +16,8 @@ export class House {
     static Choam = new House(9, "Choam", choam, 'choam.png', 2, false);
     static Richese = new House(10, "Richese", richeseGrey, 'richese black.png', 2, false);
 
-    static Ecaz = new House(11, "Atreides", ecaz, 'ecaz.png', 3, false);
-    static Moritani = new House(12, "Atreides", moritani, 'moritani.png', 3, false);
+    static Ecaz = new House(11, "Ecaz", ecaz, 'ecaz.png', 3, false);
+    static Moritani = new House(12, "Moritani", moritani, 'moritani.png', 3, false);
 
     private constructor(
         public readonly id: number, 

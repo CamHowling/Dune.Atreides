@@ -5,6 +5,8 @@ import * as React from "react";
 
 type cardProps = {
     card: Treachery;
+    renderHouse: boolean;
+    renderDiscard: boolean;
 }
 
 const cardStyle = {
@@ -15,7 +17,7 @@ const cardStyle = {
     p: 2,
 }
 
-export function CardBanner ({card}: cardProps) {
+export function CardBanner ({card, renderHouse, renderDiscard}: cardProps) {
     const imageFilePath = `/assets/cards/banners/${card.category.banner}`;
     const imageSize = 48;
     const cardHeight = 80;
@@ -36,15 +38,21 @@ export function CardBanner ({card}: cardProps) {
                         <img src={ `/assets/cards/icons/${card.category.icon}` } height={imageSize} width={imageSize}/>
                 </Paper>
                 <Box sx={{ ml: 2}}>
-                    {card.player != undefined ?
-                        <img src={ `/assets/houses/${card.player.icon}` } height={imageSize} width={imageSize}/>
-                        : <Box height={imageSize} width={imageSize}/>
+                    {renderHouse ? 
+                        (
+                            card.player != undefined ?
+                            <img src={ `/assets/houses/${card.player.icon}` } height={imageSize} width={imageSize}/>
+                            : <Box height={imageSize} width={imageSize}/>
+                        ) : <></>
                     }
                 </Box>
                 <Box sx={{ ml: 2}}>
-                    {card.isDiscarded ?
-                        <img src={ `/assets/cards/discard overlay.png` } height={53} width={43}/>
-                        : <Box height={53} width={43}/>
+                    {renderDiscard ? 
+                        ( 
+                            card.isDiscarded ?
+                            <img src={ `/assets/cards/discard overlay.png` } height={53} width={43}/>
+                            : <Box height={53} width={43}/>
+                        ) : <></>
                     }
                 </Box>
             </Box>
