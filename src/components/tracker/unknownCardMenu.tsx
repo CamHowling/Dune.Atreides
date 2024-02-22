@@ -127,7 +127,7 @@ export default function UnknownCardMenu({children, unknownCard, onUpdate, player
           (
             menuPlayers.map((house, key) => {
                 if (unknownCard.originHouse == House.Richese && house == House.Richese && unknownCard.player == House.Richese) {
-                  return <></>
+                  return;
                 }
 
                 return (

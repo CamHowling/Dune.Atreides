@@ -25,7 +25,7 @@ type playerProps = {
 export function Players ({treacheryCards, unknownTreacheryCards, players, onUpdate}: playerProps) {
     const cardGroups = players.map((player, key) => {
         const unknownCards = unknownTreacheryCards.filter((unknownCard) => {
-            return unknownCard.player == player;
+            return unknownCard.player == player && !unknownCard.isRevealed;
         })
 
         const cards = treacheryCards.filter((card) => {
