@@ -31,11 +31,11 @@ export function CardSection ({group, renderHouse, renderDiscard, onUpdate, playe
                 <Typography variant="h3" sx={{ p: 1, color: mainBackground }}>{group.name}</Typography>
             </Box>
             <Box sx={{ mb: 3 }}>
-                {group.cards ? group.cards.map((card) => {    
+                {group.unknownCards ? group.unknownCards.map((unknownCard) => {    
                     return (
                         <CardInfo 
-                            key={card.id}
-                            card={card}
+                            key={unknownCard.id}
+                            unknownCard={unknownCard}
                             renderHouse={renderHouse}
                             renderDiscard={renderDiscard}
                             onUpdate={onUpdate} 
@@ -43,11 +43,11 @@ export function CardSection ({group, renderHouse, renderDiscard, onUpdate, playe
                         </CardInfo>
                     );
                 }) : <></> }
-                {group.unknownCards ? group.unknownCards.map((unknownCard) => {    
+                {group.cards ? group.cards.map((card) => {    
                     return (
                         <CardInfo 
-                            key={unknownCard.id}
-                            unknownCard={unknownCard}
+                            key={card.id}
+                            card={card}
                             renderHouse={renderHouse}
                             renderDiscard={renderDiscard}
                             onUpdate={onUpdate} 

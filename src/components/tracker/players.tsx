@@ -24,11 +24,15 @@ type playerProps = {
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function Players ({treacheryCards, unknownTreacheryCards, players, onUpdate}: playerProps) {
     const cardGroups = players.map((player, key) => {
+        const unknownCards = unknownTreacheryCards.filter((unknownCard) => {
+            return unknownCard.player == player;
+        })
+
         const cards = treacheryCards.filter((card) => {
             return card.player == player;
         })
 
-        const cardGroup = new CardGroup(player.name, player.colour, cards);
+        const cardGroup = new CardGroup(player.name, player.colour, cards, unknownCards);
         return { key: key, value: cardGroup };
     })
 

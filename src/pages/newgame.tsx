@@ -64,7 +64,7 @@ export default function NewGame () {
     }
 
     if (house == House.Richese) {
-      initialUnknownTreacheryCards.push(new UnknownTreachery(house.name + ' ' + 1, UnknownCardTitle, house, 'silver large.png', false, House.Richese));
+      initialUnknownTreacheryCards.push(new UnknownTreachery(house.name + ' ' + 1, UnknownCardTitle, undefined, 'silver large.png', false, House.Richese));
     }
   })
 
