@@ -1,12 +1,11 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import * as React from 'react';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import { Box, PopoverPosition, Typography } from '@mui/material';
-import { useRef, useState } from 'react';
+import { Box, Typography } from '@mui/material';
+import { useState } from 'react';
 import { Treachery } from '@/classes/treachery';
-import { footerTransitionBottom, mainBackground, majorHeading, minorHeading } from '@/settings/colours';
+import { mainBackground } from '@/settings/colours';
 import { House } from '@/classes/house';
 import { UnknownTreachery } from '@/classes/unknownTreachery';
 
@@ -41,7 +40,7 @@ interface CardMenuProps {
     players: House[];
 }
 
-export default function CardMenu({children, card, onUpdate, renderDiscard, renderHouse, players}: CardMenuProps) {
+export default function CardMenu({children, card, onUpdate, players}: CardMenuProps) {
   const [menuAnchor, setMenuAnchor] = useState<null | HTMLElement>(null);
   const [clientX, setClientX] = useState<number>(0);
   const [clientY, setClientY] = useState<number>(0);

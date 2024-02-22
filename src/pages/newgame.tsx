@@ -50,27 +50,29 @@ export default function NewGame () {
   },[])
 
   const [unknownTreacheryCards, setUnknownTreacheryCards] = useState<UnknownTreachery[]>([]);
+  const [harkonenUnknownTreacheryCards, setHarkonenUnknownTreacheryCards] = useState<UnknownTreachery[]>([]);
   const [harkonenTreacheryCount, setHarkonenTreacheryCount] = useState<number>(0);
   const UnknownCardTitle = '????????';
   const initialUnknownTreacheryCards: UnknownTreachery[] = [];
+  const initialHarkonenUnknownTreacheryCards: UnknownTreachery[] = [];
   players.forEach((house, key) => {
-    if(house != House.Richese && house != House.Harkonen) {
-      initialUnknownTreacheryCards.push(new UnknownTreachery(key.toString(), UnknownCardTitle, house, 'yellow large.png', false, undefined));
-    }
-
-    if (house == House.Harkonen) {
-      initialUnknownTreacheryCards.push(new UnknownTreachery(house.name + ' ' + 1, UnknownCardTitle, house, 'black large.png', false, House.Harkonen));
-      initialUnknownTreacheryCards.push(new UnknownTreachery(house.name + ' ' + 2, UnknownCardTitle, house, 'black large.png', false, House.Harkonen));
-    }
-
-    if (house == House.Richese) {
-      initialUnknownTreacheryCards.push(new UnknownTreachery(house.name + ' ' + 1, UnknownCardTitle, undefined, 'silver large.png', false, House.Richese));
+    if(house != House.Harkonen) {
+      initialUnknownTreacheryCards.push(new UnknownTreachery(key.toString(), UnknownCardTitle, 'yellow large.png', false, house, undefined));
     }
   })
 
+  if (players.includes(House.Harkonen)) {
+    initialHarkonenUnknownTreacheryCards.push(new UnknownTreachery(House.Harkonen.name + ' ' + 1, UnknownCardTitle, 'black large.png', false, House.Harkonen, House.Harkonen));
+    initialHarkonenUnknownTreacheryCards.push(new UnknownTreachery(House.Harkonen.name + ' ' + 2, UnknownCardTitle, 'black large.png', false, House.Harkonen, House.Harkonen));
+  }
+
+  if (players.includes(House.Richese)) {
+    initialUnknownTreacheryCards.push(new UnknownTreachery(House.Richese.name + ' ' + 1, UnknownCardTitle, 'silver large.png', true, House.Richese, House.Richese));
+  }
+
   useEffect(() => {
     setUnknownTreacheryCards(initialUnknownTreacheryCards);
-    console.log(initialUnknownTreacheryCards)
+    setHarkonenUnknownTreacheryCards(initialHarkonenUnknownTreacheryCards);
   },[])
   
   const [currentTab, setCurrentTab] = useState(1);

@@ -5,18 +5,18 @@ export class UnknownTreachery {
 
     public readonly id: string;
     public readonly name: string;
-    public player: House;
+    public player?: House;
     public banner: string;
     public isRevealed: boolean;
     public isDiscarded: boolean;
     public originHouse?: House;
 
-    public constructor(id: string, name: string, player: House, banner: string, isDiscarded: boolean, originHouse?: House) {
+    public constructor(id: string, name: string, banner: string, isRevealed: boolean, player?: House, originHouse?: House) {
         this.id = id;
         this.name = name;
         this.player = player;
         this.banner = banner;
-        this.isRevealed = false;
+        this.isRevealed = isRevealed;
         this.isDiscarded = false;
         this.originHouse = originHouse;
 
