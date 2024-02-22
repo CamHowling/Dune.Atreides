@@ -17,7 +17,7 @@ export class Treachery {
     static readonly Chaumas = new Treachery(7, "Chaumas", TreacheryCategory.WeaponPoison, [Expansion.BaseGame.id]);
     static readonly Chaumurky = new Treachery(8, "Chaumurky", TreacheryCategory.WeaponPoison, [Expansion.BaseGame.id]);
     static readonly EllacaDrug = new Treachery(9, "EllacaDrug", TreacheryCategory.WeaponPoison, [Expansion.BaseGame.id]);
-    static readonly PoisonWeapon4 = new Treachery(10, "PoisonWeapon4", TreacheryCategory.WeaponPoison, [Expansion.BaseGame.id]);
+    static readonly GomJabbar = new Treachery(10, "Gom Jabbar", TreacheryCategory.WeaponPoison, [Expansion.BaseGame.id]);
 
     static readonly ArtilleryStrike = new Treachery(11, "Artillery Strike", TreacheryCategory.WeaponSpecial, [Expansion.TleilaxuAndIxian.id, Expansion.ChoamAndRichese.id]);
     static readonly Lasgun = new Treachery(12, "Lasgun", TreacheryCategory.WeaponSpecial, [Expansion.BaseGame.id]);    
