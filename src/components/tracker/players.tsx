@@ -4,6 +4,7 @@ import { Treachery } from "@/classes/treachery";
 import { Box } from "@mui/material";
 import * as React from "react";
 import { CardSection } from "./cardSection";
+import { UnknownTreachery } from "@/classes/unknownTreachery";
 
 const bodyStyle = {
     display: 'flex',
@@ -15,12 +16,13 @@ const bodyStyle = {
 
 type playerProps = {
     treacheryCards: Treachery[],
+    unknownTreacheryCards: UnknownTreachery[],
     players: House[],
-    onUpdate: (card: Treachery) => void,
+    onUpdate: (card?: Treachery, unknownCard?: UnknownTreachery) => void;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export function Players ({treacheryCards, players, onUpdate}: playerProps) {
+export function Players ({treacheryCards, unknownTreacheryCards, players, onUpdate}: playerProps) {
     const cardGroups = players.map((player, key) => {
         const cards = treacheryCards.filter((card) => {
             return card.player == player;

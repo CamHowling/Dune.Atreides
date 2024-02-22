@@ -6,6 +6,7 @@ import { richeseGrey, treacheryBlue, treacheryGreen, treacheryRed, treacheryTan 
 import { Box } from "@mui/material";
 import * as React from "react";
 import { CardSection } from "./cardSection";
+import { UnknownTreachery } from "@/classes/unknownTreachery";
 
 const bodyStyle = {
     display: 'flex',
@@ -17,12 +18,13 @@ const bodyStyle = {
 
 type deckProps = {
     treacheryCards: Treachery[],
+    unknownTreacheryCards: UnknownTreachery[],
     players: House[],
-    onUpdate: (card: Treachery) => void,
+    onUpdate: (card?: Treachery, unknownCard?: UnknownTreachery) => void;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export function Discard ({treacheryCards, players, onUpdate}: deckProps) {
+export function Discard ({treacheryCards, unknownTreacheryCards, players, onUpdate}: deckProps) {
     const groupData: ({name: string, colour: string, categories: TreacheryCategory[]})[] = [
         ({name: "Weapon", colour: treacheryRed, categories: TreacheryCategory.WeaponCategories}),
         ({name: "Defense", colour: treacheryBlue, categories: TreacheryCategory.DefenseCategories}),
@@ -49,9 +51,9 @@ export function Discard ({treacheryCards, players, onUpdate}: deckProps) {
             {cardGroups.map((group) => {
                 return (
                     <CardSection  
-                        key={group.key} 
-                        group={group.value} 
-                        renderHouse={true} 
+                        key={group.key}
+                        group={group.value}
+                        renderHouse={true}
                         renderDiscard={false}
                         onUpdate={onUpdate}
                         players={players}>

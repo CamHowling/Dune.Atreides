@@ -2,10 +2,11 @@ import { CardGroup } from "@/classes/cardGroup";
 import { House } from "@/classes/house";
 import { Treachery } from "@/classes/treachery";
 import { TreacheryCategory } from "@/classes/treacheryCategory";
-import { richeseGrey, treacheryBlue, treacheryGreen, treacheryRed, treacheryTan } from "@/settings/colours";
+import { footerTransitionMiddle, richeseGrey, treacheryBlue, treacheryGreen, treacheryRed, treacheryTan } from "@/settings/colours";
 import { Box } from "@mui/material";
 import * as React from "react";
 import { CardSection } from "./cardSection";
+import { UnknownTreachery } from "@/classes/unknownTreachery";
 
 const bodyStyle = {
     display: 'flex',
@@ -17,12 +18,12 @@ const bodyStyle = {
 
 type deckProps = {
     treacheryCards: Treachery[],
+    unknownTreacheryCards: UnknownTreachery[],
     players: House[],
-    onUpdate: (card: Treachery) => void,
+    onUpdate: (card?: Treachery, unknownCard?: UnknownTreachery) => void;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export function Deck ({treacheryCards, players, onUpdate}: deckProps) {
+export function Deck ({treacheryCards, unknownTreacheryCards, players, onUpdate}: deckProps) {
     const groupData: ({name: string, colour: string, categories: TreacheryCategory[]})[] = [
         ({name: "Weapon", colour: treacheryRed, categories: TreacheryCategory.WeaponCategories}),
         ({name: "Defense", colour: treacheryBlue, categories: TreacheryCategory.DefenseCategories}),
@@ -44,6 +45,8 @@ export function Deck ({treacheryCards, players, onUpdate}: deckProps) {
         return { key: key, value: cardGroup };
     })
 
+    const unknownGroup = { key: 'unknown', value: new CardGroup('Unknown', footerTransitionMiddle, undefined, unknownTreacheryCards)};
+
     return (
         <Box sx={{...bodyStyle}}>
             {cardGroups.map((group) => {
@@ -59,6 +62,14 @@ export function Deck ({treacheryCards, players, onUpdate}: deckProps) {
                 );
             }
         )}
+        <CardSection  
+            key={unknownGroup.key}
+            group={unknownGroup.value}
+            renderHouse={true}
+            renderDiscard={true}
+            onUpdate={onUpdate} 
+            players={players}>
+        </CardSection>
         </Box>
     )
 }

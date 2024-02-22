@@ -89,7 +89,7 @@ export class Treachery {
     public player: House | undefined;
     public isDiscarded: boolean;
 
-    private constructor(id: number, name: string, category: TreacheryCategory, expansionIds: number[]) {
+    public constructor(id: number, name: string, category: TreacheryCategory, expansionIds: number[]) {
         this.id = id;
         this.name = name;
         this.category = category;

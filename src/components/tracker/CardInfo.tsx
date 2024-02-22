@@ -4,12 +4,15 @@ import { Box, Paper, Typography } from "@mui/material";
 import * as React from "react";
 import CardMenu from "./cardMenu";
 import { House } from "@/classes/house";
+import { UnknownTreachery } from "@/classes/unknownTreachery";
+import UnknownCardMenu from "./unknownCardMenu";
 
 type cardProps = {
-    card: Treachery;
+    card?: Treachery;
+    unknownCard?: UnknownTreachery;
     renderHouse: boolean;
     renderDiscard: boolean;
-    onUpdate?: (card: Treachery) => void;
+    onUpdate?: (card?: Treachery, unknownCard?: UnknownTreachery) => void;
     players: House[];
 }
 
@@ -22,53 +25,64 @@ const cardStyle = {
     width: 'inherit', 
 }
 
-export function CardInfo ({card, renderHouse, renderDiscard, onUpdate, players}: cardProps) {
-    const imageFilePath = `/assets/cards/banners/${card.category.banner}`;
+export function CardInfo ({card, unknownCard, renderHouse, renderDiscard, onUpdate, players}: cardProps) {
+    const imageFilePath = 
+        card ? `/assets/cards/banners/${card.category.banner}` : unknownCard ? `/assets/cards/banners/${unknownCard.banner}` : '';
+    
     const imageSize = 48;
     const cardHeight = 80;
     const cardWidth = 70;
 
+    const player = card ? card.player : unknownCard ? unknownCard.player : undefined;
+    const isDiscarded = card ? card.isDiscarded : unknownCard ? unknownCard.isDiscarded : undefined;
+
     return (
-        <>
-            <Box sx={{ alignItems: 'center', justifyContent: 'center', display: 'flex'}}>
-                <Paper
-                    sx={{
-                        backgroundImage: `url('${imageFilePath}')`,
-                        height: cardHeight+"px",
-                        width: cardWidth+"%",
-                        mb: .5,
-                    }}
-                    >
-                    <CardMenu card={card} onUpdate={onUpdate} renderDiscard={renderDiscard} players={players} renderHouse={renderHouse}>
-                        <Box sx={{...cardStyle}}>
-                            <Typography sx={{ color: mainBackground }} variant="h4">{card.name}</Typography>
-                            <img src={ `/assets/cards/icons/${card.category.icon}` } height={imageSize} width={imageSize}/>
-                        </Box>
-                    </CardMenu>
-                </Paper>
-                {renderHouse ? 
-                (
-                    <Box sx={{ ml: 2}}>
-                        {
-                            card.player != undefined ?
-                            <img src={ `/assets/houses/${card.player.icon}` } height={imageSize} width={imageSize}/>
-                            : <Box height={imageSize} width={imageSize}/>
-                        }
+        <Box sx={{ alignItems: 'center', justifyContent: 'center', display: 'flex'}}>
+            <Paper
+                sx={{
+                    backgroundImage: `url('${imageFilePath}')`,
+                    height: cardHeight+"px",
+                    width: cardWidth+"%",
+                    mb: .5,
+                }}
+                >
+                {card ? 
+                <CardMenu card={card} onUpdate={onUpdate} renderDiscard={renderDiscard} players={players} renderHouse={renderHouse}>
+                    <Box sx={{...cardStyle}}>
+                        <Typography sx={{ color: mainBackground }} variant="h4">{card.name}</Typography>
+                        <img src={ `/assets/cards/icons/${card.category.icon}` } height={imageSize} width={imageSize}/>
                     </Box>
-                ) : <></>
-                }
-                {renderDiscard ? 
-                (
-                    <Box sx={{ ml: 2}}>
-                        {
-                            card.isDiscarded ?
-                            <img src={ `/assets/cards/discard overlay.png` } height={53} width={43}/>
-                            : <Box height={53} width={43}/>
-                        }
+                </CardMenu> : <></>}
+                {unknownCard ? 
+                <UnknownCardMenu unknownCard={unknownCard} onUpdate={onUpdate} players={players}>
+                    <Box sx={{...cardStyle}}>
+                        <Typography sx={{ color: mainBackground }} variant="h4">{unknownCard.name}</Typography>
                     </Box>
-                ) : <></>
-                }
-            </Box>
-        </>
+                </UnknownCardMenu> : <></>}
+            </Paper>
+            {renderHouse ? 
+            (
+                <Box sx={{ ml: 2}}>
+                    {
+                    
+                        player != undefined ?
+                        <img src={ `/assets/houses/${player.icon}` } height={imageSize} width={imageSize}/>
+                        : <Box height={imageSize} width={imageSize}/>
+                    }
+                </Box>
+            ) : <></>
+            }
+            {renderDiscard ? 
+            (
+                <Box sx={{ ml: 2}}>
+                    {
+                        isDiscarded ?
+                        <img src={ `/assets/cards/discard overlay.png` } height={53} width={43}/>
+                        : <Box height={53} width={43}/>
+                    }
+                </Box>
+            ) : <></>
+            }
+        </Box>
     )
 }

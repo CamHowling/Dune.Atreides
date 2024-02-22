@@ -5,6 +5,7 @@ import * as React from "react";
 import { CardInfo } from "./CardInfo";
 import { Treachery } from "@/classes/treachery";
 import { House } from "@/classes/house";
+import { UnknownTreachery } from "@/classes/unknownTreachery";
 
 const sectionTitleStyle = {
     minWidth: '40vw',
@@ -19,7 +20,7 @@ type sectionProps = {
     group: CardGroup;
     renderHouse: boolean;
     renderDiscard: boolean;
-    onUpdate?: (card: Treachery) => void;
+    onUpdate?: (card?: Treachery, unknownCard?: UnknownTreachery) => void;
     players: House[];
 }
 
@@ -30,7 +31,7 @@ export function CardSection ({group, renderHouse, renderDiscard, onUpdate, playe
                 <Typography variant="h3" sx={{ p: 1, color: mainBackground }}>{group.name}</Typography>
             </Box>
             <Box sx={{ mb: 3 }}>
-                {group.cards.map((card) => {    
+                {group.cards ? group.cards.map((card) => {    
                     return (
                         <CardInfo 
                             key={card.id}
@@ -41,7 +42,19 @@ export function CardSection ({group, renderHouse, renderDiscard, onUpdate, playe
                             players={players}>
                         </CardInfo>
                     );
-                })}
+                }) : <></> }
+                {group.unknownCards ? group.unknownCards.map((unknownCard) => {    
+                    return (
+                        <CardInfo 
+                            key={unknownCard.id}
+                            unknownCard={unknownCard}
+                            renderHouse={renderHouse}
+                            renderDiscard={renderDiscard}
+                            onUpdate={onUpdate} 
+                            players={players}>
+                        </CardInfo>
+                    );
+                }) : <></> }
             </Box>
         </Box>
     )

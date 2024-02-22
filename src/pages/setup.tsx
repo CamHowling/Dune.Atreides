@@ -112,7 +112,7 @@ function Setup () {
           <GameMenuButton text="Back" width= "20vh" onClick={() => router.push('/')}></GameMenuButton>
           <GameMenuButton text="Start" width= "20vh" onClick={() => router.push(
             {
-              pathname: '/cardtracker',
+              pathname: '/newgame',
               query: { houses: JSON.stringify(houseQuery()), expansions: JSON.stringify(expansionQuery())}
             })}></GameMenuButton>
         </Box>

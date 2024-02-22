@@ -1,14 +1,13 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import * as React from 'react';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import { Box, PopoverPosition, Typography } from '@mui/material';
-import { useRef, useState } from 'react';
-import { Treachery } from '@/classes/treachery';
-import { footerTransitionBottom, mainBackground, majorHeading, minorHeading } from '@/settings/colours';
+import { Box, Typography } from '@mui/material';
+import { useState } from 'react';
+import { mainBackground } from '@/settings/colours';
 import { House } from '@/classes/house';
 import { UnknownTreachery } from '@/classes/unknownTreachery';
+import { Treachery } from '@/classes/treachery';
 
 const boxStyle = {
     height: '100%', 
@@ -32,16 +31,14 @@ const iconStyle = {
     display: 'flex',
 }
 
-interface CardMenuProps {
+interface UnknownCardMenuProps {
     children?: React.ReactNode;
-    card: Treachery;
+    unknownCard: UnknownTreachery;
     onUpdate?: (card?: Treachery, unknownCard?: UnknownTreachery) => void;
-    renderDiscard: boolean;
-    renderHouse: boolean;
     players: House[];
 }
 
-export default function CardMenu({children, card, onUpdate, renderDiscard, renderHouse, players}: CardMenuProps) {
+export default function UnknownCardMenu({children, unknownCard, onUpdate, players}: UnknownCardMenuProps) {
   const [menuAnchor, setMenuAnchor] = useState<null | HTMLElement>(null);
   const [clientX, setClientX] = useState<number>(0);
   const [clientY, setClientY] = useState<number>(0);
@@ -53,7 +50,7 @@ export default function CardMenu({children, card, onUpdate, renderDiscard, rende
     setClientY(event.clientY);
   };
 
-  const [nextCard, setNextCard] = useState<Treachery>(card);
+  const [nextCard, setNextCard] = useState<UnknownTreachery>(unknownCard);
 
   const handleUpdatePlayer = (house: House) => {
     nextCard.player = house;
@@ -74,7 +71,7 @@ export default function CardMenu({children, card, onUpdate, renderDiscard, rende
   };
 
   const handleReturnToDeck = () => {
-    nextCard.player = undefined;
+    // nextCard.player = undefined;
     nextCard.isDiscarded = false;
     setNextCard(nextCard);
     handleClose();
@@ -83,12 +80,12 @@ export default function CardMenu({children, card, onUpdate, renderDiscard, rende
   const handleClose = () => {
     setMenuAnchor(null);
     if (onUpdate != undefined) {
-        onUpdate(nextCard);
+        onUpdate(undefined, nextCard);
     }
   };
 
   const menuPlayers = players.filter((house) => {
-    return house != card.player;
+    return house != unknownCard.player;
   })
 
   const iconSize = '32px';
@@ -136,7 +133,7 @@ export default function CardMenu({children, card, onUpdate, renderDiscard, rende
                 );
             })  
         }
-        {!card.isDiscarded && card.player ? 
+        {!unknownCard.isDiscarded && unknownCard.player ? 
            (
             <MenuItem onClick={handleDiscard}>
                 <Box sx={{ height: iconSize, width: iconSize, ...iconStyle }}>
@@ -146,17 +143,17 @@ export default function CardMenu({children, card, onUpdate, renderDiscard, rende
             </MenuItem>
            ) : <Box></Box>
         }
-        {card.isDiscarded && card.player ? 
+        {unknownCard.isDiscarded && unknownCard.player ? 
            (
             <MenuItem onClick={handleReturnToHand}>
                 <Box sx={{ height: iconSize, width: iconSize, ...iconStyle }}>
-                    <img src={ `/assets/houses/${card.player.icon}` } height={iconSize} width={iconSize}/>
+                    <img src={ `/assets/houses/${unknownCard.player.icon}` } height={iconSize} width={iconSize}/>
                 </Box>
                 <Typography sx={{ ml: 1 }} fontSize={fontSize}>Return to Hand</Typography>
             </MenuItem>
            ) : <Box></Box>
         }    
-        {card.player ? 
+        {unknownCard.player ? 
            (
             <MenuItem onClick={handleReturnToDeck}>
                 <Box sx={{ height: iconSize, width: iconSize, ...iconStyle }}>

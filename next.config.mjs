@@ -3,7 +3,7 @@ const nextConfig = {
     async redirects() {
         return [
         {
-            source: '/cardtracker',
+            source: '/newgame',
             destination: '/',
             permanent: true,
         },
