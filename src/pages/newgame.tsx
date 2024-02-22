@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import * as React from "react";
-
+import cloneDeep from 'lodash/cloneDeep';
 import './../app/globals.css';
 import { useRouter } from 'next/router'
 import { redirect } from "next/navigation";
@@ -31,19 +31,25 @@ export default function NewGame () {
     redirect('/');
   }
 
-  const players = House.Houses.filter((house) => {
-    return selectedHouseNames.includes(house.name);
-  })
+  const [players, setPlayers] = useState<House[]>(
+    House.Houses.filter((house) => {
+      return selectedHouseNames.includes(house.name);
+    })
+  )
   
   const selectedExpansionIds = (router.query.expansions? JSON.parse( router.query.expansions.toString()) : []) as number[];
 
+  //TODO need to apply this to other data structures taken from classes
+  const TreacheriesCopy: Treachery[] = cloneDeep(Treachery.TreacheryCards);
+  //const TreacheriesCopy = Treachery.TreacheryCards;
   const [treacheryCards, setTreacheryCards] = useState<Treachery[]>([]);
-  const initialTreacheryCards = Treachery.TreacheryCards.filter((card) => {
+
+  const initialTreacheryCards = TreacheriesCopy.filter((card) => {
     const expansionIncluded = card.expansionIds.some((id) => selectedExpansionIds.includes(id));
     const isRichese = TreacheryCategory.RicheseCategories.includes(card.category);
     const includeIfRichese = isRichese && selectedHouseNames.includes(House.Richese.name);
     return (expansionIncluded && !isRichese) || includeIfRichese;
-  });
+  })
 
   useEffect(() => {
     setTreacheryCards(initialTreacheryCards);
@@ -90,12 +96,36 @@ export default function NewGame () {
     }
   }
 
+  const updateCardCounts = (previousHouse: House, nextHouse: House) => {
+    const nextPlayers = players.map((player) => {
+      if (player.id >= previousHouse.id) {
+        player.cardsInHand--;
+      }
+
+      if (player.id == nextHouse.id) {
+        player.cardsInHand++;
+      }
+
+      return player;
+    })
+
+    setPlayers(nextPlayers);
+  }
+
   const updateTreachery = (updatedCard: Treachery) => {
+    if (updatedCard.player?.cardsInHand == updatedCard.player?.maximumHandSize) {
+      return; //toast error
+    }
+
     const nextTreacheryCards = treacheryCards.map((card) => {
       if (card.id != updatedCard.id) {
         return card;
       }
 
+      if (card.player != undefined && updatedCard.player != undefined) {
+        updateCardCounts(card.player, updatedCard.player);
+      }
+      
       return updatedCard;
     })
 
@@ -103,11 +133,19 @@ export default function NewGame () {
   }
 
   const updateUnknownTreachery = (updatedCard: UnknownTreachery) => {
+    if (updatedCard.player?.cardsInHand == updatedCard.player?.maximumHandSize) {
+      return; //toast error
+    }
+
     const nextUnknownCards = unknownTreacheryCards.map((card) => {
       if (card.id != updatedCard.id) {
         return card;
       }
 
+      if (card.player != undefined && updatedCard.player != undefined) {
+        updateCardCounts(card.player, updatedCard.player);
+      }
+      
       return updatedCard;
     })
 

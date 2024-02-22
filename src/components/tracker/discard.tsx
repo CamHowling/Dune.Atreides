@@ -37,11 +37,15 @@ export function Discard ({treacheryCards, unknownTreacheryCards, players, onUpda
     }
 
     const cardGroups = groupData.map((group, key) => {
+        const groupCategoryNames = group.categories.flatMap((category) => {
+            return category.name;
+        });
+
         const cards = treacheryCards.filter((card) => {
-            const isInCategory = group.categories.includes(card.category);
+            const isInCategory = groupCategoryNames.includes(card.category.name);
             return isInCategory && card.isDiscarded;
         })
-
+        
         const cardGroup = new CardGroup(group.name, group.colour, cards);
         return { key: key, value: cardGroup };
     })

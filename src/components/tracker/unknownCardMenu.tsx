@@ -139,7 +139,7 @@ export default function UnknownCardMenu({children, unknownCard, onUpdate, player
                   </MenuItem>
                 );
               })  
-          ) : <></>
+          ) : <Box></Box>
         }
         {!unknownCard.isDiscarded && !unknownCard.isRevealed && unknownCard.player ? 
            (

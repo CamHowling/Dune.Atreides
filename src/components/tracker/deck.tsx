@@ -36,8 +36,12 @@ export function Deck ({treacheryCards, unknownTreacheryCards, players, onUpdate}
     }
 
     const cardGroups = groupData.map((group, key) => {
+        const groupCategoryNames = group.categories.flatMap((category) => {
+            return category.name;
+        });
+
         const cards = treacheryCards.filter((card) => {
-            const isInCategory = group.categories.includes(card.category);
+            const isInCategory = groupCategoryNames.includes(card.category.name);
             return isInCategory;
         })
 
