@@ -1,8 +1,6 @@
 import { House } from "./house";
 
 export class UnknownTreachery {
-    static UnknownTreacheryCards: UnknownTreachery[] = [];
-
     public readonly id: string;
     public readonly name: string;
     public player?: House;
@@ -19,8 +17,6 @@ export class UnknownTreachery {
         this.isRevealed = isRevealed;
         this.isDiscarded = false;
         this.originHouse = originHouse;
-
-        UnknownTreachery.UnknownTreacheryCards.push(this)
     }
 
     toString() {

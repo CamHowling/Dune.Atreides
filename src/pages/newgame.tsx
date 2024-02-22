@@ -32,7 +32,7 @@ export default function NewGame () {
   }
 
   const [players, setPlayers] = useState<House[]>(
-    House.Houses.filter((house) => {
+    cloneDeep(House.Houses).filter((house) => {
       return selectedHouseNames.includes(house.name);
     })
   )
@@ -41,7 +41,6 @@ export default function NewGame () {
 
   //TODO need to apply this to other data structures taken from classes
   const TreacheriesCopy: Treachery[] = cloneDeep(Treachery.TreacheryCards);
-  //const TreacheriesCopy = Treachery.TreacheryCards;
   const [treacheryCards, setTreacheryCards] = useState<Treachery[]>([]);
 
   const initialTreacheryCards = TreacheriesCopy.filter((card) => {
