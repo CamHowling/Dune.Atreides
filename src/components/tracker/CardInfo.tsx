@@ -35,6 +35,7 @@ export function CardInfo ({card, unknownCard, renderHouse, renderDiscard, onUpda
 
     const player = card ? card.player : unknownCard ? unknownCard.player : undefined;
     const isDiscarded = card ? card.isDiscarded : unknownCard ? unknownCard.isDiscarded : undefined;
+    const hideHouseIfUnknown = unknownCard ? unknownCard.isRevealed : false;
 
     return (
         <Box sx={{ alignItems: 'center', justifyContent: 'center', display: 'flex'}}>
@@ -65,7 +66,7 @@ export function CardInfo ({card, unknownCard, renderHouse, renderDiscard, onUpda
                 <Box sx={{ ml: 2}}>
                     {
                     
-                        player != undefined ?
+                        player != undefined && !hideHouseIfUnknown ?
                         <img src={ `/assets/houses/${player.icon}` } height={imageSize} width={imageSize}/>
                         : <Box height={imageSize} width={imageSize}/>
                     }

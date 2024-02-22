@@ -101,15 +101,15 @@ export default function NewGame () {
   }
 
   const updateUnknownTreachery = (updatedCard: UnknownTreachery) => {
-    // const nextTreacheryCards = treacheryCards.map((card) => {
-    //   if (card.id != updatedCard.id) {
-    //     return card;
-    //   }
+    const nextUnknownCards = unknownTreacheryCards.map((card) => {
+      if (card.id != updatedCard.id) {
+        return card;
+      }
 
-    //   return updatedCard;
-    // })
+      return updatedCard;
+    })
 
-    // setTreacheryCards(nextTreacheryCards);
+    setUnknownTreacheryCards(nextUnknownCards);
   }
 
   return (

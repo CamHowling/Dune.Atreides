@@ -2,7 +2,7 @@ import { CardGroup } from "@/classes/cardGroup";
 import { House } from "@/classes/house";
 import { Treachery } from "@/classes/treachery";
 import { TreacheryCategory } from "@/classes/treacheryCategory";
-import { richeseGrey, treacheryBlue, treacheryGreen, treacheryRed, treacheryTan } from "@/settings/colours";
+import { footerTransitionMiddle, richeseGrey, treacheryBlue, treacheryGreen, treacheryRed, treacheryTan } from "@/settings/colours";
 import { Box } from "@mui/material";
 import * as React from "react";
 import { CardSection } from "./cardSection";
@@ -46,6 +46,9 @@ export function Discard ({treacheryCards, unknownTreacheryCards, players, onUpda
         return { key: key, value: cardGroup };
     })
 
+    const discardedUnknownCards = unknownTreacheryCards.filter((card) => card.isDiscarded);
+    const unknownGroup = { key: 'unknown', value: new CardGroup('Unknown', footerTransitionMiddle, undefined, discardedUnknownCards)};
+
     return (
         <Box sx={{...bodyStyle}}>
             {cardGroups.map((group) => {
@@ -61,6 +64,14 @@ export function Discard ({treacheryCards, unknownTreacheryCards, players, onUpda
                 );
             }
         )}
+        <CardSection  
+            key={unknownGroup.key}
+            group={unknownGroup.value}
+            renderHouse={true}
+            renderDiscard={true}
+            onUpdate={onUpdate} 
+            players={players}>
+        </CardSection>
         </Box>
     )
 }

@@ -65,13 +65,14 @@ export default function UnknownCardMenu({children, unknownCard, onUpdate, player
   };
 
   const handleReturnToHand = () => {
+    nextCard.isRevealed = false;
     nextCard.isDiscarded = false;
     setNextCard(nextCard);
     handleClose();
   };
 
-  const handleReturnToDeck = () => {
-    // nextCard.player = undefined;
+  const handleReveal = () => {
+    nextCard.isRevealed = true;
     nextCard.isDiscarded = false;
     setNextCard(nextCard);
     handleClose();
@@ -122,18 +123,25 @@ export default function UnknownCardMenu({children, unknownCard, onUpdate, player
 
         sx={{ ...menuStyle }}
       >
-        {menuPlayers.map((house, key) => {
+        {!unknownCard.isRevealed && !unknownCard.isDiscarded ?
+          (
+            menuPlayers.map((house, key) => {
+                if (unknownCard.originHouse == House.Richese && house == House.Richese) {
+                  return <></>
+                }
+
                 return (
-                    <MenuItem key={key} onClick={() => handleUpdatePlayer(house)}>
-                        <Box sx={{ height: iconSize, width: iconSize, ...iconStyle }}>
-                            <img src={ `/assets/houses/${house.icon}` } height={iconSize} width={iconSize}/>
-                        </Box>
-                        <Typography sx={{ ml: 1 }} fontSize={fontSize}>{house.name}</Typography>
-                    </MenuItem>
+                  <MenuItem key={key} onClick={() => handleUpdatePlayer(house)}>
+                      <Box sx={{ height: iconSize, width: iconSize, ...iconStyle }}>
+                          <img src={ `/assets/houses/${house.icon}` } height={iconSize} width={iconSize}/>
+                      </Box>
+                      <Typography sx={{ ml: 1 }} fontSize={fontSize}>{house.name}</Typography>
+                  </MenuItem>
                 );
-            })  
+              })  
+          ) : <></>
         }
-        {!unknownCard.isDiscarded && unknownCard.player ? 
+        {!unknownCard.isDiscarded && !unknownCard.isRevealed && unknownCard.player ? 
            (
             <MenuItem onClick={handleDiscard}>
                 <Box sx={{ height: iconSize, width: iconSize, ...iconStyle }}>
@@ -143,23 +151,23 @@ export default function UnknownCardMenu({children, unknownCard, onUpdate, player
             </MenuItem>
            ) : <Box></Box>
         }
-        {unknownCard.isDiscarded && unknownCard.player ? 
+        {(unknownCard.isDiscarded || unknownCard.isRevealed) && unknownCard.player ? 
            (
             <MenuItem onClick={handleReturnToHand}>
                 <Box sx={{ height: iconSize, width: iconSize, ...iconStyle }}>
                     <img src={ `/assets/houses/${unknownCard.player.icon}` } height={iconSize} width={iconSize}/>
                 </Box>
-                <Typography sx={{ ml: 1 }} fontSize={fontSize}>Return to Hand</Typography>
+                <Typography sx={{ ml: 1 }} fontSize={fontSize}>{!(unknownCard.player == House.Richese) ? 'Return to Hand' : 'Karama OR Return to Hand'}</Typography>
             </MenuItem>
            ) : <Box></Box>
         }    
-        {unknownCard.player ? 
+        {unknownCard.player && !unknownCard.isRevealed && !unknownCard.isDiscarded ? 
            (
-            <MenuItem onClick={handleReturnToDeck}>
+            <MenuItem onClick={handleReveal}>
                 <Box sx={{ height: iconSize, width: iconSize, ...iconStyle }}>
                     <img src={ `/assets/cards/draw overlay.png` } height={48} width={48}/>
                 </Box>
-                <Typography sx={{ ml: 1 }} fontSize={fontSize}>Return to Deck</Typography>
+                <Typography sx={{ ml: 1 }} fontSize={fontSize}>Reveal</Typography>
             </MenuItem>
            ) : <Box></Box>
         }        
