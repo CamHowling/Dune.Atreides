@@ -95,6 +95,9 @@ export default function UnknownCardMenu({children, unknownCard, onUpdate, player
     return house.id != unknownCard.player?.id;
   })
 
+  const currentPlayer = players.find((house) => house.id == unknownCard.player?.id);
+  const isHandFull = currentPlayer ? currentPlayer.isHandFull() : false;
+
   const iconSize = '32px';
   const fontSize = '16pt';
 
@@ -163,7 +166,7 @@ export default function UnknownCardMenu({children, unknownCard, onUpdate, player
         unknownCard.player && 
         (unknownCard.locationType.id == LocationType.Revealed.id || unknownCard.locationType.id == LocationType.DiscardUnknown.id) ?
            (
-            <MenuItem onClick={handleReturnToHand} disabled={unknownCard.player.isHandFull()}>
+            <MenuItem onClick={handleReturnToHand} disabled={isHandFull}>
                 <Box sx={{ height: iconSize, width: iconSize, ...iconStyle }}>
                     <img src={ `/assets/houses/${unknownCard.player.icon}` } height={iconSize} width={iconSize}/>
                 </Box>
