@@ -85,10 +85,10 @@ export function Discard ({treacheryCards, unknownTreacheryCards, players, onUpda
                         onUpdate={onUpdate}
                         players={players}>
                     </CardSection>
-                : <Box></Box> )
+                : <Box key={group.key}></Box> )
             }
         )}
-    {
+        {
         nonHarkonenUnknownCards.length != undefined && nonHarkonenUnknownCards.length > 0 ?
         <CardSection  
             key={unknownGroup.key}

@@ -33,11 +33,16 @@ export default function NewGame () {
     redirect('/');
   }
 
-  const [players, setPlayers] = useState<House[]>(
-    cloneDeep(House.Houses).filter((house) => {
+  const [players, setPlayers] = useState<House[]>([]);
+  
+  useEffect(() => {
+    const initialPlayers = cloneDeep(House.Houses).filter((house) => {
       return selectedHouseNames.includes(house.name);
     })
-  )
+
+    setPlayers(initialPlayers);
+    console.log('players set');
+  },[]) 
   
   const selectedExpansionIds = (router.query.expansions? JSON.parse( router.query.expansions.toString()) : []) as number[];
 
@@ -99,38 +104,33 @@ export default function NewGame () {
     if (updatedUnknownCard) {
       updateUnknownTreachery(updatedUnknownCard);
     }
+
+    updateCardCounts();
   }
 
-  const updateCardCounts = (previousHouse: House, nextHouse: House) => {
+  useEffect(() => {
+    console.log('Player: ' + players && players[0] ? players[0].cardsInHand : ' ');
+  }, [players])
+
+  const updateCardCounts = () => {
     const nextPlayers = players.map((player) => {
-      if (player.id == previousHouse.id) {
-        player.cardsInHand--;
-      }
+      const treacheryCount = treacheryCards.filter((card) => card?.player?.id == player.id).length;
+      const unknownCount = unknownTreacheryCards.filter((card) => card?.player?.id == player.id).length;
 
-      if (player.id == nextHouse.id) {
-        player.cardsInHand++;
-      }
+      const nextPlayer = cloneDeep(player);
+      nextPlayer.cardsInHand = treacheryCount + unknownCount;
 
-      return player;
+      return nextPlayer;
     })
 
     setPlayers(nextPlayers);
   }
 
   const updateTreachery = (updatedCard: Treachery) => {
-    //needs to be moved
-    // if (updatedCard.player?.cardsInHand == updatedCard.player?.maximumHandSize) {
-    //   return; //toast error
-    // }
-
     const nextTreacheryCards = treacheryCards.reduce((result: Treachery[], card) => {
       if (card.id != updatedCard.id) {
         result.push(card);
         return result;
-      }
-
-      if (card.player != undefined && updatedCard.player != undefined) {
-        updateCardCounts(card.player, updatedCard.player);
       }
 
       result.push(updatedCard);
@@ -141,38 +141,18 @@ export default function NewGame () {
   }
 
   const updateUnknownTreachery = (updatedCard: UnknownTreachery) => {
-    // if (updatedCard.player?.cardsInHand == updatedCard.player?.maximumHandSize) {
-    //   return; //toast error
-    // }
-
     const nextUnknownCards = unknownTreacheryCards.reduce((result: UnknownTreachery[], card) => {
       if (card.id != updatedCard.id) {
         result.push(card);
         return result;
       }
 
-      if (card.player != undefined && updatedCard.player != undefined) {
-        updateCardCounts(card.player, updatedCard.player);
-      }
-      
       if (updatedCard.locationType.id != LocationType.Removed.id) {
         result.push(updatedCard);
       }
 
       return result;
     }, []);
-
-    // const nextUnknownCards = unknownTreacheryCards.map((card) => {
-    //   if (card.id != updatedCard.id) {
-    //     return card;
-    //   }
-
-    //   if (card.player != undefined && updatedCard.player != undefined) {
-    //     updateCardCounts(card.player, updatedCard.player);
-    //   }
-      
-    //   return updatedCard;
-    // })
 
     setUnknownTreacheryCards(nextUnknownCards);
   }

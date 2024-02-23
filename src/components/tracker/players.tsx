@@ -26,11 +26,11 @@ type playerProps = {
 export function Players ({treacheryCards, unknownTreacheryCards, players, onUpdate, addHarkonenTreachery}: playerProps) {
     const cardGroups = players.map((player, key) => {
         const unknownCards = unknownTreacheryCards.filter((unknownCard) => {
-            return unknownCard.player == player && unknownCard.locationType.id != LocationType.Revealed.id;
+            return unknownCard?.player?.id == player.id && unknownCard.locationType.id != LocationType.Revealed.id;
         })
 
         const cards = treacheryCards.filter((card) => {
-            return card.player == player;
+            return card?.player?.id == player?.id;
         })
 
         const cardGroup = new CardGroup(player.name, player.colour, cards, unknownCards);

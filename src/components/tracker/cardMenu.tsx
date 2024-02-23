@@ -90,7 +90,7 @@ export default function CardMenu({children, card, onUpdate, players}: CardMenuPr
 
   const menuPlayers = players.filter((house) => {
     return house != card.player;
-  })
+  });
 
   const iconSize = '32px';
   const fontSize = '16pt';
@@ -130,7 +130,7 @@ export default function CardMenu({children, card, onUpdate, players}: CardMenuPr
         card.locationType.id == LocationType.Deck.id || card.locationType.id == LocationType.Player.id ?
         menuPlayers.map((house, key) => {
                 return (
-                    <MenuItem key={key} onClick={() => handleUpdatePlayer(house)}>
+                    <MenuItem key={key} onClick={() => handleUpdatePlayer(house)} disabled={house.isHandFull()}>
                         <Box sx={{ height: iconSize, width: iconSize, ...iconStyle }}>
                             <img src={ `/assets/houses/${house.icon}` } height={iconSize} width={iconSize}/>
                         </Box>
