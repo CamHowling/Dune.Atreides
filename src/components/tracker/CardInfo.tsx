@@ -6,6 +6,7 @@ import CardMenu from "./cardMenu";
 import { House } from "@/classes/house";
 import { UnknownTreachery } from "@/classes/unknownTreachery";
 import UnknownCardMenu from "./unknownCardMenu";
+import { LocationType } from "@/classes/locationType";
 
 type cardProps = {
     card?: Treachery;
@@ -34,8 +35,8 @@ export function CardInfo ({card, unknownCard, renderHouse, renderDiscard, onUpda
     const cardWidth = 70;
 
     const player = card ? card.player : unknownCard ? unknownCard.player : undefined;
-    const isDiscarded = card ? card.isDiscarded : unknownCard ? unknownCard.isDiscarded : undefined;
-    const hideHouseIfUnknown = unknownCard ? unknownCard.isRevealed : false;
+    const isDiscarded = card?.locationType.id == LocationType.Discard.id || unknownCard?.locationType.id == LocationType.DiscardUnknown.id;
+    const hideHouseIfUnknown = unknownCard ? unknownCard.locationType.id == LocationType.Revealed.id : false;
 
     return (
         <Box sx={{ alignItems: 'center', justifyContent: 'center', display: 'flex'}}>

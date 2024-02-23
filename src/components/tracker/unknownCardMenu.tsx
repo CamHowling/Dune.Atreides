@@ -167,7 +167,7 @@ export default function UnknownCardMenu({children, unknownCard, onUpdate, player
                 <Box sx={{ height: iconSize, width: iconSize, ...iconStyle }}>
                     <img src={ `/assets/houses/${unknownCard.player.icon}` } height={iconSize} width={iconSize}/>
                 </Box>
-                <Typography sx={{ ml: 1 }} fontSize={fontSize}>{!(unknownCard.player == House.Richese) ? 'Return to Hand' : 'Karama OR Return to Hand'}</Typography>
+                <Typography sx={{ ml: 1 }} fontSize={fontSize}>{!(unknownCard.player.id == House.Richese.id) ? 'Return to Hand' : 'Karama OR Return to Hand'}</Typography>
             </MenuItem>
            ) : <Box></Box>
         }    
