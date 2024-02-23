@@ -18,6 +18,7 @@ import { Deck } from "@/components/tracker/deck";
 import { Players } from "@/components/tracker/players";
 import { Discard } from "@/components/tracker/discard";
 import { UnknownTreachery } from "@/classes/unknownTreachery";
+import { Notes } from "@/components/tracker/notes";
 
 const tabStyles = {
     backgroundColor: mainBackground,
@@ -151,6 +152,11 @@ export default function NewGame () {
     setUnknownTreacheryCards(nextUnknownCards);
   }
 
+  const [note, setNote] = useState<string>('');
+  const updateNote = (note: string) => {
+    setNote(note);
+  }
+
   return (
     <>
       <GameMenu onChange={(value) => handleChange(value)}></GameMenu>
@@ -183,7 +189,7 @@ export default function NewGame () {
           ></Discard>
         </TabWrapper>
         <TabWrapper value={currentTab} index={4}>
-          Item Three
+          <Notes note={note} onUpdateNote={(note: string) => updateNote(note)}></Notes>
         </TabWrapper>
       </Box>
       <Footer></Footer>
