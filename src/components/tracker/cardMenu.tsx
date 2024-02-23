@@ -8,6 +8,7 @@ import { Treachery } from '@/classes/treachery';
 import { mainBackground } from '@/settings/colours';
 import { House } from '@/classes/house';
 import { UnknownTreachery } from '@/classes/unknownTreachery';
+import { LocationType } from '@/classes/locationType';
 
 const boxStyle = {
     height: '100%', 
@@ -56,25 +57,26 @@ export default function CardMenu({children, card, onUpdate, players}: CardMenuPr
 
   const handleUpdatePlayer = (house: House) => {
     nextCard.player = house;
+    nextCard.locationType = LocationType.Player;
     setNextCard(nextCard);
     handleClose();
   };
 
   const handleDiscard = () => {
-    nextCard.isDiscarded = true;
+    nextCard.locationType = LocationType.Discard;
     setNextCard(nextCard);
     handleClose();
   };
 
   const handleReturnToHand = () => {
-    nextCard.isDiscarded = false;
+    nextCard.locationType = LocationType.Player;
     setNextCard(nextCard);
     handleClose();
   };
 
   const handleReturnToDeck = () => {
     nextCard.player = undefined;
-    nextCard.isDiscarded = false;
+    nextCard.locationType = LocationType.Deck;
     setNextCard(nextCard);
     handleClose();
   };
@@ -124,7 +126,9 @@ export default function CardMenu({children, card, onUpdate, players}: CardMenuPr
 
         sx={{ ...menuStyle }}
       >
-        {menuPlayers.map((house, key) => {
+        {
+        card.locationType.id == LocationType.Deck.id || card.locationType.id == LocationType.Player.id ?
+        menuPlayers.map((house, key) => {
                 return (
                     <MenuItem key={key} onClick={() => handleUpdatePlayer(house)}>
                         <Box sx={{ height: iconSize, width: iconSize, ...iconStyle }}>
@@ -133,9 +137,10 @@ export default function CardMenu({children, card, onUpdate, players}: CardMenuPr
                         <Typography sx={{ ml: 1 }} fontSize={fontSize}>{house.name}</Typography>
                     </MenuItem>
                 );
-            })  
+            }) : <Box></Box>
         }
-        {!card.isDiscarded && card.player ? 
+        {
+        card.locationType.id == LocationType.Player.id ? 
            (
             <MenuItem onClick={handleDiscard}>
                 <Box sx={{ height: iconSize, width: iconSize, ...iconStyle }}>
@@ -145,7 +150,8 @@ export default function CardMenu({children, card, onUpdate, players}: CardMenuPr
             </MenuItem>
            ) : <Box></Box>
         }
-        {card.isDiscarded && card.player ? 
+        {
+        card.player && card.locationType.id == LocationType.Discard.id ? 
            (
             <MenuItem onClick={handleReturnToHand}>
                 <Box sx={{ height: iconSize, width: iconSize, ...iconStyle }}>
@@ -155,7 +161,8 @@ export default function CardMenu({children, card, onUpdate, players}: CardMenuPr
             </MenuItem>
            ) : <Box></Box>
         }    
-        {card.player ? 
+        { 
+        card.player && card.locationType.id == LocationType.Player.id ?
            (
             <MenuItem onClick={handleReturnToDeck}>
                 <Box sx={{ height: iconSize, width: iconSize, ...iconStyle }}>

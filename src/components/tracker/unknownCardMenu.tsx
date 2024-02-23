@@ -8,6 +8,7 @@ import { mainBackground } from '@/settings/colours';
 import { House } from '@/classes/house';
 import { UnknownTreachery } from '@/classes/unknownTreachery';
 import { Treachery } from '@/classes/treachery';
+import { LocationType } from '@/classes/locationType';
 
 const boxStyle = {
     height: '100%', 
@@ -54,26 +55,31 @@ export default function UnknownCardMenu({children, unknownCard, onUpdate, player
 
   const handleUpdatePlayer = (house: House) => {
     nextCard.player = house;
+    nextCard.locationType = LocationType.PlayerUnknown;
     setNextCard(nextCard);
     handleClose();
   };
 
   const handleDiscard = () => {
-    nextCard.isDiscarded = true;
+    nextCard.locationType = LocationType.DiscardUnknown;
     setNextCard(nextCard);
     handleClose();
   };
 
   const handleReturnToHand = () => {
-    nextCard.isRevealed = false;
-    nextCard.isDiscarded = false;
+    nextCard.locationType = LocationType.PlayerUnknown;
     setNextCard(nextCard);
     handleClose();
   };
 
   const handleReveal = () => {
-    nextCard.isRevealed = true;
-    nextCard.isDiscarded = false;
+    nextCard.locationType = LocationType.Revealed;
+    setNextCard(nextCard);
+    handleClose();
+  };
+
+  const handleRemove = () => {
+    nextCard.locationType = LocationType.Removed;
     setNextCard(nextCard);
     handleClose();
   };
@@ -123,7 +129,8 @@ export default function UnknownCardMenu({children, unknownCard, onUpdate, player
 
         sx={{ ...menuStyle }}
       >
-        {!unknownCard.isRevealed && !unknownCard.isDiscarded ?
+        {
+        unknownCard.locationType.id == LocationType.PlayerUnknown.id ?
           (
             menuPlayers.map((house, key) => {
                 if (unknownCard.originHouse == House.Richese && house == House.Richese && unknownCard.player == House.Richese) {
@@ -141,7 +148,8 @@ export default function UnknownCardMenu({children, unknownCard, onUpdate, player
               })  
           ) : <Box></Box>
         }
-        {!unknownCard.isDiscarded && !unknownCard.isRevealed && unknownCard.player ? 
+        {
+        unknownCard.player && unknownCard.locationType.id == LocationType.PlayerUnknown.id ?
            (
             <MenuItem onClick={handleDiscard}>
                 <Box sx={{ height: iconSize, width: iconSize, ...iconStyle }}>
@@ -151,7 +159,9 @@ export default function UnknownCardMenu({children, unknownCard, onUpdate, player
             </MenuItem>
            ) : <Box></Box>
         }
-        {(unknownCard.isDiscarded || unknownCard.isRevealed) && unknownCard.player ? 
+        {
+        unknownCard.player && 
+        (unknownCard.locationType.id == LocationType.Revealed.id || unknownCard.locationType.id == LocationType.DiscardUnknown.id) ?
            (
             <MenuItem onClick={handleReturnToHand}>
                 <Box sx={{ height: iconSize, width: iconSize, ...iconStyle }}>
@@ -161,13 +171,25 @@ export default function UnknownCardMenu({children, unknownCard, onUpdate, player
             </MenuItem>
            ) : <Box></Box>
         }    
-        {unknownCard.player && !unknownCard.isRevealed && !unknownCard.isDiscarded ? 
+        {
+        unknownCard.player && unknownCard.locationType.id == LocationType.PlayerUnknown.id ?
            (
             <MenuItem onClick={handleReveal}>
                 <Box sx={{ height: iconSize, width: iconSize, ...iconStyle }}>
                     <img src={ `/assets/cards/draw overlay.png` } height={48} width={48}/>
                 </Box>
                 <Typography sx={{ ml: 1 }} fontSize={fontSize}>Reveal</Typography>
+            </MenuItem>
+           ) : <Box></Box>
+        }     
+        {
+        unknownCard.player && unknownCard.locationType.id == LocationType.Revealed.id ?
+           (
+            <MenuItem onClick={handleRemove}>
+                <Box sx={{ height: iconSize, width: iconSize, ...iconStyle }}>
+                    <img src={ `/assets/cards/draw overlay.png` } height={48} width={48}/>
+                </Box>
+                <Typography sx={{ ml: 1 }} fontSize={fontSize}>Remove</Typography>
             </MenuItem>
            ) : <Box></Box>
         }        

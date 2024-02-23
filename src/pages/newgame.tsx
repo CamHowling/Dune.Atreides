@@ -19,6 +19,7 @@ import { Players } from "@/components/tracker/players";
 import { Discard } from "@/components/tracker/discard";
 import { UnknownTreachery } from "@/classes/unknownTreachery";
 import { Notes } from "@/components/tracker/notes";
+import { LocationType } from "@/classes/locationType";
 
 const tabStyles = {
     backgroundColor: mainBackground,
@@ -59,19 +60,22 @@ export default function NewGame () {
   },[])
 
   const [unknownTreacheryCards, setUnknownTreacheryCards] = useState<UnknownTreachery[]>([]);
-  const [harkonenTreacheryCount, setHarkonenTreacheryCount] = useState<number>(0);
+  // const [harkonenTreacheryCount, setHarkonenTreacheryCount] = useState<number>(0);
   const UnknownCardTitle = '????????';
   const initialUnknownTreacheryCards: UnknownTreachery[] = [];
 
 
   players.forEach((house, key) => {
     if(house.name != House.Harkonen.name) {
-      initialUnknownTreacheryCards.push(new UnknownTreachery(key.toString(), UnknownCardTitle, 'yellow large.png', false, house, undefined));
+      // initialUnknownTreacheryCards.push(new UnknownTreachery(key.toString(), UnknownCardTitle, 'yellow large.png', false, house, undefined));
+      initialUnknownTreacheryCards.push(new UnknownTreachery(key.toString(), UnknownCardTitle, 'yellow large.png', LocationType.PlayerUnknown, house, undefined));
       return;
     }
 
-    initialUnknownTreacheryCards.push(new UnknownTreachery(House.Harkonen.name + ' ' + 1, UnknownCardTitle, 'black large.png', false, house, House.Harkonen));
-    initialUnknownTreacheryCards.push(new UnknownTreachery(House.Harkonen.name + ' ' + 2, UnknownCardTitle, 'black large.png', false, house, House.Harkonen));
+    // initialUnknownTreacheryCards.push(new UnknownTreachery(House.Harkonen.name + ' ' + 1, UnknownCardTitle, 'black large.png', false, house, House.Harkonen));
+    // initialUnknownTreacheryCards.push(new UnknownTreachery(House.Harkonen.name + ' ' + 2, UnknownCardTitle, 'black large.png', false, house, House.Harkonen));
+    initialUnknownTreacheryCards.push(new UnknownTreachery(House.Harkonen.name + ' ' + 1, UnknownCardTitle, 'black large.png', LocationType.PlayerUnknown, house, House.Harkonen));
+    initialUnknownTreacheryCards.push(new UnknownTreachery(House.Harkonen.name + ' ' + 2, UnknownCardTitle, 'black large.png', LocationType.PlayerUnknown, house, House.Harkonen));
   })
 
   const playerNames = players.flatMap((player) => {
@@ -80,7 +84,8 @@ export default function NewGame () {
 
   const richesePlayer = players.find((house) => house.id == House.Richese.id);
   if (playerNames.includes(House.Richese.name)) {
-    initialUnknownTreacheryCards.push(new UnknownTreachery(House.Richese.name + ' ' + 1, UnknownCardTitle, 'silver large.png', true, richesePlayer, House.Richese));
+    // initialUnknownTreacheryCards.push(new UnknownTreachery(House.Richese.name + ' ' + 1, UnknownCardTitle, 'silver large.png', true, richesePlayer, House.Richese));
+    initialUnknownTreacheryCards.push(new UnknownTreachery(House.Richese.name + ' ' + 1, UnknownCardTitle, 'silver large.png', LocationType.Revealed, richesePlayer, House.Richese));
   }
 
   useEffect(() => {
@@ -104,11 +109,13 @@ export default function NewGame () {
 
   const updateCardCounts = (previousHouse: House, nextHouse: House) => {
     const nextPlayers = players.map((player) => {
-      if (player.id >= previousHouse.id) {
+      if (player.id == previousHouse.id) {
+        // console.log('losing cards total: ' +player.cardsInHand);
         player.cardsInHand--;
       }
 
       if (player.id == nextHouse.id) {
+        // console.log('gaining cards total: ' + player.cardsInHand);
         player.cardsInHand++;
       }
 
@@ -124,17 +131,19 @@ export default function NewGame () {
     //   return; //toast error
     // }
 
-    const nextTreacheryCards = treacheryCards.map((card) => {
+    const nextTreacheryCards = treacheryCards.reduce((result: Treachery[], card) => {
       if (card.id != updatedCard.id) {
-        return card;
+        result.push(card);
+        return result;
       }
 
       if (card.player != undefined && updatedCard.player != undefined) {
         updateCardCounts(card.player, updatedCard.player);
       }
-      
-      return updatedCard;
-    })
+
+      result.push(updatedCard);
+      return result;
+    }, []);
 
     setTreacheryCards(nextTreacheryCards);
   }
@@ -144,17 +153,34 @@ export default function NewGame () {
     //   return; //toast error
     // }
 
-    const nextUnknownCards = unknownTreacheryCards.map((card) => {
+    const nextUnknownCards = unknownTreacheryCards.reduce((result: UnknownTreachery[], card) => {
       if (card.id != updatedCard.id) {
-        return card;
+        result.push(card);
+        return result;
       }
 
       if (card.player != undefined && updatedCard.player != undefined) {
         updateCardCounts(card.player, updatedCard.player);
       }
       
-      return updatedCard;
-    })
+      if (updatedCard.locationType.id != LocationType.Removed.id) {
+        result.push(updatedCard);
+      }
+
+      return result;
+    }, []);
+
+    // const nextUnknownCards = unknownTreacheryCards.map((card) => {
+    //   if (card.id != updatedCard.id) {
+    //     return card;
+    //   }
+
+    //   if (card.player != undefined && updatedCard.player != undefined) {
+    //     updateCardCounts(card.player, updatedCard.player);
+    //   }
+      
+    //   return updatedCard;
+    // })
 
     setUnknownTreacheryCards(nextUnknownCards);
   }

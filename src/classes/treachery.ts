@@ -87,7 +87,7 @@ export class Treachery {
     public readonly expansionIds: number[];
     public locationType: LocationType;
     public player: House | undefined;
-    public isDiscarded: boolean;
+    // public isDiscarded: boolean;
 
     public constructor(id: number, name: string, category: TreacheryCategory, expansionIds: number[]) {
         this.id = id;
@@ -96,7 +96,6 @@ export class Treachery {
         this.expansionIds = expansionIds;
 
         this.locationType = LocationType.Deck;
-        this.isDiscarded = false;
 
         Treachery.TreacheryCards.push(this)
     }

@@ -19,7 +19,6 @@ const bodyStyle = {
 type deckProps = {
     treacheryCards: Treachery[],
     unknownTreacheryCards: UnknownTreachery[],
-    // harkonenTreacheryCards: UnknownTreachery[],
     players: House[],
     onUpdate: (card?: Treachery, unknownCard?: UnknownTreachery) => void;
 }
@@ -81,6 +80,8 @@ export function Deck ({treacheryCards, unknownTreacheryCards, players, onUpdate}
                 );
             }
         )}
+        {
+        nonHarkonenUnknownCards.length != undefined && nonHarkonenUnknownCards.length > 0 ?
         <CardSection  
             key={unknownGroup.key}
             group={unknownGroup.value}
@@ -88,7 +89,7 @@ export function Deck ({treacheryCards, unknownTreacheryCards, players, onUpdate}
             renderDiscard={true}
             onUpdate={onUpdate} 
             players={players}>
-        </CardSection>
+        </CardSection> : <></> }
         {playerNames.includes(House.Harkonen.name) ? 
         <CardSection  
             key={harkonenGroup.key}

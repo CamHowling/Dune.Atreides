@@ -62,4 +62,6 @@ export class TreacheryCategory {
     toString() {
         return this.name;
     }
+
+    
 }
