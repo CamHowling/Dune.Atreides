@@ -76,10 +76,10 @@ export class Treachery {
 
     static readonly Ornithopter = new Treachery(57, "Ornithopter", TreacheryCategory.RicheseSpecialMovement, [Expansion.ChoamAndRichese.id]);
 
-    static readonly MirrorWeapon = new Treachery(58, "Mirror Weapon", TreacheryCategory.Special, [Expansion.ChoamAndRichese.id]);
-    static readonly StoneBurner = new Treachery(59, "Stone Burner", TreacheryCategory.Special, [Expansion.ChoamAndRichese.id]);
+    static readonly MirrorWeapon = new Treachery(58, "Mirror Weapon", TreacheryCategory.RicheseWeaponSpecial, [Expansion.ChoamAndRichese.id]);
+    static readonly StoneBurner = new Treachery(59, "Stone Burner", TreacheryCategory.RicheseWeaponSpecial, [Expansion.ChoamAndRichese.id]);
 
-    static readonly PortableSnooper = new Treachery(60, "Portable Snooper", TreacheryCategory.Special, [Expansion.ChoamAndRichese.id]);
+    static readonly PortableSnooper = new Treachery(60, "Portable Snooper", TreacheryCategory.RicheseDefensePoison, [Expansion.ChoamAndRichese.id]);
 
     public readonly id: number;
     public readonly name: string;

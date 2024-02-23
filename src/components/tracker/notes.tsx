@@ -45,7 +45,6 @@ export function Notes ({note, onUpdateNote} : NotesProps) {
             inputProps={{style: { fontSize: 24 }}}
             multiline
             rows={18}
-            defaultValue={'Notes'} 
             value={note} 
             onChange={
                 (event: React.ChangeEvent<HTMLInputElement>) => {

@@ -2,7 +2,7 @@ import { CardGroup } from "@/classes/cardGroup";
 import { House } from "@/classes/house";
 import { Treachery } from "@/classes/treachery";
 import { TreacheryCategory } from "@/classes/treacheryCategory";
-import { footerTransitionMiddle, richeseGrey, treacheryBlue, treacheryGreen, treacheryRed, treacheryTan } from "@/settings/colours";
+import { footerTransitionMiddle, harkonen, richeseGrey, treacheryBlue, treacheryGreen, treacheryRed, treacheryTan } from "@/settings/colours";
 import { Box } from "@mui/material";
 import * as React from "react";
 import { CardSection } from "./cardSection";
@@ -19,6 +19,7 @@ const bodyStyle = {
 type deckProps = {
     treacheryCards: Treachery[],
     unknownTreacheryCards: UnknownTreachery[],
+    // harkonenTreacheryCards: UnknownTreachery[],
     players: House[],
     onUpdate: (card?: Treachery, unknownCard?: UnknownTreachery) => void;
 }
@@ -31,17 +32,21 @@ export function Deck ({treacheryCards, unknownTreacheryCards, players, onUpdate}
         ({name: "Worthless", colour: treacheryTan, categories: TreacheryCategory.WorthlessCategories}),
     ];
 
-    if (players.includes(House.Richese)) {
+    const playerNames = players.flatMap((player) => {
+        return player.name;
+      });
+
+    if (playerNames.includes(House.Richese.name)) {
         groupData.push(({name: "Richese", colour: richeseGrey, categories: TreacheryCategory.RicheseCategories}));
     }
 
     const cardGroups = groupData.map((group, key) => {
-        const groupCategoryNames = group.categories.flatMap((category) => {
-            return category.name;
+        const groupCategoryIds = group.categories.flatMap((category) => {
+            return category.id;
         });
 
         const cards = treacheryCards.filter((card) => {
-            const isInCategory = groupCategoryNames.includes(card.category.name);
+            const isInCategory = groupCategoryIds.includes(card.category.id);
             return isInCategory;
         })
 
@@ -49,7 +54,17 @@ export function Deck ({treacheryCards, unknownTreacheryCards, players, onUpdate}
         return { key: key, value: cardGroup };
     })
 
-    const unknownGroup = { key: 'unknown', value: new CardGroup('Unknown', footerTransitionMiddle, undefined, unknownTreacheryCards)};
+    const nonHarkonenUnknownCards = unknownTreacheryCards.filter((card) => {
+        return card?.originHouse?.name != House.Harkonen.name;
+    });
+
+    const harkonenUnknownCards = unknownTreacheryCards.filter((card) => {
+        return card?.originHouse?.name == House.Harkonen.name;
+    })
+
+    const unknownGroup = { key: 'unknown', value: new CardGroup('Unknown', footerTransitionMiddle, undefined, nonHarkonenUnknownCards)};
+    const harkonenGroup = { key: 'Harkonen', value: new CardGroup('Harkonen', harkonen, undefined, harkonenUnknownCards)};
+
 
     return (
         <Box sx={{...bodyStyle}}>
@@ -74,6 +89,15 @@ export function Deck ({treacheryCards, unknownTreacheryCards, players, onUpdate}
             onUpdate={onUpdate} 
             players={players}>
         </CardSection>
+        {playerNames.includes(House.Harkonen.name) ? 
+        <CardSection  
+            key={harkonenGroup.key}
+            group={harkonenGroup.value}
+            renderHouse={true}
+            renderDiscard={true}
+            onUpdate={onUpdate} 
+            players={players}>
+        </CardSection> : <></>}
         </Box>
     )
 }
