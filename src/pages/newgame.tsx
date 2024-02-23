@@ -114,8 +114,11 @@ export default function NewGame () {
 
   const updateCardCounts = () => {
     const nextPlayers = players.map((player) => {
-      const treacheryCount = treacheryCards.filter((card) => card?.player?.id == player.id).length;
-      const unknownCount = unknownTreacheryCards.filter((card) => card?.player?.id == player.id).length;
+      const treacheryCount = treacheryCards.filter((card) => 
+        card?.player?.id == player.id && card.locationType.id == LocationType.Player.id).length;
+
+      const unknownCount = unknownTreacheryCards.filter((card) => 
+        card?.player?.id == player.id&& card.locationType.id == LocationType.PlayerUnknown.id).length;
 
       const nextPlayer = cloneDeep(player);
       nextPlayer.cardsInHand = treacheryCount + unknownCount;

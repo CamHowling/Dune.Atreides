@@ -37,6 +37,6 @@ export class House {
     }
 
     isHandFull(): boolean {
-        return this.cardsInHand == this.maximumHandSize;
+        return this.cardsInHand >= this.maximumHandSize;
     }
 }

@@ -89,7 +89,7 @@ export default function CardMenu({children, card, onUpdate, players}: CardMenuPr
   };
 
   const menuPlayers = players.filter((house) => {
-    return house != card.player;
+    return house.id != card.player?.id;
   });
 
   const iconSize = '32px';
@@ -153,7 +153,7 @@ export default function CardMenu({children, card, onUpdate, players}: CardMenuPr
         {
         card.player && card.locationType.id == LocationType.Discard.id ? 
            (
-            <MenuItem onClick={handleReturnToHand}>
+            <MenuItem onClick={handleReturnToHand} disabled={card.player.isHandFull()}>
                 <Box sx={{ height: iconSize, width: iconSize, ...iconStyle }}>
                     <img src={ `/assets/houses/${card.player.icon}` } height={iconSize} width={iconSize}/>
                 </Box>

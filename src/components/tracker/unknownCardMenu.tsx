@@ -92,7 +92,7 @@ export default function UnknownCardMenu({children, unknownCard, onUpdate, player
   };
 
   const menuPlayers = players.filter((house) => {
-    return house != unknownCard.player;
+    return house.id != unknownCard.player?.id;
   })
 
   const iconSize = '32px';
@@ -138,7 +138,7 @@ export default function UnknownCardMenu({children, unknownCard, onUpdate, player
                 }
 
                 return (
-                  <MenuItem key={key} onClick={() => handleUpdatePlayer(house)}>
+                  <MenuItem key={key} onClick={() => handleUpdatePlayer(house)} disabled={house.isHandFull()}>
                       <Box sx={{ height: iconSize, width: iconSize, ...iconStyle }}>
                           <img src={ `/assets/houses/${house.icon}` } height={iconSize} width={iconSize}/>
                       </Box>
@@ -163,7 +163,7 @@ export default function UnknownCardMenu({children, unknownCard, onUpdate, player
         unknownCard.player && 
         (unknownCard.locationType.id == LocationType.Revealed.id || unknownCard.locationType.id == LocationType.DiscardUnknown.id) ?
            (
-            <MenuItem onClick={handleReturnToHand}>
+            <MenuItem onClick={handleReturnToHand} disabled={unknownCard.player.isHandFull()}>
                 <Box sx={{ height: iconSize, width: iconSize, ...iconStyle }}>
                     <img src={ `/assets/houses/${unknownCard.player.icon}` } height={iconSize} width={iconSize}/>
                 </Box>
