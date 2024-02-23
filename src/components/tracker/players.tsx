@@ -5,6 +5,7 @@ import { Box } from "@mui/material";
 import * as React from "react";
 import { CardSection } from "./cardSection";
 import { UnknownTreachery } from "@/classes/unknownTreachery";
+import { LocationType } from "@/classes/locationType";
 
 const bodyStyle = {
     display: 'flex',
@@ -19,13 +20,13 @@ type playerProps = {
     unknownTreacheryCards: UnknownTreachery[],
     players: House[],
     onUpdate: (card?: Treachery, unknownCard?: UnknownTreachery) => void;
+    addHarkonenTreachery: (player: House) => void;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export function Players ({treacheryCards, unknownTreacheryCards, players, onUpdate}: playerProps) {
+export function Players ({treacheryCards, unknownTreacheryCards, players, onUpdate, addHarkonenTreachery}: playerProps) {
     const cardGroups = players.map((player, key) => {
         const unknownCards = unknownTreacheryCards.filter((unknownCard) => {
-            return unknownCard.player == player && !unknownCard.isRevealed;
+            return unknownCard.player == player && unknownCard.locationType.id != LocationType.Revealed.id;
         })
 
         const cards = treacheryCards.filter((card) => {
@@ -41,12 +42,13 @@ export function Players ({treacheryCards, unknownTreacheryCards, players, onUpda
             {cardGroups.map((group) => {
                 return (
                     <CardSection  
-                        key={group.key} 
-                        group={group.value} 
-                        renderHouse={false} 
+                        key={group.key}
+                        group={group.value}
+                        renderHouse={false}
                         renderDiscard={true}
                         onUpdate={onUpdate}
-                        players={players}>
+                        players={players} 
+                        addHarkonenTreachery={(player: House) => {addHarkonenTreachery(player)}}>
                     </CardSection>
                 );
             }

@@ -1,10 +1,11 @@
+import { House } from '@/classes/house';
 import { footerTransitionMiddle, mainBackground, minorHeading } from '@/settings/colours';
-import { Button } from '@mui/material';
+import { Button, SxProps } from '@mui/material';
 import React  from 'react';
 
 const buttonStyle = {
-    backgroundColor: minorHeading,
     color: mainBackground,
+    backgroundColor: minorHeading,
     '&:hover': {
         backgroundColor: footerTransitionMiddle,
     },
@@ -16,17 +17,29 @@ const buttonStyle = {
 type buttonProps = {
     text: string,
     onClick?: () => void,
+    addHarkonenTreachery?: (player: House) => void;
     width?: string,
+    sxOverride?: SxProps,
+    disabled?: boolean,
 }
 
-export function GameMenuButton({text, onClick, width}: buttonProps) {
+export function GameMenuButton({text, onClick, width, sxOverride, disabled}: buttonProps) {
     const handleClick = () => {
         if (onClick != undefined) {
             onClick();
         }
     }
+
     const minWidth = width ? width : '50vh';
+
     return (
-        <Button variant="contained" size="large" sx={{...buttonStyle, minWidth: minWidth}} onClick={() => handleClick()}>{text}</Button>
+        <Button 
+            variant="contained" 
+            size="large" 
+            sx={{...buttonStyle, minWidth: minWidth, ...sxOverride}} 
+            onClick={() => handleClick()}
+            disabled={disabled}>
+            {text}
+        </Button>
     );
 }

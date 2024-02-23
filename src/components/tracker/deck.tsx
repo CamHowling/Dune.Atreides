@@ -21,9 +21,10 @@ type deckProps = {
     unknownTreacheryCards: UnknownTreachery[],
     players: House[],
     onUpdate: (card?: Treachery, unknownCard?: UnknownTreachery) => void;
+    addHarkonenTreachery: (player: House) => void;
 }
 
-export function Deck ({treacheryCards, unknownTreacheryCards, players, onUpdate}: deckProps) {
+export function Deck ({treacheryCards, unknownTreacheryCards, players, onUpdate, addHarkonenTreachery}: deckProps) {
     const groupData: ({name: string, colour: string, categories: TreacheryCategory[]})[] = [
         ({name: "Weapon", colour: treacheryRed, categories: TreacheryCategory.WeaponCategories}),
         ({name: "Defense", colour: treacheryBlue, categories: TreacheryCategory.DefenseCategories}),
@@ -75,7 +76,8 @@ export function Deck ({treacheryCards, unknownTreacheryCards, players, onUpdate}
                         renderHouse={true}
                         renderDiscard={true}
                         onUpdate={onUpdate} 
-                        players={players}>
+                        players={players}
+                        >
                     </CardSection>
                 );
             }
@@ -97,7 +99,8 @@ export function Deck ({treacheryCards, unknownTreacheryCards, players, onUpdate}
             renderHouse={true}
             renderDiscard={true}
             onUpdate={onUpdate} 
-            players={players}>
+            players={players}
+            addHarkonenTreachery={(player: House) => {addHarkonenTreachery(player)}}>
         </CardSection> : <></>}
         </Box>
     )

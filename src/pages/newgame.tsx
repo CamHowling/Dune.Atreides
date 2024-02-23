@@ -60,20 +60,15 @@ export default function NewGame () {
   },[])
 
   const [unknownTreacheryCards, setUnknownTreacheryCards] = useState<UnknownTreachery[]>([]);
-  // const [harkonenTreacheryCount, setHarkonenTreacheryCount] = useState<number>(0);
   const UnknownCardTitle = '????????';
   const initialUnknownTreacheryCards: UnknownTreachery[] = [];
 
-
   players.forEach((house, key) => {
     if(house.name != House.Harkonen.name) {
-      // initialUnknownTreacheryCards.push(new UnknownTreachery(key.toString(), UnknownCardTitle, 'yellow large.png', false, house, undefined));
       initialUnknownTreacheryCards.push(new UnknownTreachery(key.toString(), UnknownCardTitle, 'yellow large.png', LocationType.PlayerUnknown, house, undefined));
       return;
     }
 
-    // initialUnknownTreacheryCards.push(new UnknownTreachery(House.Harkonen.name + ' ' + 1, UnknownCardTitle, 'black large.png', false, house, House.Harkonen));
-    // initialUnknownTreacheryCards.push(new UnknownTreachery(House.Harkonen.name + ' ' + 2, UnknownCardTitle, 'black large.png', false, house, House.Harkonen));
     initialUnknownTreacheryCards.push(new UnknownTreachery(House.Harkonen.name + ' ' + 1, UnknownCardTitle, 'black large.png', LocationType.PlayerUnknown, house, House.Harkonen));
     initialUnknownTreacheryCards.push(new UnknownTreachery(House.Harkonen.name + ' ' + 2, UnknownCardTitle, 'black large.png', LocationType.PlayerUnknown, house, House.Harkonen));
   })
@@ -84,7 +79,6 @@ export default function NewGame () {
 
   const richesePlayer = players.find((house) => house.id == House.Richese.id);
   if (playerNames.includes(House.Richese.name)) {
-    // initialUnknownTreacheryCards.push(new UnknownTreachery(House.Richese.name + ' ' + 1, UnknownCardTitle, 'silver large.png', true, richesePlayer, House.Richese));
     initialUnknownTreacheryCards.push(new UnknownTreachery(House.Richese.name + ' ' + 1, UnknownCardTitle, 'silver large.png', LocationType.Revealed, richesePlayer, House.Richese));
   }
 
@@ -110,12 +104,10 @@ export default function NewGame () {
   const updateCardCounts = (previousHouse: House, nextHouse: House) => {
     const nextPlayers = players.map((player) => {
       if (player.id == previousHouse.id) {
-        // console.log('losing cards total: ' +player.cardsInHand);
         player.cardsInHand--;
       }
 
       if (player.id == nextHouse.id) {
-        // console.log('gaining cards total: ' + player.cardsInHand);
         player.cardsInHand++;
       }
 
@@ -185,6 +177,15 @@ export default function NewGame () {
     setUnknownTreacheryCards(nextUnknownCards);
   }
 
+  const [harkonenTreacheryCount, setHarkonenTreacheryCount] = useState<number>(2);
+  
+  const addHarkonenTreachery = (harkonenPlayer: House) => {
+    const newTreachery = new UnknownTreachery(House.Harkonen.name + ' ' + harkonenTreacheryCount+1, UnknownCardTitle, 'black large.png', LocationType.PlayerUnknown, harkonenPlayer, House.Harkonen);
+    const nextUnknownCards = unknownTreacheryCards.concat(newTreachery);
+    setUnknownTreacheryCards(nextUnknownCards);
+    setHarkonenTreacheryCount(harkonenTreacheryCount+1);
+  }
+
   const [note, setNote] = useState<string>('');
   const updateNote = (note: string) => {
     setNote(note);
@@ -201,9 +202,9 @@ export default function NewGame () {
           <Deck 
             treacheryCards={treacheryCards}
             unknownTreacheryCards={unknownTreacheryCards}
-            // harkonenTreacheryCards={harkonenUnknownTreacheryCards}
             players={players} 
             onUpdate={(card?: Treachery, unknownCard?: UnknownTreachery) => {updateCards(card, unknownCard)}}
+            addHarkonenTreachery={(player: House) => {addHarkonenTreachery(player)}}
           ></Deck>
         </TabWrapper>
         <TabWrapper value={currentTab} index={2}>
@@ -212,6 +213,7 @@ export default function NewGame () {
             unknownTreacheryCards={unknownTreacheryCards}
             players={players} 
             onUpdate={(card?: Treachery, unknownCard?: UnknownTreachery) => {updateCards(card, unknownCard)}}
+            addHarkonenTreachery={(player: House) => {addHarkonenTreachery(player)}}
           ></Players>
         </TabWrapper>
         <TabWrapper value={currentTab} index={3}>
