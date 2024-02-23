@@ -119,9 +119,10 @@ export default function NewGame () {
   }
 
   const updateTreachery = (updatedCard: Treachery) => {
-    if (updatedCard.player?.cardsInHand == updatedCard.player?.maximumHandSize) {
-      return; //toast error
-    }
+    //needs to be moved
+    // if (updatedCard.player?.cardsInHand == updatedCard.player?.maximumHandSize) {
+    //   return; //toast error
+    // }
 
     const nextTreacheryCards = treacheryCards.map((card) => {
       if (card.id != updatedCard.id) {
@@ -139,9 +140,9 @@ export default function NewGame () {
   }
 
   const updateUnknownTreachery = (updatedCard: UnknownTreachery) => {
-    if (updatedCard.player?.cardsInHand == updatedCard.player?.maximumHandSize) {
-      return; //toast error
-    }
+    // if (updatedCard.player?.cardsInHand == updatedCard.player?.maximumHandSize) {
+    //   return; //toast error
+    // }
 
     const nextUnknownCards = unknownTreacheryCards.map((card) => {
       if (card.id != updatedCard.id) {
