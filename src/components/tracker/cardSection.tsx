@@ -56,7 +56,7 @@ export function CardSection ({group, renderHouse, renderDiscard, onUpdate, playe
                     <GameMenuButton 
                         text="Draw Treachery" 
                         sxOverride={harkonenStyle} 
-                        disabled={harkonen!.cardsInHand >= harkonen!.maximumHandSize} 
+                        disabled={harkonen?.isHandFull()} 
                         onClick={() => {handleHarkonenClick()}}>
                     </GameMenuButton>
                 </Box>

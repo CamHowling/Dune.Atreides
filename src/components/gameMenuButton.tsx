@@ -1,4 +1,3 @@
-import { House } from '@/classes/house';
 import { footerTransitionMiddle, mainBackground, minorHeading } from '@/settings/colours';
 import { Button, SxProps } from '@mui/material';
 import React  from 'react';
@@ -17,7 +16,6 @@ const buttonStyle = {
 type buttonProps = {
     text: string,
     onClick?: () => void,
-    addHarkonenTreachery?: (player: House) => void;
     width?: string,
     sxOverride?: SxProps,
     disabled?: boolean,

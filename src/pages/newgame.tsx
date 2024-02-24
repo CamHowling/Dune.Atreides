@@ -46,7 +46,6 @@ export default function NewGame () {
   
   const selectedExpansionIds = (router.query.expansions? JSON.parse( router.query.expansions.toString()) : []) as number[];
 
-  //TODO need to apply this to other data structures taken from classes
   const TreacheriesCopy: Treachery[] = cloneDeep(Treachery.TreacheryCards);
   const [treacheryCards, setTreacheryCards] = useState<Treachery[]>([]);
 
@@ -66,30 +65,35 @@ export default function NewGame () {
 
   const [unknownTreacheryCards, setUnknownTreacheryCards] = useState<UnknownTreachery[]>([]);
   const UnknownCardTitle = '????????';
+  const [initializedUnknownCards, setInitializedUnknownCards] = useState<boolean>(false);
 
   useEffect(() => {
-    const initialUnknownTreacheryCards: UnknownTreachery[] = [];
-    players.forEach((house) => {
-      if(house.name != House.Harkonen.name) {
-        initialUnknownTreacheryCards.push(new UnknownTreachery('Test', '????????', 'yellow large.png', LocationType.PlayerUnknown, house, undefined));
-        return;
+    if (!initializedUnknownCards && players.length > 0) {
+      const initialUnknownTreacheryCards: UnknownTreachery[] = [];
+      players.forEach((house, key) => {
+        if(house.name != House.Harkonen.name) {
+          initialUnknownTreacheryCards.push(new UnknownTreachery(key.toString(), '????????', 'yellow large.png', LocationType.PlayerUnknown, house, undefined));
+          return;
+        }
+
+        initialUnknownTreacheryCards.push(new UnknownTreachery(House.Harkonen.name + ' ' + 1, UnknownCardTitle, 'black large.png', LocationType.PlayerUnknown, house, House.Harkonen));
+        initialUnknownTreacheryCards.push(new UnknownTreachery(House.Harkonen.name + ' ' + 2, UnknownCardTitle, 'black large.png', LocationType.PlayerUnknown, house, House.Harkonen));
+      });
+
+      
+      const playerNames = players.flatMap((player) => {
+        return player.name;
+      });
+
+      const richesePlayer = players.find((house) => house.id == House.Richese.id);
+
+      if (playerNames.includes(House.Richese.name)) {
+        initialUnknownTreacheryCards.push(new UnknownTreachery(House.Richese.name + ' ' + 1, UnknownCardTitle, 'silver large.png', LocationType.Revealed, richesePlayer, House.Richese));
       }
 
-      initialUnknownTreacheryCards.push(new UnknownTreachery(House.Harkonen.name + ' ' + 1, UnknownCardTitle, 'black large.png', LocationType.PlayerUnknown, house, House.Harkonen));
-      initialUnknownTreacheryCards.push(new UnknownTreachery(House.Harkonen.name + ' ' + 2, UnknownCardTitle, 'black large.png', LocationType.PlayerUnknown, house, House.Harkonen));
-    });
-
-    const playerNames = players.flatMap((player) => {
-      return player.name;
-    });
-
-    const richesePlayer = players.find((house) => house.id == House.Richese.id);
-
-    if (playerNames.includes(House.Richese.name)) {
-      initialUnknownTreacheryCards.push(new UnknownTreachery(House.Richese.name + ' ' + 1, UnknownCardTitle, 'silver large.png', LocationType.Revealed, richesePlayer, House.Richese));
+      setUnknownTreacheryCards(initialUnknownTreacheryCards);
+      setInitializedUnknownCards(true);
     }
-  
-    setUnknownTreacheryCards(initialUnknownTreacheryCards);
   }, [players]);
   
   const [currentTab, setCurrentTab] = useState(1);
@@ -108,10 +112,6 @@ export default function NewGame () {
 
     updateCardCounts();
   }
-
-  useEffect(() => {
-    console.log('Player: ' + players && players[0] ? players[0].cardsInHand : ' ');
-  }, [players])
 
   const updateCardCounts = () => {
     const nextPlayers = players.map((player) => {
@@ -165,9 +165,22 @@ export default function NewGame () {
   
   const addHarkonenTreachery = (harkonenPlayer: House) => {
     const newTreachery = new UnknownTreachery(House.Harkonen.name + ' ' + harkonenTreacheryCount+1, UnknownCardTitle, 'black large.png', LocationType.PlayerUnknown, harkonenPlayer, House.Harkonen);
-    const nextUnknownCards = unknownTreacheryCards.concat(newTreachery);
+    const nextUnknownCards = [...cloneDeep(unknownTreacheryCards), newTreachery];
     setUnknownTreacheryCards(nextUnknownCards);
-    setHarkonenTreacheryCount(harkonenTreacheryCount+1);
+    setHarkonenTreacheryCount(harkonenTreacheryCount + 1);
+    addCardToHarkonen();
+  }
+
+  const addCardToHarkonen = () => {
+    const nextPlayers = cloneDeep(players).map((player) => {
+      if (player.id == House.Harkonen.id) {
+        player.cardsInHand = player.cardsInHand + 1;
+      }
+
+      return player;
+    });
+
+    setPlayers(nextPlayers);
   }
 
   const [note, setNote] = useState<string>('');
