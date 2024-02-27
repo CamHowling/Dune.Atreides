@@ -3,10 +3,7 @@ import { House } from "./house";
 import { LocationType } from "./locationType";
 import { TreacheryCategory } from "./treacheryCategory";
 
-//TODO move class instances
 export class Treachery {
-    static TreacheryCards: Treachery[] = [];
-
     static readonly Crysknife = new Treachery(1, "Crysknife", TreacheryCategory.WeaponProjectile, [Expansion.BaseGame.id]);
     static readonly HunterSeeker = new Treachery(2, "Hunter Seeker", TreacheryCategory.WeaponProjectile, [Expansion.TleilaxuAndIxian.id]);
     static readonly MaulerPistol = new Treachery(3, "Mauler Pistol", TreacheryCategory.WeaponProjectile, [Expansion.BaseGame.id]);
@@ -16,7 +13,7 @@ export class Treachery {
     static readonly BasiliaWeapon = new Treachery(6, "Basilia Weapon", TreacheryCategory.WeaponPoison, [Expansion.TleilaxuAndIxian.id]);
     static readonly Chaumas = new Treachery(7, "Chaumas", TreacheryCategory.WeaponPoison, [Expansion.BaseGame.id]);
     static readonly Chaumurky = new Treachery(8, "Chaumurky", TreacheryCategory.WeaponPoison, [Expansion.BaseGame.id]);
-    static readonly EllacaDrug = new Treachery(9, "EllacaDrug", TreacheryCategory.WeaponPoison, [Expansion.BaseGame.id]);
+    static readonly EllacaDrug = new Treachery(9, "Ellaca Drug", TreacheryCategory.WeaponPoison, [Expansion.BaseGame.id]);
     static readonly GomJabbar = new Treachery(10, "Gom Jabbar", TreacheryCategory.WeaponPoison, [Expansion.BaseGame.id]);
 
     static readonly ArtilleryStrike = new Treachery(11, "Artillery Strike", TreacheryCategory.WeaponSpecial, [Expansion.TleilaxuAndIxian.id, Expansion.ChoamAndRichese.id]);
@@ -81,23 +78,85 @@ export class Treachery {
 
     static readonly PortableSnooper = new Treachery(60, "Portable Snooper", TreacheryCategory.RicheseDefensePoison, [Expansion.ChoamAndRichese.id]);
 
+    static TreacheryCards: Treachery[] = [
+        Treachery.Crysknife,
+        Treachery.HunterSeeker,
+        Treachery.MaulerPistol,
+        Treachery.SlipTip,
+        Treachery.Stunner,
+        Treachery.BasiliaWeapon,
+        Treachery.Chaumas,
+        Treachery.Chaumurky,
+        Treachery.EllacaDrug,
+        Treachery.GomJabbar,
+        Treachery.ArtilleryStrike,
+        Treachery.Lasgun,
+        Treachery.PoisonBlade,
+        Treachery.PoisonTooth,
+        Treachery.WeirdingWay,
+        Treachery.Shield1,
+        Treachery.Shield2,
+        Treachery.Shield3,
+        Treachery.Shield4,
+        Treachery.Shield5,
+        Treachery.Snooper1,
+        Treachery.Snooper2,
+        Treachery.Snooper3,
+        Treachery.Snooper4,
+        Treachery.Snooper5,
+        Treachery.ShieldSnooper,
+        Treachery.Chemistry,
+        Treachery.Baliset,
+        Treachery.JubbaCloak,
+        Treachery.Kulon,
+        Treachery.LaLaLa,
+        Treachery.TripToGamont,
+        Treachery.KullWahad,
+        Treachery.CheapHero1,
+        Treachery.CheapHero2,
+        Treachery.CheapHeroine,
+        Treachery.Karama1,
+        Treachery.Karama2,
+        Treachery.Truthtrance1,
+        Treachery.Truthtrance2,
+        Treachery.Hajr,
+        Treachery.TleilaxuGhola,
+        Treachery.FamilyAtomics,
+        Treachery.WeatherControl,
+        Treachery.Thumper,
+        Treachery.Harvester,
+        Treachery.Amal,
+        Treachery.Reinforcements,
+        Treachery.Recruits,
+        Treachery.HarassAndWithdraw,
+        Treachery.SemutaDrug,
+        Treachery.JuiceOfSapho,
+        Treachery.NullentropyBox,
+        Treachery.ResidualPoison,
+        Treachery.Distrans,
+        Treachery.Karama3,
+        Treachery.Ornithopter,
+        Treachery.MirrorWeapon,
+        Treachery.StoneBurner,
+        Treachery.PortableSnooper
+    ];
+
     public readonly id: number;
     public readonly name: string;
     public readonly category: TreacheryCategory;
     public readonly expansionIds: number[];
     public locationType: LocationType;
     public player: House | undefined;
-    // public isDiscarded: boolean;
 
-    public constructor(id: number, name: string, category: TreacheryCategory, expansionIds: number[]) {
+    public constructor(id: number, name: string, category: TreacheryCategory, expansionIds: number[], location?: LocationType, player?: House) {
         this.id = id;
         this.name = name;
         this.category = category;
         this.expansionIds = expansionIds;
+        this.locationType = location ? location : LocationType.Deck;
+        this.player = player;
 
         this.locationType = LocationType.Deck;
-
-        Treachery.TreacheryCards.push(this)
     }
 
     toString() {

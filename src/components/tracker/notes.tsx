@@ -1,4 +1,4 @@
-import { atreides, footerTransitionMiddle, minorHeading } from "@/settings/colours";
+import { footerTransitionMiddle, minorHeading } from "@/settings/colours";
 import { Box, TextField } from "@mui/material";
 import * as React from "react";
 

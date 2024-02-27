@@ -1,12 +1,12 @@
 import React  from 'react';
 
 import { majorHeading, mainBackground } from "@/settings/colours";
-import { Box, Tab, Tabs } from "@mui/material";
+import { Box, Tab, Tabs, useMediaQuery } from "@mui/material";
 
 const boxStyle = {
     display: 'flex',
     backgroundColor: majorHeading,
-    width: '100%',
+    width: '100vw',
     minHeight: '10vh', 
     alignItems: 'center',
     justifyContent: 'center',
@@ -17,13 +17,18 @@ type gameMenuProps = {
 }
 
 function tabProps(index: number) {
+    const largest = useMediaQuery('(min-width:1024px)');
+    const medium = useMediaQuery('(min-width:700px)');
+    const margin = largest ? 2 : medium ?  1 : 0;
+
     return {
         id: `menu-${index}`,
         sx: {
             fontSize: 32,
             color: mainBackground,
-            mr: 2,
-            ml: 2,
+            mr: margin,
+            ml: margin,
+            minWidth: 40,
         }
     };
 }
@@ -35,32 +40,38 @@ export function GameMenu({onChange}: gameMenuProps) {
         onChange(newValue);
     };
 
-    const imageSize = '60px';
-
+    const renderTitles = useMediaQuery('(min-width:1400px)');
+    const medium = useMediaQuery('(min-width:700px)');
+    const imageSize = medium?  '64px' : '40px';
+    
     return (
         <Box sx={{ ...boxStyle }}>
             <Tabs 
             value={value} 
-            onChange={handleChange} 
+            onChange={handleChange}
             TabIndicatorProps={{
                 sx: {
-                  background: mainBackground,
-                  borderBottom: 1, 
-                  borderColor: majorHeading, 
-                  height: 4,
+                    background: mainBackground,
+                    borderBottom: 1, 
+                    borderColor: majorHeading, 
+                    height: 4,
                 }
               }}
             sx={{
                 ".Mui-selected": {
                     color: mainBackground.toString()+"!important",
                     },
+                '.MuiTabs-indicator': {
+                    transform: 'scaleX(60%) translateX(0%)',
+                    },
+            
             }}
             >
                 <Tab icon={
                     <img src={ `/assets/menu/options.png` } height={imageSize} width={imageSize}/>
                     } 
                     iconPosition="start" 
-                    label="Options" 
+                    label= {renderTitles ? 'Options' : ''}
                     {...tabProps(0)}
                     disableRipple  
                 />
@@ -68,8 +79,8 @@ export function GameMenu({onChange}: gameMenuProps) {
                     <img src={ `/assets/menu/deck.png` } height={imageSize} width={imageSize}/>
                     } 
                     iconPosition="start" 
-                    label="Deck" 
-                    {...tabProps(1)} 
+                    label= {renderTitles ? 'Deck' : ''}
+                    {...tabProps(1)}
                     disableRipple 
                 />
                 
@@ -77,7 +88,7 @@ export function GameMenu({onChange}: gameMenuProps) {
                     <img src={ `/assets/menu/players.png` } height={imageSize} width={imageSize}/>
                     } 
                     iconPosition="start" 
-                    label="Players" 
+                    label= {renderTitles ? 'Players' : ''}
                     {...tabProps(2)} 
                     disableRipple 
                 />
@@ -86,7 +97,7 @@ export function GameMenu({onChange}: gameMenuProps) {
                     <img src={ `/assets/menu/discard.png` } height={imageSize} width={imageSize}/>
                     } 
                     iconPosition="start" 
-                    label="Discard" 
+                    label= {renderTitles ? 'Discard' : ''}
                     {...tabProps(3)} 
                     disableRipple 
                 />
@@ -95,7 +106,7 @@ export function GameMenu({onChange}: gameMenuProps) {
                     <img src={ `/assets/menu/notes.png` } height={imageSize} width={imageSize}/>
                     } 
                     iconPosition="start" 
-                    label="Notes" 
+                    label= {renderTitles ? 'Notes' : ''}
                     {...tabProps(4)} 
                     disableRipple 
                 />

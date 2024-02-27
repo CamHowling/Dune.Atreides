@@ -2,7 +2,7 @@
 import { Footer } from "@/components/footer";
 import { PageTitle } from "@/components/pageTitle";
 import { mainBackground, minorHeading } from "@/settings/colours";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, useMediaQuery } from "@mui/material";
 import * as React from "react";
 
 import './../app/globals.css';
@@ -86,28 +86,70 @@ function Setup () {
     return query;
   }
 
+  const largest = useMediaQuery('(min-width:1200px)');
+  const medium = useMediaQuery('(min-width:700px)');
+  const fontSize = (largest ? 40 : medium ? 36 : 28) + 'px'; 
+
+  const rowConfiguration1 = () => {
+    return (
+      <>
+        <Box sx={{ ...boxStyle }}>
+          <HouseButton house={House.Atreides} onClick={() => { } }></HouseButton>
+          <HouseButton house={House.Fremen} onClick={() => { handleHouseClick(House.Fremen); } }></HouseButton>
+          <HouseButton house={House.SpacingGuild} onClick={() => { handleHouseClick(House.SpacingGuild); } }></HouseButton>
+          <HouseButton house={House.Ixian} onClick={() => { handleHouseClick(House.Ixian); } }></HouseButton>
+          <HouseButton house={House.Choam} onClick={() => { handleHouseClick(House.Choam); } }></HouseButton>
+          <HouseButton house={House.Ecaz} onClick={() => { handleHouseClick(House.Ecaz); } }></HouseButton>
+        </Box><Box sx={{ ...boxStyle }}>
+          <HouseButton house={House.Harkonen} onClick={() => { handleHouseClick(House.Harkonen); } }></HouseButton>
+          <HouseButton house={House.BeneGesserit} onClick={() => { handleHouseClick(House.BeneGesserit); } }></HouseButton>
+          <HouseButton house={House.Emperor} onClick={() => { handleHouseClick(House.Emperor); } }></HouseButton>
+          <HouseButton house={House.Tleilaxu} onClick={() => { handleHouseClick(House.Tleilaxu); } }></HouseButton>
+          <HouseButton house={House.Richese} onClick={() => { handleHouseClick(House.Richese); } }></HouseButton>
+          <HouseButton house={House.Moritani} onClick={() => { handleHouseClick(House.Moritani); } }></HouseButton>
+        </Box>
+      </>
+    )
+  }
+
+  const rowConfiguration2 = () => {
+    return (
+      <>
+        <Box sx={{ ...boxStyle }}>
+          <HouseButton house={House.Atreides} onClick={() => { } }></HouseButton>
+          <HouseButton house={House.Fremen} onClick={() => { handleHouseClick(House.Fremen); } }></HouseButton>
+          <HouseButton house={House.SpacingGuild} onClick={() => { handleHouseClick(House.SpacingGuild); } }></HouseButton>
+        </Box>
+        <Box sx={{ ...boxStyle }}>
+          <HouseButton house={House.Harkonen} onClick={() => { handleHouseClick(House.Harkonen); } }></HouseButton>
+          <HouseButton house={House.BeneGesserit} onClick={() => { handleHouseClick(House.BeneGesserit); } }></HouseButton>
+          <HouseButton house={House.Emperor} onClick={() => { handleHouseClick(House.Emperor); } }></HouseButton>
+        </Box>
+        <Box sx={{ ...boxStyle }}>
+          <HouseButton house={House.Ixian} onClick={() => { handleHouseClick(House.Ixian); } }></HouseButton>
+          <HouseButton house={House.Choam} onClick={() => { handleHouseClick(House.Choam); } }></HouseButton>
+          <HouseButton house={House.Ecaz} onClick={() => { handleHouseClick(House.Ecaz); } }></HouseButton>
+        </Box>
+        <Box sx={{ ...boxStyle }}>
+          <HouseButton house={House.Tleilaxu} onClick={() => { handleHouseClick(House.Tleilaxu); } }></HouseButton>
+          <HouseButton house={House.Richese} onClick={() => { handleHouseClick(House.Richese); } }></HouseButton>
+          <HouseButton house={House.Moritani} onClick={() => { handleHouseClick(House.Moritani); } }></HouseButton>
+        </Box>
+      </>
+    )
+  }
+
   return (
     <Box sx={{ minHeight: '100vh', m: 0 }}>
       <PageTitle title="Set Up"></PageTitle>
       <Box sx={{...bodyStyle}}>
-        <Typography variant='h4' sx={{ ...headingStyle }}>Houses</Typography>
-        <Box sx={{...boxStyle}}>
-          <HouseButton house={House.Atreides} onClick={() => {}}></HouseButton>
-          <HouseButton house={House.Fremen} onClick={() => {handleHouseClick(House.Fremen)}}></HouseButton>
-          <HouseButton house={House.SpacingGuild} onClick={() => {handleHouseClick(House.SpacingGuild)}}></HouseButton>
-          <HouseButton house={House.Ixian} onClick={() => {handleHouseClick(House.Ixian)}}></HouseButton>
-          <HouseButton house={House.Choam} onClick={() => {handleHouseClick(House.Choam)}}></HouseButton>
-          <HouseButton house={House.Ecaz} onClick={() => {handleHouseClick(House.Ecaz)}}></HouseButton>
-        </Box>
-        <Box sx={{...boxStyle}}>
-          <HouseButton house={House.Harkonen} onClick={() => {handleHouseClick(House.Harkonen)}}></HouseButton>
-          <HouseButton house={House.BeneGesserit} onClick={() => {handleHouseClick(House.BeneGesserit)}}></HouseButton>
-          <HouseButton house={House.Emperor} onClick={() => {handleHouseClick(House.Emperor)}}>
-          </HouseButton><HouseButton house={House.Tleilaxu} onClick={() => {handleHouseClick(House.Tleilaxu)}}></HouseButton>
-          <HouseButton house={House.Richese} onClick={() => {handleHouseClick(House.Richese)}}></HouseButton>
-          <HouseButton house={House.Moritani} onClick={() => {handleHouseClick(House.Moritani)}}></HouseButton>
-        </Box>
-        <Typography variant='h4' sx={{ ...headingStyle }}>Treacheries</Typography>
+        <Typography variant='h4' sx={{ ...headingStyle, fontSize: fontSize }}>Houses</Typography>
+        {medium ? (
+          rowConfiguration1()
+        ) : (
+          rowConfiguration2()
+        )}  
+        <Typography variant='h4' sx={{ ...headingStyle, fontSize: fontSize }}>Treacheries</Typography>
         <Box sx={{...boxStyle}}>
             <ExpansionButton expansion={Expansion.TleilaxuAndIxian} onClick={() => {handleExpansionClick(Expansion.TleilaxuAndIxian)}}></ExpansionButton>
             <ExpansionButton expansion={Expansion.ChoamAndRichese} onClick={() => {handleExpansionClick(Expansion.ChoamAndRichese)}}></ExpansionButton>

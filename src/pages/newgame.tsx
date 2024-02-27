@@ -2,8 +2,8 @@
 import * as React from "react";
 import cloneDeep from 'lodash/cloneDeep';
 import './../app/globals.css';
-import { useRouter } from 'next/router'
-import { redirect } from "next/navigation";
+import { useRouter as useNextRouter } from 'next/router';
+import { redirect, useRouter as useNextNavigationRouter } from 'next/navigation';
 import { GameMenu } from "@/components/tracker/gameMenu";
 import { TabWrapper } from "@/components/tracker/TabWrapper";
 import { OptionsMenu } from "@/components/tracker/optionsMenu";
@@ -27,48 +27,138 @@ const tabStyles = {
 }
 
 export default function NewGame () {
-  const router = useRouter();
-  const selectedHouseNames = (router.query.houses ? JSON.parse( router.query.houses.toString()) : []) as string[];
-  if (selectedHouseNames.length == 0) {
-    redirect('/');
-  }
+  const nextRouter = useNextRouter();
+  const [selectedHouseNames, setSelectedHouseNames] = useState<string[]>(
+    (nextRouter.query.houses ? JSON.parse(nextRouter.query.houses.toString()) : []) as string[]
+  );
+
+  const [previousPlayers, setPreviousPlayers] = useState<string | null>(null);
+  const [previousCards, setPreviousCards] = useState<string | null>(null);
+  const [previousUnknownCards, setPreviousUnknownCards] = useState<string | null>(null);
+
+  const nextNavigation = useNextNavigationRouter();
+  useEffect(() => {
+    const localPlayers = selectedHouseNames.length == 0 && localStorage.getItem('players') != null ? localStorage.getItem('players') : null;
+    setPreviousPlayers(localPlayers);
+    const localCards = selectedHouseNames.length == 0 && localStorage.getItem('cards') != null ? localStorage.getItem('cards') : null;
+    setPreviousCards(localCards);
+    const localUnknownCards =selectedHouseNames.length == 0 && localStorage.getItem('unknownCards') != null ? localStorage.getItem('unknownCards') : null;
+    setPreviousUnknownCards(localUnknownCards);
+
+    const canLoadOnRefresh = localPlayers && localCards && localUnknownCards;
+    if (selectedHouseNames.length == 0 && !canLoadOnRefresh && typeof window !== 'undefined') {
+      nextNavigation.push('/');
+    }
+  }, [selectedHouseNames]);
 
   const [players, setPlayers] = useState<House[]>([]);
-  
+
   useEffect(() => {
+    if (previousPlayers != null && previousPlayers.length > 0) {
+      const parsedPlayers = JSON.parse(previousPlayers) as House[];
+      const initialPlayers = parsedPlayers.map((player) => {
+        const parsedPlayer = new House(
+          player.id, 
+          player.name, 
+          player.colour, 
+          player.icon, 
+          player.expansionId, 
+          player.alwaysActive, 
+          player.maximumHandSize, 
+          player.cardsInHand);
+
+        return parsedPlayer;
+      })
+
+      console.log('players loaded from local');
+      setPlayers(initialPlayers);
+      return;
+    }
+
     const initialPlayers = cloneDeep(House.Houses).filter((house) => {
       return selectedHouseNames.includes(house.name);
     })
 
     setPlayers(initialPlayers);
-    console.log('players set');
-  },[]) 
-  
-  const selectedExpansionIds = (router.query.expansions? JSON.parse( router.query.expansions.toString()) : []) as number[];
-
-  const TreacheriesCopy: Treachery[] = cloneDeep(Treachery.TreacheryCards);
-  const [treacheryCards, setTreacheryCards] = useState<Treachery[]>([]);
-
-  const initialTreacheryCards = TreacheriesCopy.filter((card) => {
-    const expansionIncluded = card.expansionIds.some((id) => selectedExpansionIds.includes(id));
-    const richeseCategories =  TreacheryCategory.RicheseCategories.flatMap((category) => {
-      return category.id;
-  });
-    const isRichese = richeseCategories.includes(card.category.id);
-    const includeIfRichese = isRichese && selectedHouseNames.includes(House.Richese.name);
-    return (expansionIncluded && !isRichese) || includeIfRichese;
-  })
+    localStorage.setItem('players', JSON.stringify(initialPlayers));
+  },[previousPlayers]) 
 
   useEffect(() => {
+    localStorage.setItem('players', JSON.stringify(players));
+  }, [players]);
+  
+  const [treacheryCards, setTreacheryCards] = useState<Treachery[]>([]);
+
+  useEffect(() => {
+    if (previousCards != null && previousCards.length > 0) {
+      const parsedCards = JSON.parse(previousCards) as Treachery[];
+      const initialCards = parsedCards.map((card) => {
+        const parsedCard = new Treachery(
+          card.id, 
+          card.name, 
+          card.category, 
+          card.expansionIds, 
+          card.locationType, 
+          card.player, 
+          );
+
+        return parsedCard;
+      })
+
+      console.log('treacheries loaded from local');
+      setTreacheryCards(initialCards);
+      return;
+    }
+
+    const selectedExpansionIds = (nextRouter.query.expansions? JSON.parse(nextRouter.query.expansions.toString()) : []) as number[];
+   
+    const TreacheriesCopy: Treachery[] = cloneDeep(Treachery.TreacheryCards); 
+    const initialTreacheryCards = TreacheriesCopy.filter((card) => {
+      const expansionIncluded = card.expansionIds.some((id) => selectedExpansionIds.includes(id));
+      const richeseCategories =  TreacheryCategory.RicheseCategories.flatMap((category) => {
+        return category.id;
+    });
+      const isRichese = richeseCategories.includes(card.category.id);
+      const includeIfRichese = isRichese && selectedHouseNames.includes(House.Richese.name);
+      return (expansionIncluded && !isRichese) || includeIfRichese;
+    })
+
     setTreacheryCards(initialTreacheryCards);
-  },[])
+    localStorage.setItem('cards', JSON.stringify(initialTreacheryCards));
+  },[previousCards])
+
+  useEffect(() => {
+    localStorage.setItem('cards', JSON.stringify(treacheryCards));
+  }, [treacheryCards]);
 
   const [unknownTreacheryCards, setUnknownTreacheryCards] = useState<UnknownTreachery[]>([]);
-  const UnknownCardTitle = '????????';
   const [initializedUnknownCards, setInitializedUnknownCards] = useState<boolean>(false);
+  const UnknownCardTitle = '????????';
 
   useEffect(() => {
     if (!initializedUnknownCards && players.length > 0) {
+      const loadPlayersFromLocal = previousUnknownCards != null && previousUnknownCards.length > 0;
+      if (loadPlayersFromLocal) {
+        const parsedCards = JSON.parse(previousUnknownCards) as UnknownTreachery[];
+        const initialCards = parsedCards.map((card) => {
+          const parsedPlayer = new UnknownTreachery(
+            card.id, 
+            card.name, 
+            card.banner, 
+            card.locationType , 
+            card.player, 
+            card.originHouse, 
+            );
+  
+          return parsedPlayer;
+        })
+  
+        console.log('unknown loaded from local');
+        setUnknownTreacheryCards(initialCards);
+        setInitializedUnknownCards(true);
+        return;
+      }
+
       const initialUnknownTreacheryCards: UnknownTreachery[] = [];
       players.forEach((house, key) => {
         if(house.name != House.Harkonen.name) {
@@ -92,9 +182,14 @@ export default function NewGame () {
       }
 
       setUnknownTreacheryCards(initialUnknownTreacheryCards);
+      localStorage.setItem('unknownCards', JSON.stringify(unknownTreacheryCards));
       setInitializedUnknownCards(true);
     }
-  }, [players]);
+  }, [players, previousUnknownCards]);
+
+  useEffect(() => {
+    localStorage.setItem('unknownCards', JSON.stringify(unknownTreacheryCards));
+  }, [unknownTreacheryCards]);
   
   const [currentTab, setCurrentTab] = useState(1);
   const handleChange = (newValue: number) => {

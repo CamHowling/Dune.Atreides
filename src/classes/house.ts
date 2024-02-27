@@ -1,8 +1,6 @@
 import { atreides, beneGesserit, choam, ecaz, emperor, fremen, harkonen, ixian, moritani, richeseGrey, spacingGuild, tleilaxu } from "@/settings/colours";
 
 export class House {
-    static Houses: House[] = [];
-
     static Fremen = new House(1, "Fremen", fremen, 'fremen.png', 0, false, 4, 1);
     static Atreides = new House(2, "Atreides", atreides, 'atreides.png', 0, true, 4, 1);
     static Harkonen = new House(3, "Harkonen", harkonen, 'harkonen.png', 0, false, 8, 2);
@@ -19,7 +17,22 @@ export class House {
     static Ecaz = new House(11, "Ecaz", ecaz, 'ecaz.png', 3, false, 4, 1);
     static Moritani = new House(12, "Moritani", moritani, 'moritani.png', 3, false, 4, 1);
 
-    private constructor(
+    static Houses: House[] = [
+        House.Fremen, 
+        House.Atreides, 
+        House.Harkonen, 
+        House.BeneGesserit, 
+        House.SpacingGuild, 
+        House.Emperor, 
+        House.Tleilaxu,
+        House.Ixian, 
+        House.Choam, 
+        House.Richese, 
+        House.Ecaz, 
+        House.Moritani,
+    ];
+
+    public constructor(
         public readonly id: number, 
         public readonly name: string, 
         public readonly colour: string, 
@@ -29,7 +42,6 @@ export class House {
         public readonly maximumHandSize: number,
         public cardsInHand: number
         ) {
-            House.Houses.push(this);
     }
 
     toString() {
