@@ -24,7 +24,6 @@ type deckProps = {
     onUpdate: (card?: Treachery, unknownCard?: UnknownTreachery) => void;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function Discard ({treacheryCards, unknownTreacheryCards, players, onUpdate}: deckProps) {
     const groupData: ({name: string, colour: string, categories: TreacheryCategory[]})[] = [
         ({name: "Weapon", colour: treacheryRed, categories: TreacheryCategory.WeaponCategories}),

@@ -2,7 +2,6 @@ import { mainBackground, minorHeading } from '@/settings/colours';
 import { Dialog, DialogTitle, Typography } from '@mui/material';
 import * as React from 'react';
 
-//this can probably be moved to a shared resource
 const dialogStyle = {
   display: 'flex',
   '& .MuiPaper-root': {

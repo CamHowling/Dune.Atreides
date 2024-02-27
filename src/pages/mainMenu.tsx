@@ -11,7 +11,6 @@ import { DisclaimerDialog } from '@/components/mainMenu/disclaimerDialog';
 import { AboutDialog } from '@/components/mainMenu/aboutDialog';
 import { useRouter } from 'next/navigation'
 
-//move to style file
 const bodyStyle = {
   display: 'flex',
   backgroundColor: mainBackground,

@@ -1,9 +1,8 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import * as React from "react";
 import cloneDeep from 'lodash/cloneDeep';
 import './../app/globals.css';
 import { useRouter as useNextRouter } from 'next/router';
-import { redirect, useRouter as useNextNavigationRouter } from 'next/navigation';
+import { useRouter as useNextNavigationRouter } from 'next/navigation';
 import { GameMenu } from "@/components/tracker/gameMenu";
 import { TabWrapper } from "@/components/tracker/TabWrapper";
 import { OptionsMenu } from "@/components/tracker/optionsMenu";
@@ -28,9 +27,7 @@ const tabStyles = {
 
 export default function NewGame () {
   const nextRouter = useNextRouter();
-  const [selectedHouseNames, setSelectedHouseNames] = useState<string[]>(
-    (nextRouter.query.houses ? JSON.parse(nextRouter.query.houses.toString()) : []) as string[]
-  );
+  const selectedHouseNames = (nextRouter.query.houses ? JSON.parse(nextRouter.query.houses.toString()) : []) as string[];
 
   const [previousPlayers, setPreviousPlayers] = useState<string | null>(null);
   const [previousCards, setPreviousCards] = useState<string | null>(null);
@@ -70,7 +67,6 @@ export default function NewGame () {
         return parsedPlayer;
       })
 
-      console.log('players loaded from local');
       setPlayers(initialPlayers);
       return;
     }
@@ -105,7 +101,6 @@ export default function NewGame () {
         return parsedCard;
       })
 
-      console.log('treacheries loaded from local');
       setTreacheryCards(initialCards);
       return;
     }
@@ -153,7 +148,6 @@ export default function NewGame () {
           return parsedPlayer;
         })
   
-        console.log('unknown loaded from local');
         setUnknownTreacheryCards(initialCards);
         setInitializedUnknownCards(true);
         return;
