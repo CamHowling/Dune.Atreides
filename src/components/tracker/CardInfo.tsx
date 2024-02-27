@@ -28,7 +28,8 @@ const cardStyle = {
 
 const cardTextStyle = {
     color: mainBackground, 
-    fontFamily: 'Copperplate'
+    fontFamily: 'Copperplate',
+    textAlign: 'left'
 }
 
 export function CardInfo ({card, unknownCard, renderHouse, renderDiscard, onUpdate, players}: cardProps) {
@@ -56,7 +57,10 @@ export function CardInfo ({card, unknownCard, renderHouse, renderDiscard, onUpda
                 {card ? 
                 <CardMenu card={card} onUpdate={onUpdate} renderDiscard={renderDiscard} players={players} renderHouse={renderHouse}>
                     <Box sx={{...cardStyle}}>
-                        <Typography sx={{ ...cardTextStyle }} variant="h4">{card.name}</Typography>
+                        <Box>
+                            <Typography sx={{ ...cardTextStyle }} variant="h4">{card.name}</Typography>
+                            <Typography sx={{ ...cardTextStyle, fontSize: '12px', pl: 0.25 }} variant="h4">{card.category.name}</Typography>
+                        </Box>
                         <img src={ `/assets/cards/icons/${card.category.icon}` } height={imageSize} width={imageSize}/>
                     </Box>
                 </CardMenu> : <></>}
