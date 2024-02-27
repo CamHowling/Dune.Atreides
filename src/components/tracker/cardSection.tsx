@@ -33,6 +33,12 @@ const harkonenStyle = {
     width: '100%'
 }
 
+const centerStyle = {
+    alignItems: 'center', 
+    justifyContent: 'center',
+    display: 'flex'
+}
+
 type sectionProps = {
     group: CardGroup;
     renderHouse: boolean;
@@ -53,16 +59,16 @@ export function CardSection ({group, renderHouse, renderDiscard, onUpdate, playe
 
     const largest = useMediaQuery('(min-width:1200px)');
     const medium = useMediaQuery('(min-width:700px)');
-    const cardsWidth = (largest ? 60 : medium ? 80 : 90)+'vw';
+    const cardsWidth = (largest ? 60 : medium ? 80 : 90);
 
     return (
-        <Box sx={{ width: cardsWidth}}>
+        <Box sx={{ justifyContent: 'center', width: cardsWidth+'vw'}}>
             <Box sx={{ backgroundColor: group.colour, ...sectionBoxStyle }}>
                 <Typography variant="h3" sx={{ ...sectionTitleStyle }}>{group.name}</Typography>
             </Box>
             {   
                 group.name == House.Harkonen.name && renderDiscard ? 
-                <Box sx={{ alignItems: 'center', justifyContent: 'center', display: 'flex'}}>
+                <Box sx={{ ...centerStyle, width: (cardsWidth-5)+'vw'}}>
                     <GameMenuButton 
                         text="Draw Treachery" 
                         sxOverride={harkonenStyle} 
