@@ -1,6 +1,6 @@
 import { CardGroup } from "@/classes/cardGroup";
 import { harkonen, mainBackground } from "@/settings/colours";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, useMediaQuery } from "@mui/material";
 import * as React from "react";
 import { CardInfo } from "./CardInfo";
 import { Treachery } from "@/classes/treachery";
@@ -20,10 +20,8 @@ const sectionBoxStyle = {
 const sectionTitleStyle = {
     p: 1, 
     color: mainBackground, 
-    fontFamily: 'Copperplate'
+    fontFamily: 'Copperplate',
 }
-
-
 
 const harkonenStyle = {
     backgroundColor: harkonen,
@@ -53,8 +51,12 @@ export function CardSection ({group, renderHouse, renderDiscard, onUpdate, playe
         }
     }
 
+    const largest = useMediaQuery('(min-width:1200px)');
+    const medium = useMediaQuery('(min-width:700px)');
+    const cardsWidth = (largest ? 60 : medium ? 80 : 90)+'vw';
+
     return (
-        <Box>
+        <Box sx={{ width: cardsWidth}}>
             <Box sx={{ backgroundColor: group.colour, ...sectionBoxStyle }}>
                 <Typography variant="h3" sx={{ ...sectionTitleStyle }}>{group.name}</Typography>
             </Box>

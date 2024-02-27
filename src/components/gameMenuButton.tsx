@@ -28,7 +28,7 @@ export function GameMenuButton({text, onClick, width, sxOverride, disabled}: but
         }
     }
 
-    const minWidth = width ? width : '50vh';
+    const minWidth = width ? width : '50vw';
 
     return (
         <Button 
