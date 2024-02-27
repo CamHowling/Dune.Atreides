@@ -26,6 +26,11 @@ const cardStyle = {
     width: 'inherit', 
 }
 
+const cardTextStyle = {
+    color: mainBackground, 
+    fontFamily: 'Copperplate'
+}
+
 export function CardInfo ({card, unknownCard, renderHouse, renderDiscard, onUpdate, players}: cardProps) {
     const imageFilePath = 
         card ? `/assets/cards/banners/${card.category.banner}` : unknownCard ? `/assets/cards/banners/${unknownCard.banner}` : '';
@@ -51,14 +56,14 @@ export function CardInfo ({card, unknownCard, renderHouse, renderDiscard, onUpda
                 {card ? 
                 <CardMenu card={card} onUpdate={onUpdate} renderDiscard={renderDiscard} players={players} renderHouse={renderHouse}>
                     <Box sx={{...cardStyle}}>
-                        <Typography sx={{ color: mainBackground }} variant="h4">{card.name}</Typography>
+                        <Typography sx={{ ...cardTextStyle }} variant="h4">{card.name}</Typography>
                         <img src={ `/assets/cards/icons/${card.category.icon}` } height={imageSize} width={imageSize}/>
                     </Box>
                 </CardMenu> : <></>}
                 {unknownCard ? 
                 <UnknownCardMenu unknownCard={unknownCard} onUpdate={onUpdate} players={players}>
                     <Box sx={{...cardStyle}}>
-                        <Typography sx={{ color: mainBackground }} variant="h4">{unknownCard.name}</Typography>
+                        <Typography sx={{ ...cardTextStyle }} variant="h4">{unknownCard.name}</Typography>
                     </Box>
                 </UnknownCardMenu> : <></>}
             </Paper>

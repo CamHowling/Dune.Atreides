@@ -23,7 +23,7 @@ function tabProps(index: number) {
             fontSize: 32,
             color: mainBackground,
             mr: 2,
-            ml: 2
+            ml: 2,
         }
     };
 }

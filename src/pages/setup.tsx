@@ -36,6 +36,11 @@ const menuButtonStyles = {
   mt: 2
 }
 
+const headingStyle = {
+  color: minorHeading, 
+  mt: 3,
+  mb: 1, 
+}
 
 function Setup () {
   const [selectedHouses, setSelectedHouses] = useState<House[]>([House.Atreides]);
@@ -85,7 +90,7 @@ function Setup () {
     <Box sx={{ minHeight: '100vh', m: 0 }}>
       <PageTitle title="Set Up"></PageTitle>
       <Box sx={{...bodyStyle}}>
-        <Typography variant='h4' sx={{ color: minorHeading, mt: 3, mb: 1 }}>Houses</Typography>
+        <Typography variant='h4' sx={{ ...headingStyle }}>Houses</Typography>
         <Box sx={{...boxStyle}}>
           <HouseButton house={House.Atreides} onClick={() => {}}></HouseButton>
           <HouseButton house={House.Fremen} onClick={() => {handleHouseClick(House.Fremen)}}></HouseButton>
@@ -102,7 +107,7 @@ function Setup () {
           <HouseButton house={House.Richese} onClick={() => {handleHouseClick(House.Richese)}}></HouseButton>
           <HouseButton house={House.Moritani} onClick={() => {handleHouseClick(House.Moritani)}}></HouseButton>
         </Box>
-        <Typography variant='h4' sx={{ color: minorHeading, mt: 3, mb: 1 }}>Treacheries</Typography>
+        <Typography variant='h4' sx={{ ...headingStyle }}>Treacheries</Typography>
         <Box sx={{...boxStyle}}>
             <ExpansionButton expansion={Expansion.TleilaxuAndIxian} onClick={() => {handleExpansionClick(Expansion.TleilaxuAndIxian)}}></ExpansionButton>
             <ExpansionButton expansion={Expansion.ChoamAndRichese} onClick={() => {handleExpansionClick(Expansion.ChoamAndRichese)}}></ExpansionButton>

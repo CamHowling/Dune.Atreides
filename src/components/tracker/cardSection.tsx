@@ -8,7 +8,7 @@ import { House } from "@/classes/house";
 import { UnknownTreachery } from "@/classes/unknownTreachery";
 import { GameMenuButton } from "../gameMenuButton";
 
-const sectionTitleStyle = {
+const sectionBoxStyle = {
     minWidth: '40vw',
     mt: 1,
     mb: 1,
@@ -16,6 +16,14 @@ const sectionTitleStyle = {
     justifyContent: 'center',
     display: 'flex',
 }
+
+const sectionTitleStyle = {
+    p: 1, 
+    color: mainBackground, 
+    fontFamily: 'Copperplate'
+}
+
+
 
 const harkonenStyle = {
     backgroundColor: harkonen,
@@ -47,8 +55,8 @@ export function CardSection ({group, renderHouse, renderDiscard, onUpdate, playe
 
     return (
         <Box>
-            <Box sx={{ backgroundColor: group.colour, ...sectionTitleStyle }}>
-                <Typography variant="h3" sx={{ p: 1, color: mainBackground }}>{group.name}</Typography>
+            <Box sx={{ backgroundColor: group.colour, ...sectionBoxStyle }}>
+                <Typography variant="h3" sx={{ ...sectionTitleStyle }}>{group.name}</Typography>
             </Box>
             {   
                 group.name == House.Harkonen.name && renderDiscard ? 
