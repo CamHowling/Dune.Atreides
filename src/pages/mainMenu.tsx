@@ -20,7 +20,7 @@ const bodyStyle = {
   minHeight: '80vh',
 }
 
-export function MainMenu() {
+export default function MainMenu() {
   const [aboutOpen, setAboutOpen] = useState<boolean>(false);
   const [disclaimerOpen, setDisclaimerOpen] = useState<boolean>(false);
 
