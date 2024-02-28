@@ -3,11 +3,9 @@ import { IconButton, useMediaQuery } from "@mui/material";
 import * as React from "react";
 import { useState } from "react";
 
-
-
-type houseButtonProps = {
-    house: House,
-    onClick: () => void,
+interface houseButtonProps {
+    house: House;
+    onClick: () => void;
 }
 
 export default function HouseButton ({house, onClick}: houseButtonProps) {

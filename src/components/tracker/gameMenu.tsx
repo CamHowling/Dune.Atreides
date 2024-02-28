@@ -12,7 +12,7 @@ const boxStyle = {
     justifyContent: 'center',
 }
 
-type gameMenuProps = {
+interface GameMenuProps {
     onChange: (value: number) => void,
 }
 
@@ -33,7 +33,7 @@ function tabProps(index: number) {
     };
 }
 
-export function GameMenu({onChange}: gameMenuProps) {
+export function GameMenu({onChange}: GameMenuProps) {
     const [value, setValue] = React.useState(1);
     const handleChange = (event: React.SyntheticEvent, newValue: number) => {
         setValue(newValue);

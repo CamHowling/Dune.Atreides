@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Footer } from "@/components/footer";
 import { PageTitle } from "@/components/pageTitle";
 import { mainBackground, minorHeading } from "@/settings/colours";

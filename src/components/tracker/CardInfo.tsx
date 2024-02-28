@@ -8,15 +8,6 @@ import { UnknownTreachery } from "@/classes/unknownTreachery";
 import UnknownCardMenu from "./unknownCardMenu";
 import { LocationType } from "@/classes/locationType";
 
-type cardProps = {
-    card?: Treachery;
-    unknownCard?: UnknownTreachery;
-    renderHouse: boolean;
-    renderDiscard: boolean;
-    onUpdate?: (card?: Treachery, unknownCard?: UnknownTreachery) => void;
-    players: House[];
-}
-
 const cardStyle = {
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -29,6 +20,15 @@ const cardTextStyle = {
     color: mainBackground, 
     fontFamily: 'Copperplate',
     textAlign: 'left'
+}
+
+interface cardProps {
+    card?: Treachery;
+    unknownCard?: UnknownTreachery;
+    renderHouse: boolean;
+    renderDiscard: boolean;
+    onUpdate?: (card?: Treachery, unknownCard?: UnknownTreachery) => void;
+    players: House[];
 }
 
 export function CardInfo ({card, unknownCard, renderHouse, renderDiscard, onUpdate, players}: cardProps) {

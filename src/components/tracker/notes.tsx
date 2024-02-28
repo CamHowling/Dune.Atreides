@@ -36,7 +36,6 @@ const textFieldStyle = {
     },
 }
 
-
 export function Notes ({note, onUpdateNote} : NotesProps) {
     return (
         <Box sx={{...bodyStyle}}>

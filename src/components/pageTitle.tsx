@@ -16,11 +16,11 @@ const textStyle = {
     color: mainBackground,
 }
 
-type pageTitleProps = {
-    title: string,
+interface PageTitleProps {
+    title: string;
 }
 
-export function PageTitle({title}: pageTitleProps) {
+export function PageTitle({title}: PageTitleProps) {
     const largest = useMediaQuery('(min-width:1200px)');
     const medium = useMediaQuery('(min-width:700px)');
     const fontSize = (largest ? 40 : medium ? 36 : 28) + 'px'; 

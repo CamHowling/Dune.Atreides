@@ -4,11 +4,9 @@ import { IconButton, useMediaQuery } from "@mui/material";
 import * as React from "react";
 import { useState } from "react";
 
-
-
-type expansionButtonProps = {
-    expansion: Expansion,
-    onClick: () => void,
+interface expansionButtonProps {
+    expansion: Expansion;
+    onClick: () => void;
 }
 
 export default function ExpansionButton ({expansion, onClick}: expansionButtonProps) {

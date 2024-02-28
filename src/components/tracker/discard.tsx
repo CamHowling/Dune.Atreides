@@ -17,14 +17,14 @@ const bodyStyle = {
     minHeight: '80vh',
 }
 
-type deckProps = {
+interface DeckProps {
     treacheryCards: Treachery[],
     unknownTreacheryCards: UnknownTreachery[],
     players: House[],
     onUpdate: (card?: Treachery, unknownCard?: UnknownTreachery) => void;
 }
 
-export function Discard ({treacheryCards, unknownTreacheryCards, players, onUpdate}: deckProps) {
+export function Discard ({treacheryCards, unknownTreacheryCards, players, onUpdate}: DeckProps) {
     const groupData: ({name: string, colour: string, categories: TreacheryCategory[]})[] = [
         ({name: "Weapon", colour: treacheryRed, categories: TreacheryCategory.WeaponCategories}),
         ({name: "Defense", colour: treacheryBlue, categories: TreacheryCategory.DefenseCategories}),

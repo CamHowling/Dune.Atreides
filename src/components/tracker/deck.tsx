@@ -16,7 +16,7 @@ const bodyStyle = {
     minHeight: '80vh',
 }
 
-type deckProps = {
+interface DeckProps {
     treacheryCards: Treachery[],
     unknownTreacheryCards: UnknownTreachery[],
     players: House[],
@@ -24,7 +24,7 @@ type deckProps = {
     addHarkonenTreachery: (player: House) => void;
 }
 
-export function Deck ({treacheryCards, unknownTreacheryCards, players, onUpdate, addHarkonenTreachery}: deckProps) {
+export function Deck ({treacheryCards, unknownTreacheryCards, players, onUpdate, addHarkonenTreachery}: DeckProps) {
     const groupData: ({name: string, colour: string, categories: TreacheryCategory[]})[] = [
         ({name: "Weapon", colour: treacheryRed, categories: TreacheryCategory.WeaponCategories}),
         ({name: "Defense", colour: treacheryBlue, categories: TreacheryCategory.DefenseCategories}),

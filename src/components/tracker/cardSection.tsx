@@ -38,7 +38,7 @@ const centerStyle = {
     display: 'flex'
 }
 
-type sectionProps = {
+interface sectionProps {
     group: CardGroup;
     renderHouse: boolean;
     renderDiscard: boolean;

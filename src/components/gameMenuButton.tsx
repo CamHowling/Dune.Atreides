@@ -13,15 +13,15 @@ const buttonStyle = {
     margin: 2,
 }
 
-type buttonProps = {
-    text: string,
-    onClick?: () => void,
-    width?: string,
-    sxOverride?: SxProps,
-    disabled?: boolean,
+interface ButtonProps {
+    text: string;
+    onClick?: () => void;
+    width?: string;
+    sxOverride?: SxProps;
+    disabled?: boolean;
 }
 
-export function GameMenuButton({text, onClick, width, sxOverride, disabled}: buttonProps) {
+export function GameMenuButton({text, onClick, width, sxOverride, disabled}: ButtonProps) {
     const handleClick = () => {
         if (onClick != undefined) {
             onClick();

@@ -15,7 +15,7 @@ const bodyStyle = {
     minHeight: '80vh',
 }
 
-type playerProps = {
+interface PlayerProps {
     treacheryCards: Treachery[],
     unknownTreacheryCards: UnknownTreachery[],
     players: House[],
@@ -23,7 +23,7 @@ type playerProps = {
     addHarkonenTreachery: (player: House) => void;
 }
 
-export function Players ({treacheryCards, unknownTreacheryCards, players, onUpdate, addHarkonenTreachery}: playerProps) {
+export function Players ({treacheryCards, unknownTreacheryCards, players, onUpdate, addHarkonenTreachery}: PlayerProps) {
     const cardGroups = players.map((player, key) => {
         const unknownCards = unknownTreacheryCards.filter((unknownCard) => {
             return unknownCard?.player?.id == player.id && unknownCard.locationType.id != LocationType.Revealed.id;

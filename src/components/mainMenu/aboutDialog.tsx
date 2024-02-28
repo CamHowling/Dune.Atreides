@@ -20,7 +20,7 @@ const typographyStyle = {
   pb: 3,
 }
 
-type DialogProps = {
+interface DialogProps {
   open: boolean;
   onClose: () => void;
 }
