@@ -1,5 +1,6 @@
 import { footerTransitionMiddle, mainBackground, minorHeading } from '@/settings/colours';
-import { Dialog, DialogTitle, Link, Typography } from '@mui/material';
+import { Dialog, DialogTitle, IconButton, Link, Typography } from '@mui/material';
+import CloseIcon from '@material-ui/icons/Close';
 import * as React from 'react';
 
 const dialogStyle = {
@@ -20,6 +21,13 @@ const typographyStyle = {
   pb: 3,
 }
 
+const titleStyle = {
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  color: mainBackground,
+}
+
 interface DialogProps {
   open: boolean;
   onClose: () => void;
@@ -28,7 +36,11 @@ interface DialogProps {
 export function AboutDialog({open, onClose}: DialogProps) {
   return (
     <Dialog onClose={onClose} open={open} sx={{...dialogStyle}} fullWidth maxWidth="lg">
-      <DialogTitle variant='h4' sx={{color: mainBackground}}>About</DialogTitle>
+      <DialogTitle variant='h4' sx={{...titleStyle}}>About
+        <IconButton onClick={onClose} sx={{ color: mainBackground }} >
+          <CloseIcon style={{transform: 'scale(1.6)'}}/>
+        </IconButton>
+      </DialogTitle>
         <Typography variant='h6' sx={{...typographyStyle, pb: 0}}>
         How to Play
         </Typography>
