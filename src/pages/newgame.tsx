@@ -298,7 +298,7 @@ export default function NewGame () {
   }
 
   const [note, setNote] = useState<string>('');
-    
+
   useEffect(() => {
     if (previousNote != null) {
       setNote(previousNote);
