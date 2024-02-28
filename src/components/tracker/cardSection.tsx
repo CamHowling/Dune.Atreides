@@ -1,5 +1,5 @@
 import { CardGroup } from "@/classes/cardGroup";
-import { harkonen, mainBackground } from "@/settings/colours";
+import { harkonen, mainBackground, richeseGrey } from "@/settings/colours";
 import { Box, Typography, useMediaQuery } from "@mui/material";
 import * as React from "react";
 import { CardInfo } from "./CardInfo";
@@ -27,6 +27,10 @@ const harkonenStyle = {
     backgroundColor: harkonen,
     '&:hover': {
         backgroundColor: harkonen,
+    },
+    '&:disabled': {
+        backgroundColor: richeseGrey,
+        color: mainBackground,
     },
     m: 1,
     mt: 0,
