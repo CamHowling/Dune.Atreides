@@ -1,36 +1,40 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+This is a treachery tracker for the Dune 2019 board game by GaleForce Nine.
+You can find it hosted at [treacherytracker.com](https://treacherytracker.com/)
 
-## Getting Started
+## Disclaimer
+Galeforce Nine is not associated with the production of this web application, and retain their rights to their respective intellectual property.
 
-First, run the development server:
+This application is strictly non-profit, and I do not accept donations for it. 
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+If you would like to support this project, please use your money to buy more Dune expansions, support the upcoming [Dune Gamefound project](https://gamefound.com/en/projects/gf9/dune), or get more food and drinks for your next session.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## New Game
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Click new game to open the game set up page. 
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+From the set up screen, select your factions and the expansion treachery cards you are playing with in your game. 
 
-## Learn More
+Click start to start the game.
 
-To learn more about Next.js, take a look at the following resources:
+There are 5 screens in the tracker; Options, Deck, Player, Discard, and Notes.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The Options screen allows you to return to the main menu or start a new game.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+The Deck screen shows all cards in the game, the player who holds or has discarded each card, and if a card has been discarded.
 
-## Deploy on Vercel
+The Player screen shows cards which are in a players hand.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+The Discard screen shows cards which have been discarded.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+The Notes screen allows you to keep notes.
+
+## Bugs
+
+As this is a hobby project, you might find some bugs. 
+Most of the bugs you may encounter can likely be resolved by refreshing the app on the website. 
+If you find a serious bug; please add it to the issues for the repo.
+If you're a better react developer than I am, and something really annoys you - feel free to create a pull request.
+
+## License notes
+
+This project is under the Mozilla Public License Version 2.0.

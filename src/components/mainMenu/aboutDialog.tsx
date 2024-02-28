@@ -44,11 +44,13 @@ export function AboutDialog({open, onClose}: DialogProps) {
           <br />
           The Options screen allows you to return to the main menu or start a new game.
           <br />
-          The Deck screen shows all cards in the game, the player who has or discarded each card, and if a card has been discarded.
+          The Deck screen shows all cards in the game, the player who holds or has discarded each card, and if a card has been discarded.
           <br />
-          The player and discard screens only show cards which are either in a players hand, or have discarded respectively.
+          The Player screen shows cards which are in a players hand.
           <br />
-          The notes screen allows you to keep notes.
+          The Discard screen shows cards which have been discarded.
+          <br />
+          The Notes screen allows you to keep notes.
         </Typography>
         <Typography variant='h6' sx={{...typographyStyle, pb: 0}}>
           Bugs

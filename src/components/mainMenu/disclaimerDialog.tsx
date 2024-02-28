@@ -1,5 +1,5 @@
-import { mainBackground, minorHeading } from '@/settings/colours';
-import { Box, Dialog, DialogTitle, Typography } from '@mui/material';
+import { footerTransitionMiddle, mainBackground, minorHeading } from '@/settings/colours';
+import { Box, Dialog, DialogTitle, Link, Typography } from '@mui/material';
 import * as React from 'react';
 
 const dialogStyle = {
@@ -44,7 +44,8 @@ export function DisclaimerDialog({open, onClose}: DialogProps) {
         <Typography sx={{...typographyStyle}}>
           This application is strictly non-profit, and I do not accept donations for it. 
           <br />
-          If you would like to support this project, please use your money to buy more Dune expansions, support the upcoming Dune Kickstarter
+          If you would like to support this project, please use your money to buy more Dune expansions, support the upcoming&nbsp;
+          <Link href="https://gamefound.com/en/projects/gf9/dune" color={footerTransitionMiddle}>Dune Gamefound project</Link>
           , or get more food and drinks for your next session.
         </Typography>
       </Box>
