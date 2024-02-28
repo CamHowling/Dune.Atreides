@@ -19,6 +19,7 @@ import { Discard } from "@/components/tracker/discard";
 import { UnknownTreachery } from "@/classes/unknownTreachery";
 import { Notes } from "@/components/tracker/notes";
 import { LocationType } from "@/classes/locationType";
+import { DevEnvironmentConsoleLog } from "@/util/utility";
 
 const tabStyles = {
     backgroundColor: mainBackground,
@@ -29,23 +30,41 @@ export default function NewGame () {
   const nextRouter = useNextRouter();
   const selectedHouseNames = (nextRouter.query.houses ? JSON.parse(nextRouter.query.houses.toString()) : []) as string[];
 
+  const [hasLoadedFromLocal, setHasLoadedFromLocal] = useState<boolean>(false);
+
   const [previousPlayers, setPreviousPlayers] = useState<string | null>(null);
   const [previousCards, setPreviousCards] = useState<string | null>(null);
   const [previousUnknownCards, setPreviousUnknownCards] = useState<string | null>(null);
+  const [previousNote, setPreviousNote] = useState<string | null>(null);
 
   const nextNavigation = useNextNavigationRouter();
   useEffect(() => {
-    const localPlayers = selectedHouseNames.length == 0 && localStorage.getItem('players') != null ? localStorage.getItem('players') : null;
+    if (hasLoadedFromLocal) {
+      return;
+    }
+
+    const hasHouseNames = selectedHouseNames.length > 0;
+
+    const localPlayers = !hasHouseNames && localStorage.getItem('players') != null ? localStorage.getItem('players') : null;
     setPreviousPlayers(localPlayers);
-    const localCards = selectedHouseNames.length == 0 && localStorage.getItem('cards') != null ? localStorage.getItem('cards') : null;
+    const localCards = !hasHouseNames&& localStorage.getItem('cards') != null ? localStorage.getItem('cards') : null;
     setPreviousCards(localCards);
-    const localUnknownCards =selectedHouseNames.length == 0 && localStorage.getItem('unknownCards') != null ? localStorage.getItem('unknownCards') : null;
+    const localUnknownCards = !hasHouseNames && localStorage.getItem('unknownCards') != null ? localStorage.getItem('unknownCards') : null;
     setPreviousUnknownCards(localUnknownCards);
 
-    const canLoadOnRefresh = localPlayers && localCards && localUnknownCards;
-    if (selectedHouseNames.length == 0 && !canLoadOnRefresh && typeof window !== 'undefined') {
+    const localNote = !hasHouseNames && localStorage.getItem('note') != null ? localStorage.getItem('note') : null;
+    setPreviousNote(localNote);
+
+    const canLoadOnRefresh = localPlayers != null && localCards != null && localUnknownCards != null;
+    if (!hasHouseNames && !canLoadOnRefresh && typeof window !== 'undefined') {
       nextNavigation.push('/');
     }
+
+    if (canLoadOnRefresh || hasHouseNames) {
+      setHasLoadedFromLocal(true);
+    }
+
+    DevEnvironmentConsoleLog('load house names on refresh'); 
   }, [selectedHouseNames]);
 
   const [players, setPlayers] = useState<House[]>([]);
@@ -68,6 +87,7 @@ export default function NewGame () {
       })
 
       setPlayers(initialPlayers);
+      DevEnvironmentConsoleLog('set initial players from local')
       return;
     }
 
@@ -76,11 +96,12 @@ export default function NewGame () {
     })
 
     setPlayers(initialPlayers);
-    localStorage.setItem('players', JSON.stringify(initialPlayers));
+    DevEnvironmentConsoleLog('set initial players manually')
   },[previousPlayers]) 
 
   useEffect(() => {
     localStorage.setItem('players', JSON.stringify(players));
+    DevEnvironmentConsoleLog('save players to local');
   }, [players]);
   
   const [treacheryCards, setTreacheryCards] = useState<Treachery[]>([]);
@@ -102,6 +123,7 @@ export default function NewGame () {
       })
 
       setTreacheryCards(initialCards);
+      DevEnvironmentConsoleLog('load treachery from local');
       return;
     }
 
@@ -119,11 +141,12 @@ export default function NewGame () {
     })
 
     setTreacheryCards(initialTreacheryCards);
-    localStorage.setItem('cards', JSON.stringify(initialTreacheryCards));
+    DevEnvironmentConsoleLog('set treachery manually')
   },[previousCards])
 
   useEffect(() => {
     localStorage.setItem('cards', JSON.stringify(treacheryCards));
+    DevEnvironmentConsoleLog('save treachery to local');
   }, [treacheryCards]);
 
   const [unknownTreacheryCards, setUnknownTreacheryCards] = useState<UnknownTreachery[]>([]);
@@ -148,6 +171,7 @@ export default function NewGame () {
           return parsedPlayer;
         })
   
+        DevEnvironmentConsoleLog('load unknown treachery from local');
         setUnknownTreacheryCards(initialCards);
         setInitializedUnknownCards(true);
         return;
@@ -176,13 +200,14 @@ export default function NewGame () {
       }
 
       setUnknownTreacheryCards(initialUnknownTreacheryCards);
-      localStorage.setItem('unknownCards', JSON.stringify(unknownTreacheryCards));
+      DevEnvironmentConsoleLog('set unknown treachery manually')
       setInitializedUnknownCards(true);
     }
   }, [players, previousUnknownCards]);
 
   useEffect(() => {
     localStorage.setItem('unknownCards', JSON.stringify(unknownTreacheryCards));
+    DevEnvironmentConsoleLog('save unknown treachery to local');
   }, [unknownTreacheryCards]);
   
   const [currentTab, setCurrentTab] = useState(1);
@@ -273,6 +298,18 @@ export default function NewGame () {
   }
 
   const [note, setNote] = useState<string>('');
+    
+  useEffect(() => {
+    if (previousNote != null) {
+      setNote(previousNote);
+    }
+    
+  }, [previousNote])
+
+  useEffect(() => {
+    localStorage.setItem('note', note);
+  }, [note])
+
   const updateNote = (note: string) => {
     setNote(note);
   }

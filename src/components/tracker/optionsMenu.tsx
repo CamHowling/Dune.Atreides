@@ -11,10 +11,19 @@ const bodyStyle = {
     minHeight: '80vh',
   }
 
-const NewGame = () => {
+const ClearData = () => {
     localStorage.removeItem('players');
     localStorage.removeItem('cards');
     localStorage.removeItem('unknownCards');
+}
+
+const MainMenu = () => {
+    ClearData();
+    router.push('/');
+};
+
+const NewGame = () => {
+    ClearData();
     router.push('/setup');
 };
 
@@ -22,7 +31,7 @@ export function OptionsMenu () {
     return (
         <>
             <Box sx={{...bodyStyle}}>
-                <GameMenuButton text="Main Menu" onClick={() => router.push('/')}></GameMenuButton>
+                <GameMenuButton text="Main Menu" onClick={() => MainMenu()}></GameMenuButton>
                 <GameMenuButton text="New Game" onClick={() => NewGame()}></GameMenuButton>
             </Box>
         </>
