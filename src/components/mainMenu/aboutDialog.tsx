@@ -1,5 +1,5 @@
-import { mainBackground, minorHeading } from '@/settings/colours';
-import { Dialog, DialogTitle, Typography } from '@mui/material';
+import { footerTransitionMiddle, mainBackground, minorHeading } from '@/settings/colours';
+import { Dialog, DialogTitle, Link, Typography } from '@mui/material';
 import * as React from 'react';
 
 const dialogStyle = {
@@ -28,19 +28,35 @@ type DialogProps = {
 export function AboutDialog({open, onClose}: DialogProps) {
   return (
     <Dialog onClose={onClose} open={open} sx={{...dialogStyle}} fullWidth maxWidth="lg">
-      <DialogTitle sx={{color: mainBackground}}>About</DialogTitle>
+      <DialogTitle variant='h4' sx={{color: mainBackground}}>About</DialogTitle>
+        <Typography variant='h6' sx={{...typographyStyle, pb: 0}}>
+        How to Play
+        </Typography>
         <Typography sx={{...typographyStyle}}>
-          To use the application click new game. 
-          <br /><br />
-          From the set up screen, select your factions up to a maximum of 6, and the expansion treachery cards you are playing with in your game. 
+          Click new game to open the game set up page. 
+          <br />
+          From the set up screen, select your factions and the expansion treachery cards you are playing with in your game. 
           <br />
           Click start to start the game.
-          <br /><br />
-          In the game you can navigate between the Deck, Player, and Discard screens to track which treachery cards are where - assigning them to specific players, discarding them, or returning them to the deck if you&apos;ve made a mistake.
-          <br /><br />
-          You can keep notes in the notes screen.You can exit, or start a new game at any time using the Options menu. 
-          <br /><br />
-          Please note that this web application does not currently support saving, so avoid refreshing or closing your screen.
+          <br />
+          <br />
+          There are 5 screens in the tracker; Options, Deck, Player, Discard, and Notes.
+          <br />
+          The Options screen allows you to return to the main menu or start a new game.
+          <br />
+          The Deck screen shows all cards in the game, the player who has or discarded each card, and if a card has been discarded.
+          <br />
+          The player and discard screens only show cards which are either in a players hand, or have discarded respectively.
+          <br />
+          The notes screen allows you to keep notes.
+        </Typography>
+        <Typography variant='h6' sx={{...typographyStyle, pb: 0}}>
+          Bugs
+        </Typography>
+        <Typography sx={{...typographyStyle}}>
+          As this is a hobby project, you may encounter a bug - some of which I may not be able to fix quickly. You should be able to resolve most bugs by refreshing the screen.
+          If you encounter any serious bugs, you can report them on the projects GitHub page&nbsp;
+          <Link href="https://github.com/CamHowling/DuneAtreides/issues" color={footerTransitionMiddle}>here</Link>.
         </Typography>
     </Dialog>
     );

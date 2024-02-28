@@ -1,5 +1,5 @@
 import { CardGroup } from "@/classes/cardGroup";
-import { harkonen, mainBackground, tleilaxu } from "@/settings/colours";
+import { harkonen, mainBackground } from "@/settings/colours";
 import { Box, Typography, useMediaQuery } from "@mui/material";
 import * as React from "react";
 import { CardInfo } from "./CardInfo";
