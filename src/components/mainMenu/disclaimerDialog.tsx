@@ -1,7 +1,8 @@
 import { footerTransitionMiddle, mainBackground, minorHeading } from '@/settings/colours';
 import { Box, Dialog, DialogTitle, IconButton, Link, Typography } from '@mui/material';
-import CloseIcon from '@material-ui/icons/Close';
 import * as React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
 const dialogStyle = {
   display: 'flex',
@@ -39,7 +40,7 @@ export function DisclaimerDialog({open, onClose}: DialogProps) {
     <Dialog onClose={onClose} open={open} sx={{...dialogStyle}} fullWidth maxWidth="lg">
       <DialogTitle variant='h4' sx={{ ...titleStyle }}>Dislcaimer
         <IconButton onClick={onClose} sx={{ color: mainBackground }} >
-          <CloseIcon style={{transform: 'scale(1.6)'}}/>
+          <FontAwesomeIcon icon={faXmark} />
         </IconButton>
       </DialogTitle>
       <Box>

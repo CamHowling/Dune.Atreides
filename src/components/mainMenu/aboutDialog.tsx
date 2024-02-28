@@ -1,7 +1,8 @@
 import { footerTransitionMiddle, mainBackground, minorHeading } from '@/settings/colours';
 import { Dialog, DialogTitle, IconButton, Link, Typography } from '@mui/material';
-import CloseIcon from '@material-ui/icons/Close';
 import * as React from 'react';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const dialogStyle = {
   display: 'flex',
@@ -38,7 +39,7 @@ export function AboutDialog({open, onClose}: DialogProps) {
     <Dialog onClose={onClose} open={open} sx={{...dialogStyle}} fullWidth maxWidth="lg">
       <DialogTitle variant='h4' sx={{...titleStyle}}>About
         <IconButton onClick={onClose} sx={{ color: mainBackground }} >
-          <CloseIcon style={{transform: 'scale(1.6)'}}/>
+          <FontAwesomeIcon icon={faXmark}/>
         </IconButton>
       </DialogTitle>
         <Typography variant='h6' sx={{...typographyStyle, pb: 0}}>
