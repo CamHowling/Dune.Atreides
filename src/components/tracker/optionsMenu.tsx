@@ -24,9 +24,6 @@ export function OptionsMenu () {
             <Box sx={{...bodyStyle}}>
                 <GameMenuButton text="Main Menu" onClick={() => router.push('/')}></GameMenuButton>
                 <GameMenuButton text="New Game" onClick={() => NewGame()}></GameMenuButton>
-                <GameMenuButton text="Help" onClick={() => {}}></GameMenuButton>
-                {/* <GameMenuButton text="Save" onClick={() => {}}></GameMenuButton>
-                <GameMenuButton text="Load" onClick={() => {}}></GameMenuButton> */}
             </Box>
         </>
     )
