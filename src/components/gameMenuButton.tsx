@@ -28,10 +28,10 @@ export function GameMenuButton({text, onClick, width, sxOverride, disabled}: but
         }
     }
 
-    const largest = useMediaQuery('(min-width:1200px)');
-    const medium = useMediaQuery('(min-width:700px)');
-    const scale = largest ? .5 : medium ? 0.75 : 1; 
-    const minWidth = width ? width : (scale*50)+'vw';
+    const medium = useMediaQuery('(max-width:1200px)');
+    const smallest = useMediaQuery('(max-width:700px)');
+    const scale = smallest ? 2 : medium ? 1.5 : 1; 
+    const minWidth = width ? width : (scale*25)+'vw';
 
     return (
         <Button 

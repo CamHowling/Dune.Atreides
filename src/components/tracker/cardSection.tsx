@@ -1,5 +1,5 @@
 import { CardGroup } from "@/classes/cardGroup";
-import { harkonen, mainBackground } from "@/settings/colours";
+import { harkonen, mainBackground, tleilaxu } from "@/settings/colours";
 import { Box, Typography, useMediaQuery } from "@mui/material";
 import * as React from "react";
 import { CardInfo } from "./CardInfo";
@@ -30,7 +30,6 @@ const harkonenStyle = {
     },
     m: 1,
     mt: 0,
-    width: '100%'
 }
 
 const centerStyle = {
@@ -62,16 +61,18 @@ export function CardSection ({group, renderHouse, renderDiscard, onUpdate, playe
     const cardsWidth = (largest ? 60 : medium ? 80 : 90);
 
     return (
-        <Box sx={{ justifyContent: 'center', width: cardsWidth+'vw'}}>
+        <Box sx={{     
+            width: cardsWidth+'vw', 
+        }}>
             <Box sx={{ backgroundColor: group.colour, ...sectionBoxStyle }}>
-                <Typography variant="h3" sx={{ ...sectionTitleStyle }}>{group.name}</Typography>
+                <Typography variant="h3" sx={{ ...sectionTitleStyle }}>{group.name.toUpperCase()}</Typography>
             </Box>
             {   
                 group.name == House.Harkonen.name && renderDiscard ? 
-                <Box sx={{ ...centerStyle, width: (cardsWidth-5)+'vw'}}>
+                <Box sx={{ ...centerStyle, width: '100%'}}>
                     <GameMenuButton 
                         text="Draw Treachery" 
-                        sxOverride={harkonenStyle} 
+                        sxOverride={{...harkonenStyle, width: (cardsWidth-2)+'vw'}} 
                         disabled={harkonen?.isHandFull()} 
                         onClick={() => {handleHarkonenClick()}}>
                     </GameMenuButton>
