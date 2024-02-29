@@ -1,6 +1,8 @@
 import { footerTransitionMiddle, minorHeading } from "@/settings/colours";
+import { useWindowDimensions } from "@/hooks/useWindowDimensions";
 import { Box, TextField } from "@mui/material";
 import * as React from "react";
+import { useEffect, useState } from "react";
 
 interface NotesProps {
     note: string;
@@ -16,8 +18,6 @@ const bodyStyle = {
 }
 
 const textFieldStyle = {
-    width: '60vw', 
-    height: '60vh',
     '& .MuiOutlinedInput-root': {
         '& fieldset': {
           borderColor: minorHeading,
@@ -32,18 +32,36 @@ const textFieldStyle = {
           borderWidth: 6,
           borderRadius: 3,
         },
-
     },
 }
 
 export function Notes ({note, onUpdateNote} : NotesProps) {
+    const { windowHeight } = useWindowDimensions();
+    const relativeHeight = windowHeight/1080;
+    const maxRows = 32;
+    const [rows, setRows] = useState<number>(maxRows);
+
+    useEffect(() => {
+        //Note that the relativeHeight ratio is polynomial to create a parabolic shrinking for a smoother experience
+        const dynamicRows = Math.floor(relativeHeight * relativeHeight * maxRows);
+        const nextRows = dynamicRows >=1 ? dynamicRows : 1;
+        setRows(nextRows);
+    }, [windowHeight])   
+
     return (
         <Box sx={{...bodyStyle}}>
             <TextField 
-            sx={{ ...textFieldStyle }} 
-            inputProps={{style: { fontSize: 24 }}}
+            sx={{ 
+                width: '90%',
+                ...textFieldStyle,
+            }} 
+            inputProps={{
+                sx: {
+                    fontSize: 24
+                  }
+            }}
             multiline
-            rows={18}
+            rows={rows}
             value={note} 
             onChange={
                 (event: React.ChangeEvent<HTMLInputElement>) => {
