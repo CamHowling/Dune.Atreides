@@ -1,5 +1,5 @@
 import { CardGroup } from "@/classes/cardGroup";
-import { harkonen, mainBackground, richeseGrey } from "@/settings/colours";
+import { harkonen, ixian, mainBackground, richeseGrey } from "@/settings/colours";
 import { Box, Typography, useMediaQuery } from "@mui/material";
 import * as React from "react";
 import { CardInfo } from "./CardInfo";
@@ -36,6 +36,19 @@ const harkonenStyle = {
     mt: 0,
 }
 
+const ixianStyle = {
+    backgroundColor: ixian,
+    '&:hover': {
+        backgroundColor: ixian,
+    },
+    '&:disabled': {
+        backgroundColor: richeseGrey,
+        color: mainBackground,
+    },
+    m: 1,
+    mt: 0,
+}
+
 const centerStyle = {
     alignItems: 'center', 
     justifyContent: 'center',
@@ -49,14 +62,22 @@ interface sectionProps {
     onUpdate?: (card?: Treachery, unknownCard?: UnknownTreachery) => void;
     players: House[];
     addHarkonenTreachery?: (player: House) => void;
+    addIxianTreachery?: () => void;
 }
 
-export function CardSection ({group, renderHouse, renderDiscard, onUpdate, players, addHarkonenTreachery}: sectionProps) {
+export function CardSection ({group, renderHouse, renderDiscard, onUpdate, players, addHarkonenTreachery, addIxianTreachery}: sectionProps) {
     const harkonen = players.find((player) => { return player.id == House.Harkonen.id});
+    const ixian = players.find((player) => { return player.id == House.Ixian.id});
 
     const handleHarkonenClick = () => {
         if (harkonen != undefined && addHarkonenTreachery != undefined) {
             addHarkonenTreachery(harkonen);
+        }
+    }
+
+    const handleIxianClick = () => {
+        if (ixian != undefined && addIxianTreachery != undefined) {
+            addIxianTreachery();
         }
     }
 
@@ -79,6 +100,16 @@ export function CardSection ({group, renderHouse, renderDiscard, onUpdate, playe
                         sxOverride={{...harkonenStyle, width: (cardsWidth-2)+'vw'}} 
                         disabled={harkonen?.isHandFull()} 
                         onClick={() => {handleHarkonenClick()}}>
+                    </GameMenuButton>
+                </Box>
+                :
+                group.name == House.Ixian.name && renderDiscard ? 
+                <Box sx={{ ...centerStyle, width: '100%'}}>
+                    <GameMenuButton 
+                        text="Draw Treachery" 
+                        sxOverride={{...ixianStyle, width: (cardsWidth-2)+'vw'}} 
+                        disabled={ixian?.isHandFull()} 
+                        onClick={() => {handleIxianClick()}}>
                     </GameMenuButton>
                 </Box>
                 : <></>

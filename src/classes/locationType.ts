@@ -10,7 +10,6 @@ export class LocationType {
     static PlayerUnknown = new LocationType(6, "Player Unknown");
     static DiscardUnknown = new LocationType(7, "Discard Unknown");
 
-
     private constructor(
         public readonly id: number, 
         public readonly name: string, 

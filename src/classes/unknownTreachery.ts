@@ -8,6 +8,8 @@ export class UnknownTreachery {
     public banner: string;
     public originHouse?: House;
     public locationType: LocationType;
+    public hasAuctionMarker: boolean;
+    public hasChoamMarker: boolean;
 
     public constructor(id: string, name: string, banner: string, location: LocationType, player?: House, originHouse?: House) {
         this.id = id;
@@ -16,6 +18,8 @@ export class UnknownTreachery {
         this.banner = banner;
         this.originHouse = originHouse;
         this.locationType = location;
+        this.hasAuctionMarker = false;
+        this.hasChoamMarker = false;
     }
 
     toString() {

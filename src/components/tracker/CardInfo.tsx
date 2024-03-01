@@ -85,9 +85,12 @@ export function CardInfo ({card, unknownCard, renderHouse, renderDiscard, onUpda
                 <Box sx={{ml: iconMargins }}>
                     {
                     
-                        player != undefined && !hideHouseIfUnknown ?
-                        <img src={ `/assets/houses/${player.icon}` } height={cardIconSize} width={cardIconSize}/>
-                        : <Box height={cardIconSize} width={cardIconSize}/>
+                        card?.hasAuctionMarker ?
+                        <img src={ `/assets/cards/auction.png` } height={cardIconSize} width={cardIconSize}/>
+                        :
+                            player != undefined && !hideHouseIfUnknown ?
+                            <img src={ `/assets/houses/${player.icon}` } height={cardIconSize} width={cardIconSize}/>
+                            : <Box height={cardIconSize} width={cardIconSize}/>
                     }
                 </Box>
             ) : <></>
@@ -98,6 +101,9 @@ export function CardInfo ({card, unknownCard, renderHouse, renderDiscard, onUpda
                     {
                         isDiscarded ?
                         <img src={ `/assets/cards/discard overlay.png` } height={discardIconSize} width={discardIconSize}/>
+                        :
+                            card?.hasChoamMarker || unknownCard?.hasChoamMarker ?
+                            <img src={ `/assets/cards/choam.png` } height={discardIconSize} width={discardIconSize}/>
                         : <Box height={discardIconSize} width={discardIconSize}/>
                     }
                 </Box>

@@ -21,9 +21,10 @@ interface PlayerProps {
     players: House[],
     onUpdate: (card?: Treachery, unknownCard?: UnknownTreachery) => void;
     addHarkonenTreachery: (player: House) => void;
+    addIxianTreachery: () => void;
 }
 
-export function Players ({treacheryCards, unknownTreacheryCards, players, onUpdate, addHarkonenTreachery}: PlayerProps) {
+export function Players ({treacheryCards, unknownTreacheryCards, players, onUpdate, addHarkonenTreachery, addIxianTreachery}: PlayerProps) {
     const cardGroups = players.map((player, key) => {
         const unknownCards = unknownTreacheryCards.filter((unknownCard) => {
             return unknownCard?.player?.id == player.id && unknownCard.locationType.id != LocationType.Revealed.id;
@@ -48,7 +49,8 @@ export function Players ({treacheryCards, unknownTreacheryCards, players, onUpda
                         renderDiscard={true}
                         onUpdate={onUpdate}
                         players={players} 
-                        addHarkonenTreachery={(player: House) => {addHarkonenTreachery(player)}}>
+                        addHarkonenTreachery={(player: House) => {addHarkonenTreachery(player)}}
+                        addIxianTreachery={() => {addIxianTreachery()}}>
                     </CardSection>
                 );
             }

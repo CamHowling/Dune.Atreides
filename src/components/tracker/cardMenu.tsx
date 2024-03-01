@@ -58,12 +58,26 @@ export default function CardMenu({children, card, onUpdate, players}: CardMenuPr
   const handleUpdatePlayer = (house: House) => {
     nextCard.player = house;
     nextCard.locationType = LocationType.Player;
+    nextCard.hasAuctionMarker = false;
+    setNextCard(nextCard);
+    handleClose();
+  };
+
+  const handleAuction = () => {
+    nextCard.hasAuctionMarker = !nextCard.hasAuctionMarker;
+    setNextCard(nextCard);
+    handleClose();
+  };
+
+  const handleChoam = () => {
+    nextCard.hasChoamMarker = !nextCard.hasChoamMarker;
     setNextCard(nextCard);
     handleClose();
   };
 
   const handleDiscard = () => {
     nextCard.locationType = LocationType.Discard;
+    nextCard.hasChoamMarker = false;
     setNextCard(nextCard);
     handleClose();
   };
@@ -76,6 +90,7 @@ export default function CardMenu({children, card, onUpdate, players}: CardMenuPr
 
   const handleReturnToDeck = () => {
     nextCard.player = undefined;
+    nextCard.hasChoamMarker = false;
     nextCard.locationType = LocationType.Deck;
     setNextCard(nextCard);
     handleClose();
@@ -94,6 +109,10 @@ export default function CardMenu({children, card, onUpdate, players}: CardMenuPr
 
   const currentPlayer = players.find((house) => house.id == card.player?.id);
   const isHandFull = currentPlayer ? currentPlayer.isHandFull() : false;
+
+  const isChoamPlaying = players.some((player) => {
+    return player.id == House.Choam.id;
+  });
 
   const iconSize = '32px';
   const fontSize = '16pt';
@@ -130,6 +149,19 @@ export default function CardMenu({children, card, onUpdate, players}: CardMenuPr
         sx={{ ...menuStyle }}
       >
         {
+        card.locationType.id == LocationType.Deck.id ? 
+           (
+            <MenuItem onClick={handleAuction}>
+                <Box sx={{ height: iconSize, width: iconSize, ...iconStyle }}>
+                    <img src={ `/assets/menu/auction small.png` } height={32} width={32}/>
+                </Box>
+                <Typography sx={{ ml: 1 }} fontSize={fontSize}>
+                  {card.hasAuctionMarker ? 'Remove from Auction' : 'Add to Auction'}
+                </Typography>
+            </MenuItem>
+           ) : <Box></Box>
+        }
+        {
         card.locationType.id == LocationType.Deck.id || card.locationType.id == LocationType.Player.id ?
         menuPlayers.map((house, key) => {
                 return (
@@ -141,6 +173,19 @@ export default function CardMenu({children, card, onUpdate, players}: CardMenuPr
                     </MenuItem>
                 );
             }) : <Box></Box>
+        }
+        {
+        isChoamPlaying && card.locationType.id == LocationType.Player.id ? 
+           (
+            <MenuItem onClick={handleChoam}>
+                <Box sx={{ height: iconSize, width: iconSize, ...iconStyle }}>
+                    <img src={ `/assets/menu/choam small.png` } height={32} width={32}/>
+                </Box>
+                <Typography sx={{ ml: 1 }} fontSize={fontSize}>
+                  {card.hasChoamMarker ? 'Cancel Choam Alliance' : 'Use Choam Alliance'}
+                </Typography>
+            </MenuItem>
+           ) : <Box></Box>
         }
         {
         card.locationType.id == LocationType.Player.id ? 

@@ -147,6 +147,8 @@ export class Treachery {
     public readonly expansionIds: number[];
     public locationType: LocationType;
     public player: House | undefined;
+    public hasAuctionMarker: boolean;
+    public hasChoamMarker: boolean;
 
     public constructor(id: number, name: string, category: TreacheryCategory, expansionIds: number[], location?: LocationType, player?: House) {
         this.id = id;
@@ -155,7 +157,8 @@ export class Treachery {
         this.expansionIds = expansionIds;
         this.locationType = location ? location : LocationType.Deck;
         this.player = player;
-
+        this.hasAuctionMarker = false;
+        this.hasChoamMarker = false;
         this.locationType = LocationType.Deck;
     }
 

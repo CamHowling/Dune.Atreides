@@ -282,12 +282,12 @@ export default function NewGame () {
     const nextUnknownCards = [...cloneDeep(unknownTreacheryCards), newTreachery];
     setUnknownTreacheryCards(nextUnknownCards);
     setHarkonenTreacheryCount(harkonenTreacheryCount + 1);
-    addCardToHarkonen();
+    addCardToPlayer(House.Harkonen);
   }
 
-  const addCardToHarkonen = () => {
+  const addCardToPlayer = (house: House) => {
     const nextPlayers = cloneDeep(players).map((player) => {
-      if (player.id == House.Harkonen.id) {
+      if (player.id == house.id) {
         player.cardsInHand = player.cardsInHand + 1;
       }
 
@@ -296,6 +296,16 @@ export default function NewGame () {
 
     setPlayers(nextPlayers);
   }
+
+  const [ixianTreacheryCount, setIxianTreacheryCount] = useState<number>(0);
+  
+  const addIxianTreachery = () => {
+    const newTreachery = new UnknownTreachery(House.Ixian.name + ' ' + ixianTreacheryCount+1, UnknownCardTitle, 'ixian large.png', LocationType.PlayerUnknown, undefined, House.Ixian);
+    const nextUnknownCards = [...cloneDeep(unknownTreacheryCards), newTreachery];
+    setUnknownTreacheryCards(nextUnknownCards);
+    setIxianTreacheryCount(ixianTreacheryCount + 1);
+  }
+
 
   const [note, setNote] = useState<string>('');
 
@@ -328,6 +338,7 @@ export default function NewGame () {
             players={players} 
             onUpdate={(card?: Treachery, unknownCard?: UnknownTreachery) => {updateCards(card, unknownCard)}}
             addHarkonenTreachery={(player: House) => {addHarkonenTreachery(player)}}
+            addIxianTreachery={() => {addIxianTreachery()}}
           ></Deck>
         </TabWrapper>
         <TabWrapper value={currentTab} index={2}>
@@ -337,6 +348,7 @@ export default function NewGame () {
             players={players} 
             onUpdate={(card?: Treachery, unknownCard?: UnknownTreachery) => {updateCards(card, unknownCard)}}
             addHarkonenTreachery={(player: House) => {addHarkonenTreachery(player)}}
+            addIxianTreachery={() => {addIxianTreachery()}}
           ></Players>
         </TabWrapper>
         <TabWrapper value={currentTab} index={3}>

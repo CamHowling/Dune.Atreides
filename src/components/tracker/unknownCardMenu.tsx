@@ -60,14 +60,22 @@ export default function UnknownCardMenu({children, unknownCard, onUpdate, player
     handleClose();
   };
 
+  const handleChoam = () => {
+    nextCard.hasChoamMarker = !nextCard.hasChoamMarker;
+    setNextCard(nextCard);
+    handleClose();
+  };
+
   const handleDiscard = () => {
     nextCard.locationType = LocationType.DiscardUnknown;
+    nextCard.hasChoamMarker = false;
     setNextCard(nextCard);
     handleClose();
   };
 
   const handleReturnToHand = () => {
     nextCard.locationType = LocationType.PlayerUnknown;
+    nextCard.hasChoamMarker = false;
     setNextCard(nextCard);
     handleClose();
   };
@@ -97,6 +105,10 @@ export default function UnknownCardMenu({children, unknownCard, onUpdate, player
 
   const currentPlayer = players.find((house) => house.id == unknownCard.player?.id);
   const isHandFull = currentPlayer ? currentPlayer.isHandFull() : false;
+
+  const isChoamPlaying = players.some((player) => {
+    return player.id == House.Choam.id;
+  });
 
   const iconSize = '32px';
   const fontSize = '16pt';
@@ -150,6 +162,19 @@ export default function UnknownCardMenu({children, unknownCard, onUpdate, player
                 );
               })  
           ) : <Box></Box>
+        }
+        {
+        isChoamPlaying && unknownCard.locationType.id == LocationType.PlayerUnknown.id ? 
+           (
+            <MenuItem onClick={handleChoam}>
+                <Box sx={{ height: iconSize, width: iconSize, ...iconStyle }}>
+                    <img src={ `/assets/menu/choam small.png` } height={32} width={32}/>
+                </Box>
+                <Typography sx={{ ml: 1 }} fontSize={fontSize}>
+                  {unknownCard.hasChoamMarker ? 'Cancel Choam Alliance' : 'Use Choam Alliance'}
+                </Typography>
+            </MenuItem>
+           ) : <Box></Box>
         }
         {
         unknownCard.player && unknownCard.locationType.id == LocationType.PlayerUnknown.id ?
