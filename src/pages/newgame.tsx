@@ -183,9 +183,6 @@ export default function NewGame () {
           initialUnknownTreacheryCards.push(new UnknownTreachery(key.toString(), '????????', 'yellow large.png', LocationType.PlayerUnknown, house, undefined));
           return;
         }
-
-        initialUnknownTreacheryCards.push(new UnknownTreachery(House.Harkonen.name + ' ' + 1, UnknownCardTitle, 'black large.png', LocationType.PlayerUnknown, house, House.Harkonen));
-        initialUnknownTreacheryCards.push(new UnknownTreachery(House.Harkonen.name + ' ' + 2, UnknownCardTitle, 'black large.png', LocationType.PlayerUnknown, house, House.Harkonen));
       });
 
       
@@ -194,9 +191,14 @@ export default function NewGame () {
       });
 
       const richesePlayer = players.find((house) => house.id == House.Richese.id);
-
       if (playerNames.includes(House.Richese.name)) {
         initialUnknownTreacheryCards.push(new UnknownTreachery(House.Richese.name + ' ' + 1, UnknownCardTitle, 'silver large.png', LocationType.Revealed, richesePlayer, House.Richese));
+      }
+
+      const harkonenPlayer = players.find((house) => house.id == House.Harkonen.id);
+      if (playerNames.includes(House.Harkonen.name)) {
+        initialUnknownTreacheryCards.push(new UnknownTreachery(House.Harkonen.name + ' ' + 1, UnknownCardTitle, 'black large.png', LocationType.PlayerUnknown, harkonenPlayer, House.Harkonen));
+        initialUnknownTreacheryCards.push(new UnknownTreachery(House.Harkonen.name + ' ' + 2, UnknownCardTitle, 'black large.png', LocationType.PlayerUnknown, harkonenPlayer, House.Harkonen));
       }
 
       setUnknownTreacheryCards(initialUnknownTreacheryCards);

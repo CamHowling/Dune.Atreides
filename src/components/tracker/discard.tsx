@@ -2,7 +2,7 @@ import { CardGroup } from "@/classes/cardGroup";
 import { House } from "@/classes/house";
 import { Treachery } from "@/classes/treachery";
 import { TreacheryCategory } from "@/classes/treacheryCategory";
-import { footerTransitionMiddle, harkonen, richeseGrey, treacheryBlue, treacheryGreen, treacheryRed, treacheryTan } from "@/settings/colours";
+import { footerTransitionMiddle, richeseGrey, treacheryBlue, treacheryGreen, treacheryRed, treacheryTan } from "@/settings/colours";
 import { Box } from "@mui/material";
 import * as React from "react";
 import { CardSection } from "./cardSection";
@@ -55,21 +55,12 @@ export function Discard ({treacheryCards, unknownTreacheryCards, players, onUpda
         return { key: key, value: cardGroup };
     })
 
-    const nonHarkonenUnknownCards = unknownTreacheryCards.filter((card) => {
-        const nonHarkonen = card?.originHouse?.name != House.Harkonen.name;
+    const unknownCards = unknownTreacheryCards.filter((card) => {
         const isDiscarded = card.locationType.id == LocationType.Discard.id || card.locationType.id == LocationType.DiscardUnknown.id;
-        return nonHarkonen && isDiscarded;
+        return isDiscarded;
     });
 
-    const harkonenUnknownCards = unknownTreacheryCards.filter((card) => {
-        const isHarkonen = card?.originHouse?.name == House.Harkonen.name;
-        const isDiscarded = card.locationType.id == LocationType.Discard.id || card.locationType.id == LocationType.DiscardUnknown.id;
-        return isHarkonen && isDiscarded;
-    })
-
-    const unknownGroup = { key: 'unknown', value: new CardGroup('Unknown', footerTransitionMiddle, undefined, nonHarkonenUnknownCards)};
-    const harkonenGroup = { key: 'Harkonen', value: new CardGroup('Harkonen', harkonen, undefined, harkonenUnknownCards)};
-
+    const unknownGroup = { key: 'unknown', value: new CardGroup('Unknown', footerTransitionMiddle, undefined, unknownCards)};
 
     return (
         <Box sx={{...bodyStyle}}>
@@ -88,7 +79,7 @@ export function Discard ({treacheryCards, unknownTreacheryCards, players, onUpda
             }
         )}
         {
-        nonHarkonenUnknownCards.length != undefined && nonHarkonenUnknownCards.length > 0 ?
+        unknownCards.length != undefined && unknownCards.length > 0 ?
         <CardSection  
             key={unknownGroup.key}
             group={unknownGroup.value}
@@ -97,15 +88,6 @@ export function Discard ({treacheryCards, unknownTreacheryCards, players, onUpda
             onUpdate={onUpdate} 
             players={players}>
         </CardSection> : <></> }
-        {playerNames.includes(House.Harkonen.name) && harkonenUnknownCards.length > 0 ? 
-        <CardSection  
-            key={harkonenGroup.key}
-            group={harkonenGroup.value}
-            renderHouse={true}
-            renderDiscard={false}
-            onUpdate={onUpdate} 
-            players={players}>
-        </CardSection> : <></>}
         </Box>
     )
 }
