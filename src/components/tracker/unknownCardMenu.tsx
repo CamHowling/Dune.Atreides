@@ -4,11 +4,13 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { Box, Typography } from '@mui/material';
 import { useState } from 'react';
-import { mainBackground } from '@/settings/colours';
+import { atreides, mainBackground } from '@/settings/colours';
 import { House } from '@/classes/house';
 import { UnknownTreachery } from '@/classes/unknownTreachery';
 import { Treachery } from '@/classes/treachery';
 import { LocationType } from '@/classes/locationType';
+import { faEye } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const boxStyle = {
     height: '100%', 
@@ -66,6 +68,12 @@ export default function UnknownCardMenu({children, unknownCard, onUpdate, player
     handleClose();
   };
 
+  const handleShare = () => {
+    nextCard.isShared = !nextCard.isShared;
+    setNextCard(nextCard);
+    handleClose();
+  };
+
   const handleDiscard = () => {
     nextCard.locationType = LocationType.DiscardUnknown;
     nextCard.hasChoamMarker = false;
@@ -82,6 +90,7 @@ export default function UnknownCardMenu({children, unknownCard, onUpdate, player
 
   const handleReveal = () => {
     nextCard.locationType = LocationType.Revealed;
+    nextCard.isShared = false;
     setNextCard(nextCard);
     handleClose();
   };
@@ -220,7 +229,18 @@ export default function UnknownCardMenu({children, unknownCard, onUpdate, player
                 <Typography sx={{ ml: 1 }} fontSize={fontSize}>Remove</Typography>
             </MenuItem>
            ) : <Box></Box>
-        }        
+        }
+        { 
+        unknownCard.player && (unknownCard.locationType.id == LocationType.DiscardUnknown.id || unknownCard.locationType.id == LocationType.PlayerUnknown.id) ?
+           (
+            <MenuItem onClick={handleShare}>
+                <Box sx={{ height: iconSize, width: iconSize, ...iconStyle }}>
+                  <FontAwesomeIcon icon={faEye} style={{ fontSize: '1.8em' }} color={atreides}></FontAwesomeIcon>
+                </Box>
+                <Typography sx={{ ml: 1 }} fontSize={fontSize}>{unknownCard.isShared ? 'Remove from Share' : 'Add to Share'}</Typography>
+            </MenuItem>
+           ) : <Box></Box>
+        }              
       </Menu>
     </Box>
   );

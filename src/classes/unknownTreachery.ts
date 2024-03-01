@@ -10,6 +10,7 @@ export class UnknownTreachery {
     public locationType: LocationType;
     public hasAuctionMarker: boolean;
     public hasChoamMarker: boolean;
+    public isShared: boolean;
 
     public constructor(id: string, name: string, banner: string, location: LocationType, player?: House, originHouse?: House) {
         this.id = id;
@@ -20,6 +21,7 @@ export class UnknownTreachery {
         this.locationType = location;
         this.hasAuctionMarker = false;
         this.hasChoamMarker = false;
+        this.isShared = false;
     }
 
     toString() {

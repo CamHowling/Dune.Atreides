@@ -7,6 +7,8 @@ import { House } from "@/classes/house";
 import { UnknownTreachery } from "@/classes/unknownTreachery";
 import UnknownCardMenu from "./unknownCardMenu";
 import { LocationType } from "@/classes/locationType";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye } from '@fortawesome/free-solid-svg-icons';
 
 const cardStyle = {
     alignItems: 'center',
@@ -20,6 +22,10 @@ const cardTextStyle = {
     color: mainBackground, 
     fontFamily: 'Copperplate',
     textAlign: 'left'
+}
+
+const centerStyle = {
+    alignItems: 'center', justifyContent: 'center', display: 'flex'
 }
 
 interface cardProps {
@@ -45,6 +51,9 @@ export function CardInfo ({card, unknownCard, renderHouse, renderDiscard, onUpda
     const cardPadding = largest ? 1 : medium ? 0.5 : 0; 
     const iconMargins = largest ? 2 : medium ? 1.5 : 1; 
     const cardWidth = 70;
+    const shareIconSize = (2 * imageScale) +'em';
+    const shareIconPositionY = largest ? 5 : medium ? 3 : -3; 
+    const shareIconPositionX = largest ? 5 : 3; 
 
     const titleFontsize = (largest ? 30 : medium ? 22 : 16)+'px'; 
     const subTitleFontsize = (largest ? 12 : medium ? 10 : 8)+'px'; 
@@ -54,7 +63,7 @@ export function CardInfo ({card, unknownCard, renderHouse, renderDiscard, onUpda
     const hideHouseIfUnknown = unknownCard ? unknownCard.locationType.id == LocationType.Revealed.id : false;
 
     return (
-        <Box sx={{ alignItems: 'center', justifyContent: 'center', display: 'flex'}}>
+        <Box sx={{ ...centerStyle }}>
             <Paper
                 sx={{
                     backgroundImage: `url('${imageFilePath}')`,
@@ -70,13 +79,27 @@ export function CardInfo ({card, unknownCard, renderHouse, renderDiscard, onUpda
                             <Typography sx={{ ...cardTextStyle, fontSize: titleFontsize }} variant="h4">{card.name}</Typography>
                             <Typography sx={{ ...cardTextStyle, fontSize: subTitleFontsize, pl: 0.25 }} variant="h4">{card.category.name}</Typography>
                         </Box>
-                        <img src={ `/assets/cards/icons/${card.category.icon}` } height={cardIconSize} width={cardIconSize}/>
+                        <Box sx={{...centerStyle}}>
+                            <Box sx={{ position:'absolute', zIndex: 2, top: shareIconPositionY, right: shareIconPositionX}}>
+                                {card.isShared ?  
+                                <FontAwesomeIcon icon={faEye} style={{ fontSize: shareIconSize }} color={mainBackground}></FontAwesomeIcon>
+                                : <></>}
+                            </Box>
+                            <img src={ `/assets/cards/icons/${card.category.icon}` } height={cardIconSize} width={cardIconSize} />
+                        </Box>
                     </Box>
                 </CardMenu> : <></>}
                 {unknownCard ? 
                 <UnknownCardMenu unknownCard={unknownCard} onUpdate={onUpdate} players={players}>
                     <Box sx={{...cardStyle, p: cardPadding}}>
                         <Typography sx={{ ...cardTextStyle }} variant="h4">{unknownCard.name}</Typography>
+                        <Box sx={{...centerStyle}}>
+                            <Box sx={{ position:'absolute', zIndex: 2, top: shareIconPositionY, right: shareIconPositionX}}>
+                                {unknownCard.isShared ?  
+                                <FontAwesomeIcon icon={faEye} style={{ fontSize: shareIconSize }} color={mainBackground}></FontAwesomeIcon>
+                                : <></>}
+                            </Box>
+                        </Box>
                     </Box>
                 </UnknownCardMenu> : <></>}
             </Paper>

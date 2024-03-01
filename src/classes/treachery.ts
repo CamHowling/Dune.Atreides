@@ -149,6 +149,7 @@ export class Treachery {
     public player: House | undefined;
     public hasAuctionMarker: boolean;
     public hasChoamMarker: boolean;
+    public isShared: boolean;
 
     public constructor(id: number, name: string, category: TreacheryCategory, expansionIds: number[], location?: LocationType, player?: House) {
         this.id = id;
@@ -159,6 +160,7 @@ export class Treachery {
         this.player = player;
         this.hasAuctionMarker = false;
         this.hasChoamMarker = false;
+        this.isShared = false;
         this.locationType = LocationType.Deck;
     }
 
