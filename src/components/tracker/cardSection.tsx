@@ -7,6 +7,7 @@ import { Treachery } from "@/classes/treachery";
 import { House } from "@/classes/house";
 import { UnknownTreachery } from "@/classes/unknownTreachery";
 import { GameMenuButton } from "../gameMenuButton";
+import { LocationType } from "@/classes/locationType";
 
 const sectionBoxStyle = {
     minWidth: '40vw',
@@ -81,6 +82,15 @@ export function CardSection ({group, renderHouse, renderDiscard, onUpdate, playe
         }
     }
 
+    //review deck view behavior
+    const sortTreacheries = (cards: Treachery[]) => {     
+        if (!renderDiscard) return cards;
+
+        return cards   
+            .filter((card) => card.locationType != LocationType.Discard)
+            .concat(cards.filter(card => card.locationType == LocationType.Discard))
+    }
+
     const largest = useMediaQuery('(min-width:1200px)');
     const medium = useMediaQuery('(min-width:700px)');
     const cardsWidth = (largest ? 60 : medium ? 80 : 90);
@@ -115,7 +125,8 @@ export function CardSection ({group, renderHouse, renderDiscard, onUpdate, playe
                 : <></>
             }
             <Box sx={{ mb: 3 }}>            
-                {group.cards ? group.cards.map((card) => {    
+                {group.cards ? sortTreacheries(group.cards)
+                    .map((card) => {    
                     return (
                         <CardInfo 
                             key={card.id}
