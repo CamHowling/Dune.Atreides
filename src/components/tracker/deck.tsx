@@ -2,11 +2,13 @@ import { CardGroup } from "@/classes/cardGroup";
 import { House } from "@/classes/house";
 import { Treachery } from "@/classes/treachery";
 import { TreacheryCategory } from "@/classes/treacheryCategory";
-import { footerTransitionMiddle, harkonen, ixian, richeseGrey, treacheryBlue, treacheryGreen, treacheryRed, treacheryTan } from "@/settings/colours";
-import { Box } from "@mui/material";
+import { atreides, footerTransitionMiddle, harkonen, ixian, mainBackground, richeseGrey, treacheryBlue, treacheryGreen, treacheryRed, treacheryTan } from "@/settings/colours";
+import { Box, useMediaQuery } from "@mui/material";
 import * as React from "react";
 import { CardSection } from "./cardSection";
 import { UnknownTreachery } from "@/classes/unknownTreachery";
+import { GameMenuButton } from "../gameMenuButton";
+import { useState } from "react";
 
 const bodyStyle = {
     display: 'flex',
@@ -14,6 +16,25 @@ const bodyStyle = {
     justifyContent:'center',
     alignItems: 'center',
     minHeight: '80vh',
+}
+
+const atreidesStyle = {
+    backgroundColor: atreides,
+    '&:hover': {
+        backgroundColor: atreides,
+    },
+    '&:disabled': {
+        backgroundColor: richeseGrey,
+        color: mainBackground,
+    },
+    m: 0,
+    mt: 1,
+}
+
+const centerStyle = {
+    alignItems: 'center', 
+    justifyContent: 'center',
+    display: 'flex'
 }
 
 interface DeckProps {
@@ -26,6 +47,11 @@ interface DeckProps {
 }
 
 export function Deck ({treacheryCards, unknownTreacheryCards, players, onUpdate, addHarkonenTreachery, addIxianTreachery}: DeckProps) {
+    const [hideDiscard, setHideDiscard] = useState<boolean>(false);
+    const handleHideDiscardClick = () => {
+        setHideDiscard(!hideDiscard);
+    }
+
     const groupData: ({name: string, colour: string, categories: TreacheryCategory[]})[] = [
         ({name: "Weapon", colour: treacheryRed, categories: TreacheryCategory.WeaponCategories}),
         ({name: "Defense", colour: treacheryBlue, categories: TreacheryCategory.DefenseCategories}),
@@ -71,9 +97,19 @@ export function Deck ({treacheryCards, unknownTreacheryCards, players, onUpdate,
     const harkonenGroup = { key: 'Harkonen', value: new CardGroup('Harkonen', harkonen, undefined, harkonenUnknownCards)};
     const ixianGroup = { key: 'Ixian', value: new CardGroup('Ixian', ixian, undefined, ixianUnknownCards)};
 
+    const largest = useMediaQuery('(min-width:1200px)');
+    const medium = useMediaQuery('(min-width:700px)');
+    const cardsWidth = (largest ? 60 : medium ? 80 : 90);
 
     return (
         <Box sx={{...bodyStyle}}>
+            <Box sx={{ ...centerStyle, width: '100%'}}>
+                <GameMenuButton 
+                    text={hideDiscard ? "Show Discarded Cards"  : "Hide Discarded Cards" }
+                    sxOverride={{...atreidesStyle, width: (cardsWidth)+'vw'}} 
+                    onClick={() => {handleHideDiscardClick()}}>                           
+                </GameMenuButton>
+            </Box>
             {cardGroups.map((group) => {
                 return (
                     <CardSection  
@@ -81,6 +117,7 @@ export function Deck ({treacheryCards, unknownTreacheryCards, players, onUpdate,
                         group={group.value}
                         renderHouse={true}
                         renderDiscard={true}
+                        hideDiscarded={hideDiscard}
                         onUpdate={onUpdate} 
                         players={players}
                         >

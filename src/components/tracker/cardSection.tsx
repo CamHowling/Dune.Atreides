@@ -138,8 +138,9 @@ export function CardSection ({group, renderHouse, renderDiscard, hideDiscarded, 
                 {group.cards ? sortTreacheries(group.cards)
                     .map((card) => {    
                     return (
+                        //The key must be randomized to prevent react from scrolling on re-render when the discard event fires
                         <CardInfo 
-                            key={card.id}
+                            key={(Math.random() * 1000).toString() + card.id.toString()}
                             card={card}
                             renderHouse={renderHouse}
                             renderDiscard={renderDiscard}
