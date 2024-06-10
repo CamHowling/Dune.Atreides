@@ -48,9 +48,14 @@ interface PlayerProps {
 
 export function Players ({treacheryCards, unknownTreacheryCards, players, onUpdate, addHarkonenTreachery, addIxianTreachery}: PlayerProps) {
     const [showShared, setShowShared] = useState<boolean>(false);
+    const [hideDiscard, setHideDiscard] = useState<boolean>(false);
 
     const handleShareClick = () => {
         setShowShared(!showShared);
+    }
+
+    const handleHideDiscardClick = () => {
+        setHideDiscard(!hideDiscard);
     }
     
     const cardGroups = players.map((player, key) => {
@@ -88,6 +93,16 @@ export function Players ({treacheryCards, unknownTreacheryCards, players, onUpda
                         onClick={() => {handleShareClick()}}>                           
                     </GameMenuButton>
                 </Box>
+                { 
+                !showShared ? 
+                <Box sx={{ ...centerStyle, width: '100%'}}>
+                    <GameMenuButton 
+                        text={hideDiscard ? "Show Discarded Cards"  : "Hide Discarded Cards" }
+                        sxOverride={{...atreidesStyle, width: (cardsWidth)+'vw'}} 
+                        onClick={() => {handleHideDiscardClick()}}>                           
+                    </GameMenuButton>
+                </Box> :<></>
+                }
             {cardGroups.map((group) => {
                 return (
                     !showShared ||
@@ -97,6 +112,7 @@ export function Players ({treacheryCards, unknownTreacheryCards, players, onUpda
                             group={group.value}
                             renderHouse={false}
                             renderDiscard={true}
+                            hideDiscarded={hideDiscard}
                             onUpdate={onUpdate}
                             players={players} 
                             addHarkonenTreachery={(player: House) => {addHarkonenTreachery(player)}}

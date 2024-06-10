@@ -60,13 +60,14 @@ interface sectionProps {
     group: CardGroup;
     renderHouse: boolean;
     renderDiscard: boolean;
+    hideDiscarded?: boolean;
     onUpdate?: (card?: Treachery, unknownCard?: UnknownTreachery) => void;
     players: House[];
     addHarkonenTreachery?: (player: House) => void;
     addIxianTreachery?: () => void;
 }
 
-export function CardSection ({group, renderHouse, renderDiscard, onUpdate, players, addHarkonenTreachery, addIxianTreachery}: sectionProps) {
+export function CardSection ({group, renderHouse, renderDiscard, hideDiscarded, onUpdate, players, addHarkonenTreachery, addIxianTreachery}: sectionProps) {
     const harkonen = players.find((player) => { return player.id == House.Harkonen.id});
     const ixian = players.find((player) => { return player.id == House.Ixian.id});
 
@@ -84,11 +85,20 @@ export function CardSection ({group, renderHouse, renderDiscard, onUpdate, playe
 
     //review deck view behavior
     const sortTreacheries = (cards: Treachery[]) => {     
-        if (!renderDiscard) return cards;
+        if (!renderDiscard) return cards; 
 
-        return cards   
-            .filter((card) => card.locationType != LocationType.Discard)
-            .concat(cards.filter(card => card.locationType == LocationType.Discard))
+        let sortedCards = cards.filter((card) => card.locationType != LocationType.Discard);
+        if (hideDiscarded) return sortedCards; 
+
+        sortedCards = sortedCards.concat(cards.filter(card => card.locationType == LocationType.Discard))
+        return sortedCards;
+    }
+
+    const filterUnknownTreacheries =(unknownCards: UnknownTreachery[]) => {     
+        if (!hideDiscarded) return unknownCards; 
+
+        const filteredCards = unknownCards.filter(card => card.locationType != LocationType.DiscardUnknown)
+        return filteredCards;
     }
 
     const largest = useMediaQuery('(min-width:1200px)');
@@ -138,7 +148,8 @@ export function CardSection ({group, renderHouse, renderDiscard, onUpdate, playe
                         </CardInfo>
                     );
                 }) : <></> }
-                {group.unknownCards ? group.unknownCards.map((unknownCard) => {    
+                {group.unknownCards ? filterUnknownTreacheries(group.unknownCards)
+                    .map((unknownCard) => {    
                     return (
                         <CardInfo 
                             key={unknownCard.id}
