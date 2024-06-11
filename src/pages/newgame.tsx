@@ -107,6 +107,7 @@ export default function NewGame () {
   const [treacheryCards, setTreacheryCards] = useState<Treachery[]>([]);
 
   useEffect(() => {
+    if (!previousPlayers) return;
     if (previousCards != null && previousCards.length > 0) {
       const parsedCards = JSON.parse(previousCards) as Treachery[];
       const initialCards = parsedCards.map((card) => {
@@ -142,7 +143,7 @@ export default function NewGame () {
 
     setTreacheryCards(initialTreacheryCards);
     DevEnvironmentConsoleLog('set treachery manually')
-  },[previousCards])
+  },[previousCards, previousPlayers])
 
   useEffect(() => {
     localStorage.setItem('cards', JSON.stringify(treacheryCards));

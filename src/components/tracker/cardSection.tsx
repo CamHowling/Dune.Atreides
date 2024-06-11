@@ -84,18 +84,18 @@ export function CardSection ({group, renderHouse, renderDiscard, hideDiscarded, 
     }
 
     //review deck view behavior
-    const sortTreacheries = (cards: Treachery[]) => {     
-        if (!renderDiscard) return cards; 
+    const sortTreacheries = (cards: Treachery[]) => {
+        if (!renderDiscard || cards.length == 0) return cards; 
 
-        let sortedCards = cards.filter((card) => card.locationType != LocationType.Discard);
+        let sortedCards = cards.filter((card) => card.locationType.id != LocationType.Discard.id);
         if (hideDiscarded) return sortedCards; 
 
-        sortedCards = sortedCards.concat(cards.filter(card => card.locationType == LocationType.Discard))
+        sortedCards = sortedCards.concat(cards.filter(card => card.locationType.id == LocationType.Discard.id))
         return sortedCards;
     }
 
     const filterUnknownTreacheries =(unknownCards: UnknownTreachery[]) => {     
-        if (!hideDiscarded) return unknownCards; 
+        if (!hideDiscarded || unknownCards.length == 0) return unknownCards; 
 
         const filteredCards = unknownCards.filter(card => card.locationType != LocationType.DiscardUnknown)
         return filteredCards;

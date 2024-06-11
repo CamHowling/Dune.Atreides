@@ -161,7 +161,7 @@ export class Treachery {
         this.hasAuctionMarker = false;
         this.hasChoamMarker = false;
         this.isShared = false;
-        this.locationType = LocationType.Deck;
+        this.locationType = location ?? LocationType.Deck;
     }
 
     toString() {
