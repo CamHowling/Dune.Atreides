@@ -26,11 +26,23 @@ export default function MainMenu() {
 
   const router = useRouter();
 
+  const ClearData = () => {
+    localStorage.removeItem('players');
+    localStorage.removeItem('cards');
+    localStorage.removeItem('unknownCards');
+    localStorage.removeItem('notes');
+}
+
+  const NewGame = () => {
+    ClearData();
+    router.push('/setup');
+};
+
   return (
     <Box sx={{ minHeight: '100vh' }}>
       <PageTitle title="Treachery Tracker for Dune"></PageTitle>
       <Box sx={{...bodyStyle}}>
-        <GameMenuButton text="New Game" onClick={() => router.push('/setup')}></GameMenuButton>
+        <GameMenuButton text="New Game" onClick={() => NewGame()}></GameMenuButton>
         <GameMenuButton text="About" onClick={() => setAboutOpen(!aboutOpen)}></GameMenuButton>
         <GameMenuButton text="Disclaimer" onClick={() => setDisclaimerOpen(!disclaimerOpen)}></GameMenuButton>
       </Box>

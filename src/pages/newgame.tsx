@@ -324,6 +324,7 @@ export default function NewGame () {
 
   const updateNote = (note: string) => {
     setNote(note);
+    localStorage.setItem('note', note);
   }
 
   return (
