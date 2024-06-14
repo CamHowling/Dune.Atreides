@@ -43,7 +43,7 @@ export function AboutDialog({open, onClose}: DialogProps) {
         </IconButton>
       </DialogTitle>
         <Typography variant='h6' sx={{...typographyStyle, pb: 0}}>
-        How to Play
+          Getting Started
         </Typography>
         <Typography sx={{...typographyStyle}}>
           Click new game to open the game set up page. 
@@ -52,18 +52,20 @@ export function AboutDialog({open, onClose}: DialogProps) {
           <br />
           Click start to start the game.
           <br />
+          </Typography>
+          <Typography variant='h6' sx={{...typographyStyle, pb: 0}}>
+          Screens
+          </Typography>
+          <Typography sx={{...typographyStyle}}>
+          <b>Options</b> allows you to return to the main menu, start a new game, and save or load a game file.
           <br />
-          There are 5 screens in the tracker; Options, Deck, Player, Discard, and Notes.
+          <b>Deck</b> shows all cards in the game, the player who holds or has discarded each card, and if a card has been discarded.
           <br />
-          The Options screen allows you to return to the main menu or start a new game.
+          <b>Player</b> shows cards which are in a players hand.
           <br />
-          The Deck screen shows all cards in the game, the player who holds or has discarded each card, and if a card has been discarded.
+          <b>Discard</b> screen shows cards which have been discarded.
           <br />
-          The Player screen shows cards which are in a players hand.
-          <br />
-          The Discard screen shows cards which have been discarded.
-          <br />
-          The Notes screen allows you to keep notes.
+          <b>Notes</b> allows you to keep notes.
         </Typography>
         <Typography variant='h6' sx={{...typographyStyle, pb: 0}}>
           Bugs

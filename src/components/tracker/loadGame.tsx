@@ -1,6 +1,7 @@
+"use client";
+
 import { FileUploadOutlined } from "@mui/icons-material";
 import { Dialog, DialogTitle, DialogContent, TextField, IconButton, DialogActions, Button, Typography } from "@mui/material";
-import router from "next/router";
 import { useState } from "react";
 import * as React from "react";
 import { GameMenuButton } from "../gameMenuButton";
@@ -36,7 +37,11 @@ const dialogBoxStyle = {
   },
 }
 
-export function LoadGameButton()
+type LoadGameProps = {
+  RouterFunction: () => void,
+}
+
+export function LoadGameButton({RouterFunction}: LoadGameProps)
 {
     const [open, setOpen] = useState(false);
     const [selectedFile, setSelectedFile] = useState<File>();
@@ -72,7 +77,8 @@ export function LoadGameButton()
           });
 
           handleClose();
-          router.reload();
+          // router.reload();
+          RouterFunction();
         };
 
         reader.readAsText(selectedFile);

@@ -32,7 +32,7 @@ const SaveData = () => {
         note
     }
 
-    const fileName = new Date().toLocaleString();
+    const fileName = `Atreides ${new Date().toLocaleString()}`;
     const data = JSON.stringify(items);
     const blob = new Blob([data], { type: 'application/json' });
 
@@ -55,6 +55,10 @@ const NewGame = () => {
     router.push('/setup');
 };
 
+const RouterFunction = () => {
+    router.reload();
+};
+
 export function OptionsMenu () {
     return (
         <>
@@ -62,7 +66,7 @@ export function OptionsMenu () {
                 <GameMenuButton text="Main Menu" onClick={() => MainMenu()}></GameMenuButton>
                 <GameMenuButton text="New Game" onClick={() => NewGame()}></GameMenuButton>
                 <GameMenuButton text="Save Game" onClick={() => SaveData()}></GameMenuButton>
-                <LoadGameButton></LoadGameButton>
+                <LoadGameButton RouterFunction={RouterFunction}></LoadGameButton>
             </Box>
 
         </>
