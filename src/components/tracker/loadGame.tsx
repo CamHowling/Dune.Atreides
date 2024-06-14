@@ -1,7 +1,7 @@
 "use client";
 
 import { FileUploadOutlined } from "@mui/icons-material";
-import { Dialog, DialogTitle, DialogContent, TextField, IconButton, DialogActions, Button, Typography } from "@mui/material";
+import { Dialog, DialogTitle, DialogContent, TextField, IconButton, DialogActions, Button, Typography, useMediaQuery } from "@mui/material";
 import { useState } from "react";
 import * as React from "react";
 import { GameMenuButton } from "../gameMenuButton";
@@ -25,16 +25,6 @@ const titleStyle = {
 const dialogTitleStyle = {
   justifyContent: 'center', 
   display: 'flex'
-}
-
-const dialogBoxStyle = {
-  "& .MuiDialog-container": {
-    "& .MuiPaper-root": {
-      width: "100%",
-      maxWidth: "20vw",  
-      backgroundColor: mainBackground,
-    },
-  },
 }
 
 type LoadGameProps = {
@@ -83,6 +73,22 @@ export function LoadGameButton({RouterFunction}: LoadGameProps)
 
         reader.readAsText(selectedFile);
       };
+
+      const width = 20;
+      const medium = useMediaQuery('(max-width:1200px)');
+      const smallest = useMediaQuery('(max-width:700px)');
+      const scale = smallest ? 2 : medium ? 1.5 : 1; 
+      const minWidth = width ? width : (scale*25)+'vw';
+
+      const dialogBoxStyle = {
+        "& .MuiDialog-container": {
+          "& .MuiPaper-root": {
+            width: "100%",
+            minWidth: minWidth,  
+            backgroundColor: mainBackground,
+          },
+        },
+      }
 
     return (
         <>
