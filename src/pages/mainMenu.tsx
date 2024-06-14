@@ -10,6 +10,7 @@ import { GameMenuButton } from '@/components/gameMenuButton';
 import { DisclaimerDialog } from '@/components/mainMenu/disclaimerDialog';
 import { AboutDialog } from '@/components/mainMenu/aboutDialog';
 import { useRouter } from 'next/navigation'
+import { LoadGameButton } from '@/components/tracker/loadGame';
 
 const bodyStyle = {
   display: 'flex',
@@ -43,6 +44,7 @@ export default function MainMenu() {
       <PageTitle title="Treachery Tracker for Dune"></PageTitle>
       <Box sx={{...bodyStyle}}>
         <GameMenuButton text="New Game" onClick={() => NewGame()}></GameMenuButton>
+        <LoadGameButton></LoadGameButton>
         <GameMenuButton text="About" onClick={() => setAboutOpen(!aboutOpen)}></GameMenuButton>
         <GameMenuButton text="Disclaimer" onClick={() => setDisclaimerOpen(!disclaimerOpen)}></GameMenuButton>
       </Box>
