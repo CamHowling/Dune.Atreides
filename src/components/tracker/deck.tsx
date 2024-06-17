@@ -44,9 +44,10 @@ interface DeckProps {
     onUpdate: (card?: Treachery, unknownCard?: UnknownTreachery) => void;
     addHarkonenTreachery: (player: House) => void;
     addIxianTreachery: () => void;
+    addUnknownTreachery: () => void;
 }
 
-export function Deck ({treacheryCards, unknownTreacheryCards, players, onUpdate, addHarkonenTreachery, addIxianTreachery}: DeckProps) {
+export function Deck ({treacheryCards, unknownTreacheryCards, players, onUpdate, addHarkonenTreachery, addIxianTreachery, addUnknownTreachery}: DeckProps) {
     const [hideDiscard, setHideDiscard] = useState<boolean>(false);
     const handleHideDiscardClick = () => {
         setHideDiscard(!hideDiscard);
@@ -133,7 +134,9 @@ export function Deck ({treacheryCards, unknownTreacheryCards, players, onUpdate,
             renderHouse={true}
             renderDiscard={true}
             onUpdate={onUpdate} 
-            players={players}>
+            players={players}
+            addUnknownTreachery={() => addUnknownTreachery()}
+            >
         </CardSection> : <></> }
         {playerNames.includes(House.Harkonen.name) ? 
         <CardSection  

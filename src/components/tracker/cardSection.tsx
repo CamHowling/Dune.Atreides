@@ -1,5 +1,5 @@
 import { CardGroup } from "@/classes/cardGroup";
-import { harkonen, ixian, mainBackground, richeseGrey } from "@/settings/colours";
+import { footerTransitionMiddle, harkonen, ixian, mainBackground, richeseGrey } from "@/settings/colours";
 import { Box, Typography, useMediaQuery } from "@mui/material";
 import * as React from "react";
 import { CardInfo } from "./CardInfo";
@@ -37,6 +37,19 @@ const harkonenStyle = {
     mt: 0,
 }
 
+const unknownStyle = {
+    backgroundColor: footerTransitionMiddle,
+    '&:hover': {
+        backgroundColor: footerTransitionMiddle,
+    },
+    '&:disabled': {
+        backgroundColor: richeseGrey,
+        color: mainBackground,
+    },
+    m: 1,
+    mt: 0,
+}
+
 const ixianStyle = {
     backgroundColor: ixian,
     '&:hover': {
@@ -65,9 +78,10 @@ interface sectionProps {
     players: House[];
     addHarkonenTreachery?: (player: House) => void;
     addIxianTreachery?: () => void;
+    addUnknownTreachery?: () => void;
 }
 
-export function CardSection ({group, renderHouse, renderDiscard, hideDiscarded, onUpdate, players, addHarkonenTreachery, addIxianTreachery}: sectionProps) {
+export function CardSection ({group, renderHouse, renderDiscard, hideDiscarded, onUpdate, players, addHarkonenTreachery, addIxianTreachery, addUnknownTreachery}: sectionProps) {
     const harkonen = players.find((player) => { return player.id == House.Harkonen.id});
     const ixian = players.find((player) => { return player.id == House.Ixian.id});
 
@@ -80,6 +94,11 @@ export function CardSection ({group, renderHouse, renderDiscard, hideDiscarded, 
     const handleIxianClick = () => {
         if (ixian != undefined && addIxianTreachery != undefined) {
             addIxianTreachery();
+        }
+    }
+    const handleUnknownClick = () => {
+        if (addUnknownTreachery != undefined) {
+            addUnknownTreachery();
         }
     }
 
@@ -130,6 +149,15 @@ export function CardSection ({group, renderHouse, renderDiscard, hideDiscarded, 
                         sxOverride={{...ixianStyle, width: (cardsWidth-2)+'vw'}} 
                         disabled={ixian?.isHandFull()} 
                         onClick={() => {handleIxianClick()}}>
+                    </GameMenuButton>
+                </Box>
+                :
+                group.unknownCards && renderDiscard ? 
+                <Box sx={{ ...centerStyle, width: '100%'}}>
+                    <GameMenuButton 
+                        text="Draw Unknown" 
+                        sxOverride={{...unknownStyle, width: (cardsWidth-2)+'vw'}} 
+                        onClick={() => {handleUnknownClick()}}>
                     </GameMenuButton>
                 </Box>
                 : <></>

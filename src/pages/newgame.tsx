@@ -308,6 +308,14 @@ export default function NewGame () {
     setIxianTreacheryCount(ixianTreacheryCount + 1);
   }
 
+  const [unknownTreacheryCount, setUnknownTreacheryCount] = useState<number>(0);
+
+  const addUnknownTreachery = () => {
+    const newTreachery = new UnknownTreachery('Unknown ' + unknownTreacheryCount+1, UnknownCardTitle, 'yellow large.png', LocationType.PlayerUnknown, undefined, undefined);
+    const nextUnknownCards = [...cloneDeep(unknownTreacheryCards), newTreachery];
+    setUnknownTreacheryCards(nextUnknownCards);
+    setUnknownTreacheryCount(unknownTreacheryCount + 1);
+  }
 
   const [note, setNote] = useState<string>('');
 
@@ -342,6 +350,7 @@ export default function NewGame () {
             onUpdate={(card?: Treachery, unknownCard?: UnknownTreachery) => {updateCards(card, unknownCard)}}
             addHarkonenTreachery={(player: House) => {addHarkonenTreachery(player)}}
             addIxianTreachery={() => {addIxianTreachery()}}
+            addUnknownTreachery={() => {addUnknownTreachery()}}
           ></Deck>
         </TabWrapper>
         <TabWrapper value={currentTab} index={2}>
