@@ -100,7 +100,7 @@ function Setup () {
           <HouseButton house={House.Choam} onClick={() => { handleHouseClick(House.Choam); } }></HouseButton>
           <HouseButton house={House.Ecaz} onClick={() => { handleHouseClick(House.Ecaz); } }></HouseButton>
         </Box><Box sx={{ ...boxStyle }}>
-          <HouseButton house={House.Harkonen} onClick={() => { handleHouseClick(House.Harkonen); } }></HouseButton>
+          <HouseButton house={House.Harkonnen} onClick={() => { handleHouseClick(House.Harkonnen); } }></HouseButton>
           <HouseButton house={House.BeneGesserit} onClick={() => { handleHouseClick(House.BeneGesserit); } }></HouseButton>
           <HouseButton house={House.Emperor} onClick={() => { handleHouseClick(House.Emperor); } }></HouseButton>
           <HouseButton house={House.Tleilaxu} onClick={() => { handleHouseClick(House.Tleilaxu); } }></HouseButton>
@@ -120,7 +120,7 @@ function Setup () {
           <HouseButton house={House.SpacingGuild} onClick={() => { handleHouseClick(House.SpacingGuild); } }></HouseButton>
         </Box>
         <Box sx={{ ...boxStyle }}>
-          <HouseButton house={House.Harkonen} onClick={() => { handleHouseClick(House.Harkonen); } }></HouseButton>
+          <HouseButton house={House.Harkonnen} onClick={() => { handleHouseClick(House.Harkonnen); } }></HouseButton>
           <HouseButton house={House.BeneGesserit} onClick={() => { handleHouseClick(House.BeneGesserit); } }></HouseButton>
           <HouseButton house={House.Emperor} onClick={() => { handleHouseClick(House.Emperor); } }></HouseButton>
         </Box>

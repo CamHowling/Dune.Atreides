@@ -179,7 +179,7 @@ export default function NewGame () {
 
       const initialUnknownTreacheryCards: UnknownTreachery[] = [];
       players.forEach((house, key) => {
-        if(house.name != House.Harkonen.name) {
+        if(house.name != House.Harkonnen.name) {
           initialUnknownTreacheryCards.push(new UnknownTreachery(key.toString(), '????????', 'yellow large.png', LocationType.PlayerUnknown, house, undefined));
           return;
         }
@@ -195,10 +195,10 @@ export default function NewGame () {
         initialUnknownTreacheryCards.push(new UnknownTreachery(House.Richese.name + ' ' + 1, UnknownCardTitle, 'silver large.png', LocationType.Revealed, richesePlayer, House.Richese));
       }
 
-      const harkonenPlayer = players.find((house) => house.id == House.Harkonen.id);
-      if (playerNames.includes(House.Harkonen.name)) {
-        initialUnknownTreacheryCards.push(new UnknownTreachery(House.Harkonen.name + ' ' + 1, UnknownCardTitle, 'black large.png', LocationType.PlayerUnknown, harkonenPlayer, House.Harkonen));
-        initialUnknownTreacheryCards.push(new UnknownTreachery(House.Harkonen.name + ' ' + 2, UnknownCardTitle, 'black large.png', LocationType.PlayerUnknown, harkonenPlayer, House.Harkonen));
+      const HarkonnenPlayer = players.find((house) => house.id == House.Harkonnen.id);
+      if (playerNames.includes(House.Harkonnen.name)) {
+        initialUnknownTreacheryCards.push(new UnknownTreachery(House.Harkonnen.name + ' ' + 1, UnknownCardTitle, 'black large.png', LocationType.PlayerUnknown, HarkonnenPlayer, House.Harkonnen));
+        initialUnknownTreacheryCards.push(new UnknownTreachery(House.Harkonnen.name + ' ' + 2, UnknownCardTitle, 'black large.png', LocationType.PlayerUnknown, HarkonnenPlayer, House.Harkonnen));
       }
 
       setUnknownTreacheryCards(initialUnknownTreacheryCards);
@@ -277,14 +277,14 @@ export default function NewGame () {
     setUnknownTreacheryCards(nextUnknownCards);
   }
 
-  const [harkonenTreacheryCount, setHarkonenTreacheryCount] = useState<number>(2);
+  const [HarkonnenTreacheryCount, setHarkonnenTreacheryCount] = useState<number>(2);
   
-  const addHarkonenTreachery = (harkonenPlayer: House) => {
-    const newTreachery = new UnknownTreachery(House.Harkonen.name + ' ' + harkonenTreacheryCount+1, UnknownCardTitle, 'black large.png', LocationType.PlayerUnknown, harkonenPlayer, House.Harkonen);
+  const addHarkonnenTreachery = (HarkonnenPlayer: House) => {
+    const newTreachery = new UnknownTreachery(House.Harkonnen.name + ' ' + HarkonnenTreacheryCount+1, UnknownCardTitle, 'black large.png', LocationType.PlayerUnknown, HarkonnenPlayer, House.Harkonnen);
     const nextUnknownCards = [...cloneDeep(unknownTreacheryCards), newTreachery];
     setUnknownTreacheryCards(nextUnknownCards);
-    setHarkonenTreacheryCount(harkonenTreacheryCount + 1);
-    addCardToPlayer(House.Harkonen);
+    setHarkonnenTreacheryCount(HarkonnenTreacheryCount + 1);
+    addCardToPlayer(House.Harkonnen);
   }
 
   const addCardToPlayer = (house: House) => {
@@ -348,7 +348,7 @@ export default function NewGame () {
             unknownTreacheryCards={unknownTreacheryCards}
             players={players} 
             onUpdate={(card?: Treachery, unknownCard?: UnknownTreachery) => {updateCards(card, unknownCard)}}
-            addHarkonenTreachery={(player: House) => {addHarkonenTreachery(player)}}
+            addHarkonnenTreachery={(player: House) => {addHarkonnenTreachery(player)}}
             addIxianTreachery={() => {addIxianTreachery()}}
             addUnknownTreachery={() => {addUnknownTreachery()}}
           ></Deck>
@@ -359,7 +359,7 @@ export default function NewGame () {
             unknownTreacheryCards={unknownTreacheryCards}
             players={players} 
             onUpdate={(card?: Treachery, unknownCard?: UnknownTreachery) => {updateCards(card, unknownCard)}}
-            addHarkonenTreachery={(player: House) => {addHarkonenTreachery(player)}}
+            addHarkonnenTreachery={(player: House) => {addHarkonnenTreachery(player)}}
             addIxianTreachery={() => {addIxianTreachery()}}
           ></Players>
         </TabWrapper>

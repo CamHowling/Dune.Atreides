@@ -42,11 +42,11 @@ interface PlayerProps {
     unknownTreacheryCards: UnknownTreachery[],
     players: House[],
     onUpdate: (card?: Treachery, unknownCard?: UnknownTreachery) => void;
-    addHarkonenTreachery: (player: House) => void;
+    addHarkonnenTreachery: (player: House) => void;
     addIxianTreachery: () => void;
 }
 
-export function Players ({treacheryCards, unknownTreacheryCards, players, onUpdate, addHarkonenTreachery, addIxianTreachery}: PlayerProps) {
+export function Players ({treacheryCards, unknownTreacheryCards, players, onUpdate, addHarkonnenTreachery, addIxianTreachery}: PlayerProps) {
     const [showShared, setShowShared] = useState<boolean>(false);
     const [hideDiscard, setHideDiscard] = useState<boolean>(false);
 
@@ -115,7 +115,7 @@ export function Players ({treacheryCards, unknownTreacheryCards, players, onUpda
                             hideDiscarded={hideDiscard}
                             onUpdate={onUpdate}
                             players={players} 
-                            addHarkonenTreachery={(player: House) => {addHarkonenTreachery(player)}}
+                            addHarkonnenTreachery={(player: House) => {addHarkonnenTreachery(player)}}
                             addIxianTreachery={() => {addIxianTreachery()}}>
                         </CardSection>
                     : <></>

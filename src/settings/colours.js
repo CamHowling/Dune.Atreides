@@ -1,7 +1,7 @@
 //Faction Colours
 export const fremen = '#CA842A';
 export const atreides = '#49642B';
-export const harkonen = '#222326';
+export const Harkonnen = '#222326';
 export const beneGesserit = '#1B3366';
 export const spacingGuild = '#C3491E';
 export const emperor = '#8A1D16';

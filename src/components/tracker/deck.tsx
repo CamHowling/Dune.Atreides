@@ -2,7 +2,7 @@ import { CardGroup } from "@/classes/cardGroup";
 import { House } from "@/classes/house";
 import { Treachery } from "@/classes/treachery";
 import { TreacheryCategory } from "@/classes/treacheryCategory";
-import { atreides, footerTransitionMiddle, harkonen, ixian, mainBackground, richeseGrey, treacheryBlue, treacheryGreen, treacheryRed, treacheryTan } from "@/settings/colours";
+import { atreides, footerTransitionMiddle, Harkonnen, ixian, mainBackground, richeseGrey, treacheryBlue, treacheryGreen, treacheryRed, treacheryTan } from "@/settings/colours";
 import { Box, useMediaQuery } from "@mui/material";
 import * as React from "react";
 import { CardSection } from "./cardSection";
@@ -42,12 +42,12 @@ interface DeckProps {
     unknownTreacheryCards: UnknownTreachery[],
     players: House[],
     onUpdate: (card?: Treachery, unknownCard?: UnknownTreachery) => void;
-    addHarkonenTreachery: (player: House) => void;
+    addHarkonnenTreachery: (player: House) => void;
     addIxianTreachery: () => void;
     addUnknownTreachery: () => void;
 }
 
-export function Deck ({treacheryCards, unknownTreacheryCards, players, onUpdate, addHarkonenTreachery, addIxianTreachery, addUnknownTreachery}: DeckProps) {
+export function Deck ({treacheryCards, unknownTreacheryCards, players, onUpdate, addHarkonnenTreachery, addIxianTreachery, addUnknownTreachery}: DeckProps) {
     const [hideDiscard, setHideDiscard] = useState<boolean>(false);
     const handleHideDiscardClick = () => {
         setHideDiscard(!hideDiscard);
@@ -83,11 +83,11 @@ export function Deck ({treacheryCards, unknownTreacheryCards, players, onUpdate,
     })
 
     const unknownCards = unknownTreacheryCards.filter((card) => {
-        return card?.originHouse?.id != House.Harkonen.id && card?.originHouse?.id != House.Ixian.id;
+        return card?.originHouse?.id != House.Harkonnen.id && card?.originHouse?.id != House.Ixian.id;
     });
 
-    const harkonenUnknownCards = unknownTreacheryCards.filter((card) => {
-        return card?.originHouse?.id == House.Harkonen.id;
+    const HarkonnenUnknownCards = unknownTreacheryCards.filter((card) => {
+        return card?.originHouse?.id == House.Harkonnen.id;
     })
 
     const ixianUnknownCards = unknownTreacheryCards.filter((card) => {
@@ -95,7 +95,7 @@ export function Deck ({treacheryCards, unknownTreacheryCards, players, onUpdate,
     })
 
     const unknownGroup = { key: 'unknown', value: new CardGroup('Unknown', footerTransitionMiddle, undefined, unknownCards)};
-    const harkonenGroup = { key: 'Harkonen', value: new CardGroup('Harkonen', harkonen, undefined, harkonenUnknownCards)};
+    const HarkonnenGroup = { key: 'Harkonnen', value: new CardGroup('Harkonnen', Harkonnen, undefined, HarkonnenUnknownCards)};
     const ixianGroup = { key: 'Ixian', value: new CardGroup('Ixian', ixian, undefined, ixianUnknownCards)};
 
     const largest = useMediaQuery('(min-width:1200px)');
@@ -138,15 +138,15 @@ export function Deck ({treacheryCards, unknownTreacheryCards, players, onUpdate,
             addUnknownTreachery={() => addUnknownTreachery()}
             >
         </CardSection> : <></> }
-        {playerNames.includes(House.Harkonen.name) ? 
+        {playerNames.includes(House.Harkonnen.name) ? 
         <CardSection  
-            key={harkonenGroup.key}
-            group={harkonenGroup.value}
+            key={HarkonnenGroup.key}
+            group={HarkonnenGroup.value}
             renderHouse={true}
             renderDiscard={true}
             onUpdate={onUpdate} 
             players={players}
-            addHarkonenTreachery={(player: House) => {addHarkonenTreachery(player)}}>
+            addHarkonnenTreachery={(player: House) => {addHarkonnenTreachery(player)}}>
         </CardSection> : <></>}
         {playerNames.includes(House.Ixian.name) ? 
         <CardSection  

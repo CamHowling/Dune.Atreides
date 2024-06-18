@@ -1,5 +1,5 @@
 import { CardGroup } from "@/classes/cardGroup";
-import { footerTransitionMiddle, harkonen, ixian, mainBackground, richeseGrey } from "@/settings/colours";
+import { footerTransitionMiddle, Harkonnen, ixian, mainBackground, richeseGrey } from "@/settings/colours";
 import { Box, Typography, useMediaQuery } from "@mui/material";
 import * as React from "react";
 import { CardInfo } from "./CardInfo";
@@ -24,10 +24,10 @@ const sectionTitleStyle = {
     fontFamily: 'Copperplate',
 }
 
-const harkonenStyle = {
-    backgroundColor: harkonen,
+const HarkonnenStyle = {
+    backgroundColor: Harkonnen,
     '&:hover': {
-        backgroundColor: harkonen,
+        backgroundColor: Harkonnen,
     },
     '&:disabled': {
         backgroundColor: richeseGrey,
@@ -76,18 +76,18 @@ interface sectionProps {
     hideDiscarded?: boolean;
     onUpdate?: (card?: Treachery, unknownCard?: UnknownTreachery) => void;
     players: House[];
-    addHarkonenTreachery?: (player: House) => void;
+    addHarkonnenTreachery?: (player: House) => void;
     addIxianTreachery?: () => void;
     addUnknownTreachery?: () => void;
 }
 
-export function CardSection ({group, renderHouse, renderDiscard, hideDiscarded, onUpdate, players, addHarkonenTreachery, addIxianTreachery, addUnknownTreachery}: sectionProps) {
-    const harkonen = players.find((player) => { return player.id == House.Harkonen.id});
+export function CardSection ({group, renderHouse, renderDiscard, hideDiscarded, onUpdate, players, addHarkonnenTreachery, addIxianTreachery, addUnknownTreachery}: sectionProps) {
+    const Harkonnen = players.find((player) => { return player.id == House.Harkonnen.id});
     const ixian = players.find((player) => { return player.id == House.Ixian.id});
 
-    const handleHarkonenClick = () => {
-        if (harkonen != undefined && addHarkonenTreachery != undefined) {
-            addHarkonenTreachery(harkonen);
+    const handleHarkonnenClick = () => {
+        if (Harkonnen != undefined && addHarkonnenTreachery != undefined) {
+            addHarkonnenTreachery(Harkonnen);
         }
     }
 
@@ -132,13 +132,13 @@ export function CardSection ({group, renderHouse, renderDiscard, hideDiscarded, 
                 <Typography variant="h3" sx={{ ...sectionTitleStyle }}>{group.name.toUpperCase()}</Typography>
             </Box>
             {   
-                group.name == House.Harkonen.name && renderDiscard ? 
+                group.name == House.Harkonnen.name && renderDiscard ? 
                 <Box sx={{ ...centerStyle, width: '100%'}}>
                     <GameMenuButton 
                         text="Draw Treachery" 
-                        sxOverride={{...harkonenStyle, width: (cardsWidth-2)+'vw'}} 
-                        disabled={harkonen?.isHandFull()} 
-                        onClick={() => {handleHarkonenClick()}}>
+                        sxOverride={{...HarkonnenStyle, width: (cardsWidth-2)+'vw'}} 
+                        disabled={Harkonnen?.isHandFull()} 
+                        onClick={() => {handleHarkonnenClick()}}>
                     </GameMenuButton>
                 </Box>
                 :
@@ -152,7 +152,7 @@ export function CardSection ({group, renderHouse, renderDiscard, hideDiscarded, 
                     </GameMenuButton>
                 </Box>
                 :
-                group.unknownCards && renderDiscard ? 
+                group.unknownCards && renderDiscard && renderHouse ? 
                 <Box sx={{ ...centerStyle, width: '100%'}}>
                     <GameMenuButton 
                         text="Draw Unknown" 
